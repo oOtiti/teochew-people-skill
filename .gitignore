@@ -1,0 +1,34 @@
+.omx/
+.codex/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs and local runtime output
+*.log
+logs/
+tmp/
+temp/
+
+# Python caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+
+# Node caches, in case docs tooling is added later
+node_modules/
+dist/
+build/
+coverage/
+
+# Secrets and local environment files
+.env
+.env.*
+!.env.example
