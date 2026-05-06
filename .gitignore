@@ -27,6 +27,7 @@ node_modules/
 dist/
 build/
 coverage/
+*.tgz
 
 # 密钥和本地环境变量
 .env

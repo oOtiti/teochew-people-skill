@@ -5,6 +5,12 @@ $skillDir = Join-Path $root "skills/chaoshan-ren"
 $skillFile = Join-Path $skillDir "SKILL.md"
 $agentFile = Join-Path $skillDir "agents/openai.yaml"
 $referencesDir = Join-Path $skillDir "references"
+$packageFile = Join-Path $root "package.json"
+$installScript = Join-Path $root "scripts/install-skill.mjs"
+$readmeFile = Join-Path $root "README.md"
+$licenseFile = Join-Path $root "LICENSE"
+$contributingFile = Join-Path $root "CONTRIBUTING.md"
+$exampleFile = Join-Path $root "examples/before-after.md"
 $requiredReferenceFiles = @(
     "00-使用索引.md",
     "01-范围与称谓.md",
@@ -54,6 +60,12 @@ foreach ($path in @($agentFile, $referencesDir)) {
     }
 }
 
+foreach ($path in @($packageFile, $installScript, $readmeFile, $licenseFile, $contributingFile, $exampleFile)) {
+    if (-not (Test-Path -LiteralPath $path)) {
+        Fail "缺少公开发布文件: $($path.Substring($root.Length + 1))"
+    }
+}
+
 foreach ($file in $requiredReferenceFiles) {
     $path = Join-Path $referencesDir $file
     if (-not (Test-Path -LiteralPath $path)) {
@@ -79,6 +91,29 @@ foreach ($term in @("粤东", "汕头", "揭阳", "潮州", "工夫茶", "潮剧
 
 if ($referenceText -match '\[TODO|TODO:') {
     Fail "参考资料仍包含 TODO 文本"
+}
+
+$package = Get-Content -LiteralPath $packageFile -Raw | ConvertFrom-Json
+if ($package.name -ne "chaoshan-ren-skill") {
+    Fail "package.json 的 name 应为 chaoshan-ren-skill"
+}
+
+if (-not $package.bin.'chaoshan-ren-skill') {
+    Fail "package.json 应提供 chaoshan-ren-skill 命令"
+}
+
+$installer = Get-Content -LiteralPath $installScript -Raw
+foreach ($term in @("--codex", "--claude", "--dest", "--force", "skills", "chaoshan-ren")) {
+    if ($installer -notmatch [regex]::Escape($term)) {
+        Fail "安装脚本应包含 '$term'"
+    }
+}
+
+$readme = Get-Content -LiteralPath $readmeFile -Raw
+foreach ($term in @("为什么值得用", "快速安装", "使用示例", "效果预览", "npx chaoshan-ren-skill --codex", "npx chaoshan-ren-skill --claude")) {
+    if ($readme -notmatch [regex]::Escape($term)) {
+        Fail "README 应包含 '$term'"
+    }
 }
 
 if (Test-Path -LiteralPath (Join-Path $root "chaoshan-ren/SKILL.md")) {

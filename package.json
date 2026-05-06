@@ -1,0 +1,37 @@
+{
+  "name": "chaoshan-ren-skill",
+  "version": "0.1.0",
+  "description": "面向 AI agent 的粤东潮汕文化写作与审校 skill。",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "chaoshan-ren-skill": "./scripts/install-skill.mjs"
+  },
+  "files": [
+    "skills/chaoshan-ren",
+    "scripts/install-skill.mjs",
+    "examples",
+    "README.md",
+    "CONTRIBUTING.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "install:codex": "node scripts/install-skill.mjs --codex --force",
+    "install:claude": "node scripts/install-skill.mjs --claude --force",
+    "validate": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/validate-skill.ps1",
+    "pack:check": "npm pack --dry-run"
+  },
+  "keywords": [
+    "agent-skill",
+    "codex-skill",
+    "claude-code-skill",
+    "chaoshan",
+    "teochew",
+    "潮汕",
+    "潮汕文化",
+    "中文写作"
+  ],
+  "engines": {
+    "node": ">=18"
+  }
+}
