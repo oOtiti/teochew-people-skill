@@ -48,7 +48,7 @@ if ($skill -match '\[TODO|TODO:|Replace with|Structuring This Skill') {
     Fail "SKILL.md 仍包含模板 TODO 文本"
 }
 
-foreach ($term in @("是什么", "什么时候使用", "什么时候不要使用", "粤东", "汕头", "揭阳", "潮州")) {
+foreach ($term in @("Teochew People", "潮汕人", "是什么", "什么时候使用", "什么时候不要使用", "粤东", "汕头", "揭阳", "潮州")) {
     if ($skill -notmatch [regex]::Escape($term)) {
         Fail "SKILL.md 应包含 '$term'"
     }
@@ -83,7 +83,7 @@ $reference = foreach ($file in $requiredReferenceFiles) {
 }
 $referenceText = $reference -join "`n"
 
-foreach ($term in @("粤东", "汕头", "揭阳", "潮州", "工夫茶", "潮剧", "英歌", "出花园", "七样羹", "营老爷", "侨批", "善堂", "常用词库", "任务示例", "资料来源")) {
+foreach ($term in @("Teochew people", "Teochew People", "粤东", "汕头", "揭阳", "潮州", "工夫茶", "潮剧", "英歌", "出花园", "七样羹", "营老爷", "侨批", "善堂", "常用词库", "任务示例", "资料来源")) {
     if ($referenceText -notmatch [regex]::Escape($term)) {
         Fail "参考资料应包含 '$term'"
     }
@@ -110,7 +110,7 @@ foreach ($term in @("--codex", "--claude", "--dest", "--force", "skills", "chaos
 }
 
 $readme = Get-Content -LiteralPath $readmeFile -Raw
-foreach ($term in @("一个具体案例", "给阿嬷的情书", "为什么值得用", "快速安装", "使用示例", "效果预览", "npx chaoshan-ren-skill --codex", "npx chaoshan-ren-skill --claude")) {
+foreach ($term in @("Teochew People (潮汕人) Skill", "名字怎么理解", "一个具体案例", "给阿嬷的情书", "为什么值得用", "快速安装", "使用示例", "效果预览", "npx chaoshan-ren-skill --codex", "npx chaoshan-ren-skill --claude")) {
     if ($readme -notmatch [regex]::Escape($term)) {
         Fail "README 应包含 '$term'"
     }

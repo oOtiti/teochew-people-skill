@@ -1,7 +1,7 @@
 {
   "name": "chaoshan-ren-skill",
   "version": "0.1.0",
-  "description": "面向 AI agent 的粤东潮汕文化写作与审校 skill。",
+  "description": "Teochew People (潮汕人) writing and review skill for AI agents.",
   "license": "MIT",
   "author": "oOtiti",
   "homepage": "https://github.com/oOtiti/chaoshan-ren-skill#readme",
@@ -40,7 +40,9 @@
     "claude-code-skill",
     "chaoshan",
     "teochew",
+    "teochew-people",
     "潮汕",
+    "潮汕人",
     "潮汕文化",
     "中文写作"
   ],

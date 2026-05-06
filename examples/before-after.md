@@ -1,6 +1,26 @@
 # Before / After
 
-这些例子展示 `chaoshan-ren` skill 适合修正什么问题。
+这些例子展示 `chaoshan-ren` skill 适合修正什么问题。项目对外英文名使用 `Teochew People (潮汕人)`，但技术名仍是 `chaoshan-ren`。
+
+## 例子零：英文项目介绍太泛
+
+原文：
+
+```text
+Chaoshan people are people from Chaozhou. This skill teaches AI about Chaozhou customs.
+```
+
+问题：
+
+- 把潮汕人缩成 Chaozhou people。
+- 没有使用更常见的英文社群称谓 `Teochew people`。
+- 忽略汕头、揭阳和海外潮人社群。
+
+改写：
+
+```text
+Teochew People (潮汕人) refers here to the wider Chaoshan cultural world: Shantou, Chaozhou, Jieyang, nearby Teochew-speaking communities, and the overseas Teochew diaspora. This skill helps AI agents write and review content about Teochew / Chaoshan culture with better scope, warmer details, and fewer stereotypes.
+```
 
 ## 例子一：把潮州误写成全部潮汕
 

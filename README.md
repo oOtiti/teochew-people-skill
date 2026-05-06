@@ -1,12 +1,22 @@
-# 潮汕人 Skill
+# Teochew People (潮汕人) Skill
 
 ![潮汕人 Skill 项目预览图](assets/social-preview.png)
 
 让 AI 写潮汕文化时，少一点泛泛而谈，多一点地方感和分寸感。
 
-`chaoshan-ren` 是一个面向 Codex、Claude Code 等 AI agent 的中文 skill，用于围绕粤东潮汕文化圈进行写作、审校、解释、研究和本地化。它帮助模型在写潮汕人、潮汕风俗、工夫茶、潮剧、英歌、粿品、潮汕菜、侨批、祠堂、善堂、营老爷、出花园等内容时，避免把潮州单点误写成全部潮汕，也避免把地方文化写成刻板印象或猎奇段子。
+`chaoshan-ren` 是一个面向 Codex、Claude Code 等 AI agent 的中文 skill。项目对外英文名使用 **Teochew People (潮汕人)**：`Teochew people` 是海外和英文语境里更常见、更有辨识度的潮人/潮汕人说法；`chaoshan-ren` 则保留为 npm 包、skill 目录和命令名，方便安装和工具识别。
+
+这个 skill 用于围绕粤东潮汕文化圈进行写作、审校、解释、研究和本地化。它帮助模型在写 Teochew people / 潮汕人、潮汕风俗、工夫茶、潮剧、英歌、粿品、潮汕菜、侨批、祠堂、善堂、营老爷、出花园等内容时，避免把潮州单点误写成全部潮汕，也避免把地方文化写成刻板印象或猎奇段子。
 
 这里的“潮汕”按更宽的粤东大潮汕文化圈理解，重点覆盖汕头、潮州、揭阳及海内外潮人社群。潮州是重要组成部分，但不是全部潮汕。
+
+## 名字怎么理解
+
+- **Teochew People (潮汕人)**：面向英文读者、海外潮人社群、GitHub/NPM 项目展示时优先使用。
+- **潮汕人**：面向中文读者时使用，强调粤东潮汕文化圈和海内外潮人社群。
+- **潮人**：适合侨乡、同乡会、宗亲会、海外社群、文化社团语境。
+- **潮州人 / Teochew**：可用于历史潮州府、潮州话、海外 Teochew 社群等语境，但不要把“潮州”机械等同于整个潮汕。
+- **chaoshan-ren**：只作为技术名使用，包括 skill 名、包名、安装目录和命令。
 
 ## 一个具体案例
 
@@ -49,6 +59,13 @@
 - 写出花园、节庆、家族纪念、长辈祝福等温和得体的中文。
 - 审校已有文案，指出范围错误、刻板印象、伪民俗和没有来源的说法。
 - 作为模板，fork 后改造成客家、广府、闽南、吴语、东北民俗等地域文化 skill。
+
+## 不适合做什么
+
+- 不适合替代学术论文、族谱考证、地方志编纂或正式出版物审稿。
+- 不适合给出具体祭拜流程、风水择日、宗教仪轨或家族规矩。
+- 不适合编造潮汕话读音、古法、祖训、禁忌或“老一辈都这么说”。
+- 不适合把潮汕文化包装成单一城市标签、商业成功学或猎奇民俗。
 
 ## 快速安装
 
@@ -127,7 +144,7 @@ npx chaoshan-ren-skill --codex --force
 Codex 中可以这样说：
 
 ```text
-使用 $chaoshan-ren，帮我写一段潮汕文化展览前言，重点不要只写潮州。
+使用 $chaoshan-ren，帮我写一段 Teochew People (潮汕人) 文化展览前言，重点不要只写潮州。
 ```
 
 ```text
@@ -158,6 +175,12 @@ Claude Code 中可以这样调用：
 
 ```text
 潮州是潮汕文化的重要源流和重镇，但潮汕文化圈还包括汕头、揭阳及海内外潮人社群。工夫茶、潮剧、英歌、粿品、侨批和各地年俗，共同构成了潮汕人关于家、乡、礼数与远方的记忆。不同地方、不同家庭的做法并不完全一样，真正值得写的，正是这些生活细节里的地方感。
+```
+
+再比如英文/双语项目介绍中，skill 会倾向这样处理：
+
+```text
+Teochew People (潮汕人) refers here to the wider Chaoshan cultural world: Shantou, Chaozhou, Jieyang, nearby Teochew-speaking communities, and the overseas Teochew diaspora. The point is not to reduce the culture to one city or one stereotype, but to write from living details: gongfu tea, Teochew opera, Yingge dance, rice cakes, qiaopi letters, clan halls, charity halls, family rituals, and the sound of the Teochew language.
 ```
 
 ## 仓库结构
@@ -202,6 +225,7 @@ Claude Code 中可以这样调用：
 - 事实性内容尽量附来源；涉及最新认定、活动时间、官方称号时需要实时核对。
 - 不把某个地方、家庭或村社的习惯写成整个潮汕通用。
 - 不为真实感编造潮汕话读音、祖训、禁忌或古法。
+- 英文对外介绍优先使用 `Teochew People (潮汕人)`，但内容解释要覆盖粤东潮汕文化圈，不把 Teochew 简化成单一潮州城市身份。
 
 ## 本地验证
 
