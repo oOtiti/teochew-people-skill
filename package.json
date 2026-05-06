@@ -17,7 +17,7 @@
   },
   "type": "module",
   "bin": {
-    "chaoshan-ren-skill": "./scripts/install-skill.mjs"
+    "chaoshan-ren-skill": "scripts/install-skill.mjs"
   },
   "files": [
     "skills/chaoshan-ren",
