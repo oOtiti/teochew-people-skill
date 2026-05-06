@@ -8,6 +8,28 @@
 
 这里的“潮汕”按更宽的粤东大潮汕文化圈理解，重点覆盖汕头、潮州、揭阳及海内外潮人社群。潮州是重要组成部分，但不是全部潮汕。
 
+## 一个具体案例
+
+比如分析 2026 年 4 月 30 日上映的潮汕方言电影《给阿嬷的情书》时，普通模型很容易只写成“方言亲情片”或“潮汕人很重家庭”。使用这个 skill，agent 会先抓住更有潮汕文化辨识度的线索：
+
+- 片名里的“阿嬷”不是普通亲昵称呼，而是潮汕家庭代际情感的入口。
+- 影片以侨批家书为核心线索，可以连接潮汕侨乡、下南洋、跨海汇款、家书往返和家国记忆。
+- 潮汕话不是点缀，而是人物关系、家庭伦理和地方记忆的声音载体。
+- 汕头、潮州、揭阳及海外潮人社群共同构成故事背景，不能把它简化成单一“潮州文化”。
+- 适合写成“阿嬷、侨批、乡音、远方和家”的分析，不适合写成“潮汕人都恋家”这种标签。
+
+示例提问：
+
+```text
+使用 $chaoshan-ren，分析电影《给阿嬷的情书》为什么适合作为潮汕文化传播案例，重点写侨批、阿嬷、潮汕话和大潮汕文化圈，不要写成泛泛的亲情片影评。
+```
+
+示例输出方向：
+
+```text
+《给阿嬷的情书》真正动人的地方，不只是祖孙亲情，而是把潮汕人的“家”写成了一条跨海的线。侨批让远方不再抽象：它既是钱，也是信，是下南洋的人寄回故土的牵挂。阿嬷守着的不只是一段往事，也是一个家庭如何在乡音、等待和记忆里延续下来。潮汕话在片中因此不只是方言对白，而是亲人之间最自然、也最难被翻译的情感方式。
+```
+
 ## 为什么值得用
 
 普通模型写潮汕文化时，常见问题是：
@@ -32,13 +54,19 @@
 
 ### Codex
 
-发布到 npm 后可以这样安装：
+npm 包发布后可以这样安装：
 
 ```bash
 npx chaoshan-ren-skill --codex
 ```
 
-当前从本仓库本地安装：
+现在也可以直接从 GitHub 安装：
+
+```bash
+npx github:oOtiti/chaoshan-ren-skill --codex
+```
+
+从本仓库本地安装：
 
 ```bash
 npm run install:codex
@@ -58,13 +86,19 @@ $CODEX_HOME/skills/chaoshan-ren
 
 ### Claude Code
 
-发布到 npm 后可以这样安装：
+npm 包发布后可以这样安装：
 
 ```bash
 npx chaoshan-ren-skill --claude
 ```
 
-当前从本仓库本地安装：
+现在也可以直接从 GitHub 安装：
+
+```bash
+npx github:oOtiti/chaoshan-ren-skill --claude
+```
+
+从本仓库本地安装：
 
 ```bash
 npm run install:claude
@@ -200,13 +234,6 @@ git config core.hooksPath .githooks
 - 可靠来源，尤其是方志、博物馆、非遗、政府、学术和深度报道。
 - 真实但不泄露隐私的 before/after 审校案例。
 - 对刻板印象、范围混淆、伪民俗表达的修正。
-
-## 参考的公开 skill 仓库
-
-- [Anthropic Skills](https://github.com/anthropics/skills)：参考其 skill 自包含和 supporting files 按需加载的组织方式。
-- [Claude Code Skills 文档](https://docs.claude.com/en/docs/claude-code/skills)：参考其对 `SKILL.md`、metadata 和附加资源的说明。
-- [mattpocock/skills](https://github.com/mattpocock/skills)：参考其公开 skill 仓库的 README 展示方式。
-- [secondsky/claude-skills](https://github.com/secondsky/claude-skills)：参考其 `skills/` 目录、脚本和验证说明的组织方式。
 
 ## License
 

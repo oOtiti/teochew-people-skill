@@ -110,9 +110,15 @@ foreach ($term in @("--codex", "--claude", "--dest", "--force", "skills", "chaos
 }
 
 $readme = Get-Content -LiteralPath $readmeFile -Raw
-foreach ($term in @("为什么值得用", "快速安装", "使用示例", "效果预览", "npx chaoshan-ren-skill --codex", "npx chaoshan-ren-skill --claude")) {
+foreach ($term in @("一个具体案例", "给阿嬷的情书", "为什么值得用", "快速安装", "使用示例", "效果预览", "npx chaoshan-ren-skill --codex", "npx chaoshan-ren-skill --claude")) {
     if ($readme -notmatch [regex]::Escape($term)) {
         Fail "README 应包含 '$term'"
+    }
+}
+
+foreach ($term in @("Anthropic Skills", "mattpocock/skills", "secondsky/claude-skills", "参考的公开 skill 仓库")) {
+    if ($readme -match [regex]::Escape($term)) {
+        Fail "README 不应展示公开 skill 仓库参考痕迹: $term"
     }
 }
 

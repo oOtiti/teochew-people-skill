@@ -3,6 +3,18 @@
   "version": "0.1.0",
   "description": "面向 AI agent 的粤东潮汕文化写作与审校 skill。",
   "license": "MIT",
+  "author": "oOtiti",
+  "homepage": "https://github.com/oOtiti/chaoshan-ren-skill#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oOtiti/chaoshan-ren-skill.git"
+  },
+  "bugs": {
+    "url": "https://github.com/oOtiti/chaoshan-ren-skill/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "type": "module",
   "bin": {
     "chaoshan-ren-skill": "./scripts/install-skill.mjs"
