@@ -10,6 +10,10 @@ permissions:
   contents: read
   id-token: write
 
+concurrency:
+  group: publish-npm-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   publish:
     name: Publish to npmjs.com
@@ -28,6 +32,17 @@ jobs:
       - name: Install package metadata
         run: npm ci
 
+      - name: Check release tag matches package version
+        if: github.event_name == 'release'
+        shell: bash
+        run: |
+          package_version="$(node -p "require('./package.json').version")"
+          release_version="${GITHUB_REF_NAME#v}"
+          if [ "$package_version" != "$release_version" ]; then
+            echo "Release tag ${GITHUB_REF_NAME} does not match package.json version ${package_version}."
+            exit 1
+          fi
+
       - name: Validate skill structure
         run: npm run validate
 
@@ -35,4 +50,4 @@ jobs:
         run: npm run pack:check
 
       - name: Publish package
-        run: npm publish --access public
+        run: npm publish --access public --provenance

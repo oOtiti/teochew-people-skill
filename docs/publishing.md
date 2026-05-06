@@ -2,6 +2,14 @@
 
 这份文档给维护者使用，说明如何第一次发布、如何更新版本，以及 GitHub Actions 自动发布怎么配置。
 
+## 当前发布状态
+
+包已经发布到 npmjs.com：
+
+- Package: [`teochew-people-skill`](https://www.npmjs.com/package/teochew-people-skill)
+- Current version: `0.1.1`
+- GitHub repository: [`oOtiti/teochew-people-skill`](https://github.com/oOtiti/teochew-people-skill)
+
 ## 第一次发布
 
 第一次发布建议先在本机完成，因为 npm 需要确认你的账号具备发布权限。
@@ -35,7 +43,7 @@ npm publish --access public
 
 ## 配置 Trusted Publishing
 
-第一次包发布成功后，建议在 npmjs.com 为包配置 Trusted Publishing。这样以后可以通过 GitHub Release 自动发布，不需要在 GitHub Secrets 里保存长期 npm token。
+第一次包发布成功后，建议在 npmjs.com 为包配置 Trusted Publishing。这样以后可以通过 GitHub Release 自动发布，不需要在 GitHub Secrets 里保存长期 npm token，也能让 npm 为发布生成 provenance。
 
 在 npmjs.com 进入包设置后，找到 Trusted Publisher，选择 GitHub Actions，并填写：
 
@@ -45,6 +53,8 @@ npm publish --access public
 - Environment name: 留空
 
 保存后，GitHub 的 `.github/workflows/publish-npm.yml` 就可以通过 OIDC 发布这个包。
+
+不要把 npm token 放进仓库，也不要长期保留为了第一次发布临时生成的 token。
 
 ## 更新 npm 包
 
@@ -64,6 +74,8 @@ git push origin main --follow-tags
 ```
 
 然后在 GitHub 页面创建一个 Release，选择刚刚推送的 tag。Release 发布后，`Publish npm package` workflow 会自动运行。
+
+Release tag 要和 `package.json` 版本一致。比如版本是 `0.1.1`，tag 应为 `v0.1.1` 或 `0.1.1`；不一致时 workflow 会停止，避免发错版本。
 
 如果暂时不使用 GitHub Release，也可以本地手动发布：
 

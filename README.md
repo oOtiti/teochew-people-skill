@@ -1,5 +1,9 @@
 # Teochew People (潮汕人) Skill
 
+[![npm version](https://img.shields.io/npm/v/teochew-people-skill?color=0b7285&label=npm)](https://www.npmjs.com/package/teochew-people-skill)
+[![CI](https://github.com/oOtiti/teochew-people-skill/actions/workflows/ci.yml/badge.svg)](https://github.com/oOtiti/teochew-people-skill/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
 ![Teochew People (潮汕人) Skill 项目预览图](assets/social-preview.png)
 
 让 AI 写潮汕文化时，少一点泛泛而谈，多一点地方感和分寸感。
@@ -9,6 +13,17 @@
 这个 skill 用于围绕粤东潮汕文化圈进行写作、审校、解释、研究和本地化。它帮助模型在写 Teochew people / 潮汕人、潮汕风俗、工夫茶、潮剧、英歌、粿品、潮汕菜、侨批、祠堂、善堂、营老爷、出花园等内容时，避免把潮州单点误写成全部潮汕，也避免把地方文化写成刻板印象或猎奇段子。
 
 这里的“潮汕”按更宽的粤东大潮汕文化圈理解，重点覆盖汕头、潮州、揭阳及海内外潮人社群。潮州是重要组成部分，但不是全部潮汕。
+
+## npm 包
+
+这个项目已经发布到 npm：[teochew-people-skill](https://www.npmjs.com/package/teochew-people-skill)。
+
+```bash
+npx teochew-people-skill --codex
+npx teochew-people-skill --claude
+```
+
+GitHub 仓库和 npm 包通过 `package.json` 里的 `repository`、README 徽章、GitHub About 链接和发布 workflow 互相指向。GitHub 侧边栏里的 Packages 区域显示的是 GitHub Packages，不是 npmjs.com；本项目的公开分发渠道以 npmjs.com 为主。
 
 ## 名字怎么理解
 
@@ -221,8 +236,16 @@ Teochew People (潮汕人) refers here to the wider Chaoshan cultural world: Sha
 .
 ├── README.md
 ├── package.json
+├── package-lock.json
 ├── LICENSE
 ├── CONTRIBUTING.md
+├── docs/
+│   ├── github-workflows.md
+│   └── publishing.md
+├── .github/
+│   └── workflows/
+│       ├── ci.yml
+│       └── publish-npm.yml
 ├── examples/
 │   └── before-after.md
 ├── skills/
@@ -269,7 +292,7 @@ npm run pack:check
 Windows PowerShell 也可以直接运行：
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts/validate-skill.ps1
+pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/validate-skill.ps1
 ```
 
 启用仓库内 hook：

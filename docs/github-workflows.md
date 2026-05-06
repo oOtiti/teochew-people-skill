@@ -44,10 +44,13 @@ Workflow 是 GitHub Actions 里的“自动化流程”。它写在 `.github/wor
 
 - 拉取当前代码。
 - 使用 Node.js 24。
+- 确认 GitHub Release 的 tag 和 `package.json` 版本一致，例如 `v0.1.1` 对应 `0.1.1`。
 - 先跑完整校验和打包预检查。
-- 通过 npm Trusted Publishing 发布到 npmjs.com。
+- 通过 npm Trusted Publishing 发布到 npmjs.com，并携带 npm provenance。
 
 这个 workflow 不把 npm 密钥写进仓库。它依赖 npm 和 GitHub Actions 之间的 OIDC 信任关系，发布时由 GitHub 临时证明“这次发布来自这个公开仓库的这个 workflow”。
+
+本项目已经发布到 npmjs.com：[teochew-people-skill](https://www.npmjs.com/package/teochew-people-skill)。
 
 ## 为什么没有加 GitHub Packages 发布
 
