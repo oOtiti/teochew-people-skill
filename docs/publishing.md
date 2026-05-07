@@ -77,6 +77,8 @@ git push origin main --follow-tags
 
 Release tag 要和 `package.json` 版本一致。比如版本是 `0.1.1`，tag 应为 `v0.1.1` 或 `0.1.1`；不一致时 workflow 会停止，避免发错版本。
 
+如果这个版本已经在 npm 上发布过，workflow 会自动跳过 `npm publish`，只保留一次成功的 Release 检查记录。这样可以安全补建 GitHub Release，不会因为 npm 禁止重复发布同一版本而把 Actions 跑红。
+
 如果暂时不使用 GitHub Release，也可以本地手动发布：
 
 ```bash
