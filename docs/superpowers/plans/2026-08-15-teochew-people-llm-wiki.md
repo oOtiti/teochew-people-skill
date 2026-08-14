@@ -92,6 +92,12 @@ Create `tests/skill-scenarios.json` with these exact scenario IDs and requiremen
       "prompt": "Teochew People 是不是只指今天潮州市的人？",
       "must": ["说明历史与当代语境", "覆盖汕头潮州揭阳和海外社群"],
       "must_not": ["把潮州等同全部潮汕"]
+    },
+    {
+      "id": "source-grounded-video-production",
+      "prompt": "帮我写一个 60 秒介绍拜老爷的短视频口播和分镜，要有画面细节。",
+      "must": ["使用有来源的场景细节", "包含人物动作器物声音或空间", "区分拜老爷与营老爷", "说明地方差异", "给出事实核验依据"],
+      "must_not": ["编造统一仪式流程", "把单一地方画面写成全潮汕通用"]
     }
   ]
 }
@@ -99,14 +105,14 @@ Create `tests/skill-scenarios.json` with these exact scenario IDs and requiremen
 
 - [ ] **Step 2: Add a deterministic fixture validator**
 
-Create `scripts/validate-scenarios.mjs` using `node:fs` and `node:assert/strict`. It must reject duplicate IDs, empty prompts, missing `must`, missing `must_not`, and scenario versions other than `1`; success prints `Behavior scenarios valid: 6`.
+Create `scripts/validate-scenarios.mjs` using `node:fs` and `node:assert/strict`. It must reject duplicate IDs, empty prompts, missing `must`, missing `must_not`, and scenario versions other than `1`; success prints `Behavior scenarios valid: 7`.
 
 - [ ] **Step 3: Run the fixture validator**
 
 Run: `node scripts/validate-scenarios.mjs`  
-Expected: `Behavior scenarios valid: 6`
+Expected: `Behavior scenarios valid: 7`
 
-- [ ] **Step 4: Run the six scenarios without the new wiki architecture**
+- [ ] **Step 4: Run the seven scenarios without the new wiki architecture**
 
 Use fresh validation agents without revealing the intended fix. Give each agent only the current skill path and one prompt. Save raw responses and a short rubric result under `tmp/behavior-baseline/`.
 
@@ -191,7 +197,7 @@ Do not commit while the hook is red.
 
 - [ ] **Step 1: Write the purpose and schema files**
 
-Use the approved design as the exact contract. `wiki-schema.md` must define the raw and wiki frontmatter shown in the spec, evidence states (`verified`, `synthesis`, `varies`, `unknown`), source tiers (`A`, `B`, `C`, `Reject`), claim roles, freshness classes (`enduring`, `current`, `event`), and these review windows:
+Use the approved design as the exact contract. `wiki-schema.md` must define the raw and wiki frontmatter shown in the spec, evidence states (`verified`, `synthesis`, `varies`, `unknown`), source tiers (`A`, `B`, `C`, `Reject`), claim roles (`definition`, `history`, `geographic_scope`, `visual_detail`, `sound_detail`, `action_sequence`, `object_detail`, `lived_experience`), production facets, freshness classes (`enduring`, `current`, `event`), and these review windows:
 
 - `enduring`: review on source change or explicit challenge.
 - `current`: recheck after 180 days.
@@ -326,7 +332,7 @@ Use primary sources for technical and official-status claims. Replace broken lin
 
 - [ ] **Step 2: Apply the source-admission matrix before ingesting**
 
-Score each candidate on authority, direct support, regional fit, temporal fit, independence and identifiable editorial purpose. Assign `A`, `B`, `C` or `Reject` using `wiki-schema.md`. Write every decision and reason to `raw/source-review.md`.
+Score each candidate on authority, direct support, regional fit, temporal fit, independence, identifiable editorial purpose and production detail value. Production detail value measures whether the source provides grounded people, actions, objects, sounds, spaces or sequences useful for writing and video. It can break a tie between equally trustworthy sources but can never compensate for weak factual support. Assign `A`, `B`, `C` or `Reject` using `wiki-schema.md`. Write every decision and reason to `raw/source-review.md`.
 
 Reject unattributed reposts, marketing pages presented as neutral history, pages that merely repeat the claim, and sources whose geographic scope does not match the topic. Keep a C source only when it adds a clearly bounded lived-experience example.
 
@@ -494,11 +500,14 @@ guides/事实与来源口径.md
 guides/写作口径.md
 guides/审校清单.md
 guides/写作模板.md
+guides/写作生产.md
+guides/短视频口播与分镜.md
+guides/场景细节索引.md
 guides/常用词库.md
 guides/任务示例.md
 ```
 
-Every cultural page follows the nine-section schema and cites raw source IDs. Guides may cite cultural pages instead of duplicating their facts.
+Every cultural page follows the eleven-section schema and cites raw source IDs. The production sections must separate sourced scene details from suggested narrative structure. Guides may cite cultural pages instead of duplicating their facts.
 
 - [ ] **Step 6: Migrate live 2026 cases into dated event pages**
 
@@ -584,7 +593,7 @@ git commit -m "feat: add safe personalized Teochew vaults"
 - Modify as needed: topic or guide pages
 - Temporary evidence only: `tmp/behavior-green/`
 
-- [ ] **Step 1: Run all six scenarios with fresh validation agents**
+- [ ] **Step 1: Run all seven scenarios with fresh validation agents**
 
 Do not show validators the expected answer or the baseline failures. Give only the installed updated skill and one scenario prompt.
 
@@ -598,7 +607,7 @@ Prefer improving routing, schema or one relevant page. Do not add broad duplicat
 
 - [ ] **Step 4: Re-run failed scenarios until green**
 
-Expected: 6/6 scenarios pass.
+Expected: 7/7 scenarios pass.
 
 - [ ] **Step 5: Commit behavioral corrections**
 
@@ -686,13 +695,14 @@ Use `assets/social-preview.png` as the opening image. Below it, use this exact s
 1. one-paragraph product definition.
 2. `为什么它不是普通资料合集`.
 3. `它如何持续成长` with ingest/query/research/evolve/lint.
-4. `知识如何保持全面和客观`.
-5. `个性化如何工作`.
-6. `快速安装`.
-7. `使用示例`.
-8. `知识结构`.
-9. `贡献资料与主题页`.
-10. `验证、版本与许可证`.
+4. `为写作和视频生产准备的知识`.
+5. `知识如何保持全面和客观`.
+6. `个性化如何工作`.
+7. `快速安装`.
+8. `使用示例`.
+9. `知识结构`.
+10. `贡献资料与主题页`.
+11. `验证、版本与许可证`.
 
 Do not repeat hero slogans or feature badges. Use real wiki filenames and current commands.
 
