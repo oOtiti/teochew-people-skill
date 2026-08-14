@@ -682,6 +682,8 @@ git commit -m "design: introduce epic TEOCHEW PEOPLE identity"
 - Rewrite: `CONTRIBUTING.md`
 - Rewrite: `skills/README.md`
 - Rewrite: `examples/before-after.md`
+- Create: `examples/showcase-article.md`
+- Create: `examples/showcase-video.md`
 - Modify: `docs/github-workflows.md`
 - Modify: `docs/publishing.md`
 - Modify: `skills/teochew-people-skill/agents/openai.yaml`
@@ -714,6 +716,13 @@ Require contributors to add or identify raw sources before changing a factual to
 
 Examples must include the 拜老爷/营老爷 distinction, a current-event verification example, and a local-personalization example. `agents/openai.yaml` must describe a source-grounded, evolving Teochew People wiki without claiming fully autonomous truth.
 
+Create two end-to-end showcase artifacts from the finished Wiki:
+
+- `examples/showcase-article.md`: a polished source-grounded cultural article that cites topic pages and raw source IDs, exposes locality limits, and demonstrates concrete people/actions/objects/sounds/spaces.
+- `examples/showcase-video.md`: a 60-second voiceover and shot list derived from the same evidence, clearly separating sourced scene details from creative transitions and production suggestions.
+
+README must show a useful excerpt of each and link to the full artifact, so GitHub and NPM visitors see real output rather than capability claims.
+
 - [ ] **Step 4: Set the next feature version**
 
 Set `package.json` and `package-lock.json` to `0.2.0`. Update the package description and keywords to include `llm-wiki`, `knowledge-base`, `潮汕文化`, `Teochew`, and `source-grounded`. Do not publish the version in this task.
@@ -729,11 +738,11 @@ git add README.md CONTRIBUTING.md skills/README.md examples docs package.json pa
 git commit -m "docs: relaunch Teochew People as an evolving LLM wiki"
 ```
 
-## Task 12: Run full verification and prepare the GitHub issue update
+## Task 12: Run full verification, update GitHub and publish NPM
 
 **Files:**
 - Modify only if verification finds defects
-- No release or merge without a separate user instruction
+- Authorized release target: GitHub default branch and `teochew-people-skill@0.2.0`
 
 - [ ] **Step 1: Run deterministic verification**
 
@@ -773,14 +782,35 @@ git diff --stat origin/main...HEAD
 
 Expected: clean working tree and intentional, reviewable commits.
 
-- [ ] **Step 6: Draft the exact Issue #1 update without posting yet**
+- [ ] **Step 6: Push the implementation branch and create a PR**
 
-The draft must state:
+Confirm GitHub authentication and the exact remote `oOtiti/teochew-people-skill`. Push `codex/llm-wiki-implementation`, create a reviewable PR against the default branch, and include the structural upgrade, source-quality gates, behavior results, visual/showcase assets and release verification in the description.
+
+- [ ] **Step 7: Wait for checks, merge, and revalidate the default branch**
+
+Do not merge while required checks are failing. After merge, update the local default branch and rerun `npm test`, `npm run pack:check` and `git diff --check` from the merged commit.
+
+- [ ] **Step 8: Publish and verify NPM 0.2.0**
+
+Run `npm whoami`, verify `npm view teochew-people-skill version` is still below `0.2.0`, and publish with public access. Then verify:
+
+```powershell
+npm view teochew-people-skill@0.2.0 version
+npm view teochew-people-skill@0.2.0 dist.tarball
+npm pack teochew-people-skill@0.2.0 --dry-run
+```
+
+Expected: registry returns `0.2.0`, a public tarball URL, and the intended raw/wiki/operations/scripts/docs/visual/showcase files without private vault data.
+
+- [ ] **Step 9: Post and close the exact Issue #1 update**
+
+Post to `oOtiti/teochew-people-skill#1`. The update must state:
 
 - where `拜老爷.md`, `营老爷.md` and their raw sources live.
 - how the concepts are distinguished.
 - what validation was run.
 - which branch/commit contains the change.
 - that the wider repository was upgraded to a source-grounded LLM Wiki.
+- the merged commit/PR and NPM `0.2.0` release.
 
-Restate the exact target `oOtiti/teochew-people-skill#1` to the user before posting or closing it. Do not push, open a PR, merge, publish npm, comment on the issue or close it without the corresponding user authorization.
+Close the issue only after the merged GitHub files and public NPM package have both been verified.
