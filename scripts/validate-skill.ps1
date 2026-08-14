@@ -4,7 +4,6 @@ $root = Split-Path -Parent $PSScriptRoot
 $skillDir = Join-Path $root "skills/teochew-people-skill"
 $skillFile = Join-Path $skillDir "SKILL.md"
 $agentFile = Join-Path $skillDir "agents/openai.yaml"
-$referencesDir = Join-Path $skillDir "references"
 $packageFile = Join-Path $root "package.json"
 $installScript = Join-Path $root "scripts/install-skill.mjs"
 $readmeFile = Join-Path $root "README.md"
@@ -12,18 +11,38 @@ $licenseFile = Join-Path $root "LICENSE"
 $contributingFile = Join-Path $root "CONTRIBUTING.md"
 $exampleFile = Join-Path $root "examples/before-after.md"
 $caseDemoFile = Join-Path $root "assets/case-demo.svg"
-$requiredReferenceFiles = @(
-    "00-使用索引.md",
-    "01-范围与称谓.md",
-    "02-风俗礼仪.md",
-    "03-节庆岁时.md",
-    "04-饮食与工夫茶.md",
-    "05-语言戏曲英歌工艺.md",
-    "06-侨乡与社会组织.md",
-    "07-写作模板与审校清单.md",
-    "08-常用词库.md",
-    "09-任务示例.md",
-    "90-资料来源.md"
+$requiredSkillFiles = @(
+    "wiki-purpose.md",
+    "wiki-schema.md",
+    "wiki-log.md",
+    "agents/openai.yaml",
+    "operations/ingest.md",
+    "operations/query.md",
+    "operations/research.md",
+    "operations/evolve.md",
+    "operations/lint.md",
+    "raw/index.md",
+    "raw/source-review.md",
+    "wiki/index.md",
+    "scripts/wiki-lib.mjs",
+    "scripts/build-index.mjs",
+    "scripts/lint-wiki.mjs",
+    "scripts/wiki-status.mjs",
+    "scripts/init-vault.mjs",
+    "assets/vault-template/profile.md",
+    "assets/vault-template/wiki/index.md",
+    "assets/vault-template/raw/index.md"
+)
+$requiredWikiCategories = @(
+    "concepts",
+    "places",
+    "customs",
+    "food",
+    "arts-language",
+    "society-diaspora",
+    "people-organizations",
+    "current-events",
+    "guides"
 )
 
 function Fail($message) {
@@ -55,9 +74,18 @@ foreach ($term in @("Teochew People", "潮汕人", "是什么", "什么时候使
     }
 }
 
-foreach ($path in @($agentFile, $referencesDir)) {
-    if (-not (Test-Path -LiteralPath $path)) {
-        Fail "缺少必要文件: $($path.Substring($root.Length + 1))"
+foreach ($file in $requiredSkillFiles) {
+    $path = Join-Path $skillDir $file
+    if (-not (Test-Path -LiteralPath $path -PathType Leaf)) {
+        Fail "缺少必要文件: skills/teochew-people-skill/$file"
+    }
+}
+
+foreach ($category in $requiredWikiCategories) {
+    $categoryDir = Join-Path $skillDir "wiki/$category"
+    $markdown = @(Get-ChildItem -LiteralPath $categoryDir -Filter "*.md" -File -Recurse -ErrorAction SilentlyContinue)
+    if ($markdown.Count -eq 0) {
+        Fail "wiki 分类 '$category' 至少需要一个 Markdown 文件"
     }
 }
 
@@ -67,31 +95,37 @@ foreach ($path in @($packageFile, $installScript, $readmeFile, $licenseFile, $co
     }
 }
 
-foreach ($file in $requiredReferenceFiles) {
-    $path = Join-Path $referencesDir $file
-    if (-not (Test-Path -LiteralPath $path)) {
-        Fail "缺少参考资料: skills/teochew-people-skill/references/$file"
-    }
-}
-
 $agent = Get-Content -LiteralPath $agentFile -Raw
 if ($agent -notmatch '\$teochew-people-skill') {
     Fail "agents/openai.yaml 的 default_prompt 必须包含 `$teochew-people-skill"
 }
 
-$reference = foreach ($file in $requiredReferenceFiles) {
-    Get-Content -LiteralPath (Join-Path $referencesDir $file) -Raw
-}
-$referenceText = $reference -join "`n"
+$bundledText = Get-ChildItem -LiteralPath $skillDir -File -Recurse |
+    Where-Object { $_.Extension -in @(".md", ".yaml", ".yml", ".mjs") } |
+    ForEach-Object { Get-Content -LiteralPath $_.FullName -Raw } |
+    Join-String -Separator "`n"
 
-foreach ($term in @("Teochew people", "Teochew People", "粤东", "汕头", "揭阳", "潮州", "工夫茶", "潮剧", "英歌", "出花园", "七样羹", "营老爷", "侨批", "善堂", "常用词库", "任务示例", "资料来源")) {
-    if ($referenceText -notmatch [regex]::Escape($term)) {
-        Fail "参考资料应包含 '$term'"
+foreach ($term in @("raw", "wiki", "research", "evolve", "local vault", "拜老爷", "营老爷", "TEOCHEW PEOPLE", "ingest", "query", "lint")) {
+    if ($bundledText -notmatch [regex]::Escape($term)) {
+        Fail "技能内容应包含 '$term'"
     }
 }
 
-if ($referenceText -match '\[TODO|TODO:') {
-    Fail "参考资料仍包含 TODO 文本"
+$sourceAdmissionContract = @(
+    @{ Label = "Wikipedia/维基百科"; Pattern = '(?i)(Wikipedia|维基百科)' },
+    @{ Label = "Baidu/百度百科"; Pattern = '(?i)(Baidu|百度百科)' },
+    @{ Label = "候选/线索"; Pattern = '(?i)(候选|线索|candidate|research\s+lead|search\s+lead)' },
+    @{ Label = "不得自动作为核心证据"; Pattern = '(?is)(不得|不能|不可|cannot|must\s+not).{0,80}(自动|automatically).{0,80}(核心证据|core\s+evidence|A\s*[/／]\s*B)' }
+)
+
+foreach ($requirement in $sourceAdmissionContract) {
+    if ($bundledText -notmatch $requirement.Pattern) {
+        Fail "技能内容缺少来源准入规则: $($requirement.Label)"
+    }
+}
+
+if ($bundledText -match '\[TODO|TODO:') {
+    Fail "技能内容仍包含 TODO 文本"
 }
 
 $package = Get-Content -LiteralPath $packageFile -Raw | ConvertFrom-Json

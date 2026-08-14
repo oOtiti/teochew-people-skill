@@ -33,8 +33,14 @@
   "scripts": {
     "install:codex": "node scripts/install-skill.mjs --codex --force",
     "install:claude": "node scripts/install-skill.mjs --claude --force",
+    "wiki:index": "node skills/teochew-people-skill/scripts/build-index.mjs",
+    "wiki:index:check": "node skills/teochew-people-skill/scripts/build-index.mjs --check",
+    "wiki:lint": "node skills/teochew-people-skill/scripts/lint-wiki.mjs",
+    "wiki:status": "node skills/teochew-people-skill/scripts/wiki-status.mjs",
+    "test:scenarios": "node scripts/validate-scenarios.mjs",
+    "test:unit": "node --test tests/*.test.mjs",
     "validate": "pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/validate-skill.ps1",
-    "test": "npm run validate",
+    "test": "npm run test:scenarios && npm run test:unit && npm run wiki:index:check && npm run wiki:lint && npm run validate",
     "pack:check": "npm pack --dry-run"
   },
   "keywords": [
