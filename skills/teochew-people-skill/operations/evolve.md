@@ -20,6 +20,18 @@
 
 三层严格分离。未经用户同意不得创建或写入 local vault；项目层不得写回用户层；私人覆盖不得进入公共包。公共编译、索引和日志更新必须串行。
 
+## 层级解析与安装
+
+读取顺序固定为 `<project>/.teochew-people` → `~/.teochew-people` → bundled public wiki。项目层和用户层可补充写作偏好、家庭讲法与授权的本地材料，但不能将其伪装成公共事实，也不能静默覆盖已有来源的结论。
+
+- 默认安装只替换公共 skill，不会创建 vault：`node scripts/install-skill.mjs --dest <skills-dir>`。
+- 用户明确同意后，使用 `--init-vault` 初始化 `~/.teochew-people`；使用 `--vault <dir>` 可选择其他绝对或相对目录。
+- 用户明确同意后，使用 `--init-project <project-dir>` 初始化项目内的 `.teochew-people`。其内 `.gitignore` 默认忽略全部个性化内容；如要纳入版本控制，先审查私密性，再改成明确 allow 规则或对选定文件使用 `git add -f`。
+- `--force` 只重装公共 skill。安装器初始化 vault 时始终保留已修改的 `profile.md`、本地 raw 与本地 wiki；它不会把私有目录删除后重建。
+- 自动化或发布环境可显式使用 `--no-vault`，保证仅处理公共 skill。
+
+所有目标在写入前必须解析为明确路径。如果目标与公共 skill 重叠，或者任一已存在的路径组件是 symbolic link、junction 或 reparse point，停止写入并报错。
+
 ## 失败处理
 
 无法判断归属层时不写入并请求确认。证据未达门槛时回到 research。并发候选更新发生冲突时停止公共写入，由单一写入者合并。

@@ -1,7 +1,10 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { execFile } from "node:child_process";
 import os from "node:os";
 import path from "node:path";
+import { promisify } from "node:util";
+import { fileURLToPath } from "node:url";
 import { mkdtemp, mkdir, readFile, rm, symlink, writeFile } from "node:fs/promises";
 
 import {
@@ -13,6 +16,16 @@ import {
 } from "../skills/teochew-people-skill/scripts/wiki-lib.mjs";
 
 const temporaryRoots = [];
+const execFileAsync = promisify(execFile);
+const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const installerScript = path.join(repositoryRoot, "scripts", "install-skill.mjs");
+const vaultInitializerScript = path.join(
+  repositoryRoot,
+  "skills",
+  "teochew-people-skill",
+  "scripts",
+  "init-vault.mjs",
+);
 
 test.afterEach(async () => {
   await Promise.all(temporaryRoots.splice(0).map((root) => rm(root, { recursive: true, force: true })));
@@ -29,6 +42,32 @@ async function put(root, relativePath, content) {
   await mkdir(path.dirname(file), { recursive: true });
   await writeFile(file, content, "utf8");
   return file;
+}
+
+async function exists(candidate) {
+  try {
+    await readFile(candidate);
+    return true;
+  } catch (error) {
+    if (error.code === "ENOENT") return false;
+    throw error;
+  }
+}
+
+function runInstaller(args, options = {}) {
+  return execFileAsync(process.execPath, [installerScript, ...args], {
+    cwd: options.cwd || repositoryRoot,
+    encoding: "utf8",
+    windowsHide: true,
+  });
+}
+
+function runVaultInitializer(args, options = {}) {
+  return execFileAsync(process.execPath, [vaultInitializerScript, ...args], {
+    cwd: options.cwd || repositoryRoot,
+    encoding: "utf8",
+    windowsHide: true,
+  });
 }
 
 function sourcePage({ id, title, tier = "A", url = "https://example.test/source" }) {
@@ -246,6 +285,125 @@ test("initVault rejects overlapping roots and source or destination link escapes
     if (error.code !== "EPERM") throw error;
     t.diagnostic("ordinary file symlinks require extra privileges; directory-junction rejection was verified");
   }
+});
+
+test("installer resolves an explicit global vault independently from the skill destination", async () => {
+  const root = await temporaryRoot();
+  const skillParent = path.join(root, "skills");
+  const vault = path.join(root, "private", "vault");
+
+  const { stdout } = await runInstaller([
+    "--dest",
+    skillParent,
+    "--init-vault",
+    "--vault",
+    vault,
+  ]);
+
+  assert.equal(await exists(path.join(skillParent, "teochew-people-skill", "SKILL.md")), true);
+  assert.equal(await exists(path.join(vault, "profile.md")), true);
+  assert.match(stdout, new RegExp(vault.replaceAll("\\", "\\\\")));
+});
+
+test("installer initializes a private project overlay with opt-in versioning guidance", async () => {
+  const root = await temporaryRoot();
+  const skillParent = path.join(root, "skills");
+  const projectRoot = path.join(root, "project");
+  const overlay = path.join(projectRoot, ".teochew-people");
+
+  await runInstaller(["--dest", skillParent, "--init-project", projectRoot]);
+
+  assert.equal(await exists(path.join(overlay, "profile.md")), true);
+  assert.equal(await exists(path.join(overlay, "wiki", "index.md")), true);
+  const ignore = await readFile(path.join(overlay, ".gitignore"), "utf8");
+  assert.match(ignore, /^\*$/m);
+  assert.match(ignore, /version control|git add -f|intentionally/i);
+});
+
+test("init-vault CLI resolves --project to the project's private overlay", async () => {
+  const root = await temporaryRoot();
+  const projectRoot = path.join(root, "project");
+  const overlay = path.join(projectRoot, ".teochew-people");
+
+  const { stdout } = await runVaultInitializer(["--project", projectRoot]);
+
+  assert.equal(await exists(path.join(overlay, "profile.md")), true);
+  assert.equal(await exists(path.join(overlay, ".gitignore")), true);
+  assert.match(stdout, new RegExp(overlay.replaceAll("\\", "\\\\")));
+});
+
+test("forced skill reinstall preserves modified global profile and local wiki", async () => {
+  const root = await temporaryRoot();
+  const skillParent = path.join(root, "skills");
+  const installedSkill = path.join(skillParent, "teochew-people-skill");
+  const vault = path.join(root, "vault");
+  const installArgs = ["--dest", skillParent, "--init-vault", "--vault", vault];
+
+  await runInstaller(installArgs);
+  await writeFile(path.join(vault, "profile.md"), "home_region: 潮州\n", "utf8");
+  await writeFile(path.join(vault, "wiki", "index.md"), "# 我的本地知识\n", "utf8");
+  await writeFile(path.join(installedSkill, "SKILL.md"), "damaged public install\n", "utf8");
+
+  await runInstaller([...installArgs, "--force"]);
+
+  assert.equal(await readFile(path.join(vault, "profile.md"), "utf8"), "home_region: 潮州\n");
+  assert.equal(await readFile(path.join(vault, "wiki", "index.md"), "utf8"), "# 我的本地知识\n");
+  assert.notEqual(await readFile(path.join(installedSkill, "SKILL.md"), "utf8"), "damaged public install\n");
+});
+
+test("project initialization refuses a junction that escapes the resolved overlay target", async () => {
+  const root = await temporaryRoot();
+  const skillParent = path.join(root, "skills");
+  const projectRoot = path.join(root, "project");
+  const external = path.join(root, "external");
+  await mkdir(projectRoot, { recursive: true });
+  await mkdir(external, { recursive: true });
+  await symlink(external, path.join(projectRoot, ".teochew-people"), process.platform === "win32" ? "junction" : "dir");
+
+  await assert.rejects(
+    runInstaller(["--dest", skillParent, "--init-project", projectRoot]),
+    (error) => /symbolic|junction|reparse|unsafe/i.test(error.stderr || error.message),
+  );
+  assert.equal(await exists(path.join(external, "profile.md")), false);
+});
+
+test("installer dry-run prints every resolved target without creating directories", async () => {
+  const root = await temporaryRoot();
+  const skillParent = path.join(root, "dry", "skills");
+  const vault = path.join(root, "dry", "vault");
+  const projectRoot = path.join(root, "dry", "project");
+
+  const { stdout } = await runInstaller([
+    "--dest",
+    skillParent,
+    "--init-vault",
+    "--vault",
+    vault,
+    "--init-project",
+    projectRoot,
+    "--dry-run",
+  ]);
+
+  assert.match(stdout, new RegExp(skillParent.replaceAll("\\", "\\\\")));
+  assert.match(stdout, new RegExp(vault.replaceAll("\\", "\\\\")));
+  assert.match(stdout, new RegExp(path.join(projectRoot, ".teochew-people").replaceAll("\\", "\\\\")));
+  assert.equal(await exists(path.join(skillParent, "teochew-people-skill", "SKILL.md")), false);
+  assert.equal(await exists(path.join(vault, "profile.md")), false);
+  assert.equal(await exists(path.join(projectRoot, ".teochew-people", "profile.md")), false);
+});
+
+test("installer remains skill-only by default and honors --no-vault", async () => {
+  const root = await temporaryRoot();
+  const defaultSkillParent = path.join(root, "default-skills");
+  const explicitSkillParent = path.join(root, "explicit-skills");
+  const vault = path.join(root, "vault");
+
+  await runInstaller(["--dest", defaultSkillParent]);
+  await runInstaller(["--dest", explicitSkillParent, "--vault", vault, "--no-vault"]);
+
+  assert.equal(await exists(path.join(defaultSkillParent, "teochew-people-skill", "SKILL.md")), true);
+  assert.equal(await exists(path.join(explicitSkillParent, "teochew-people-skill", "SKILL.md")), true);
+  assert.equal(await exists(path.join(vault, "profile.md")), false);
 });
 
 test("wikiStatus returns source, page, category, stale, and orphan counts", async () => {

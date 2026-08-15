@@ -11,6 +11,12 @@ import {
 } from "node:fs/promises";
 
 const GENERATED_MARKER = "<!-- GENERATED: teochew-wiki; DO NOT EDIT -->";
+const PROJECT_OVERLAY_IGNORE = `# Teochew People project overlays are private by default.
+# To intentionally include selected files in version control, replace the wildcard
+# with explicit allow rules or use \`git add -f <path>\` after reviewing the content.
+*
+!.gitignore
+`;
 const SOURCE_TIERS = new Set(["A", "B", "C"]);
 const EVIDENCE_STATES = new Set(["verified", "synthesis", "varies", "unknown"]);
 const FRESHNESS_VALUES = new Set(["enduring", "current", "event"]);
@@ -406,7 +412,7 @@ export async function lintWiki(skillRoot, options = {}) {
   return { ok: issues.length === 0, issues };
 }
 
-export async function initVault({ target, templateRoot, force = false }) {
+export async function initVault({ target, templateRoot, force = false, projectOverlay = false }) {
   if (typeof target !== "string" || target.trim() === "") throw new TypeError("Vault target must be a non-empty path");
   if (typeof templateRoot !== "string" || templateRoot.trim() === "") throw new TypeError("Template root must be a non-empty path");
   const sourceRoot = path.resolve(templateRoot);
@@ -520,6 +526,22 @@ export async function initVault({ target, templateRoot, force = false }) {
     }
     await assertSourceUnchanged(entry);
     await assertDestinationSafe(destination);
+  }
+
+  if (projectOverlay) {
+    const ignoreFile = path.join(destinationRoot, ".gitignore");
+    await assertDestinationSafe(ignoreFile);
+    try {
+      await writeFile(ignoreFile, PROJECT_OVERLAY_IGNORE, {
+        encoding: "utf8",
+        flag: force ? "w" : "wx",
+      });
+      created += 1;
+    } catch (error) {
+      if (!force && error.code === "EEXIST") skipped += 1;
+      else throw error;
+    }
+    await assertDestinationSafe(ignoreFile);
   }
   return { target: destinationRoot, created, skipped };
 }
