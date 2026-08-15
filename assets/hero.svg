@@ -28,6 +28,6 @@
   <rect width="1600" height="900" fill="url(#focus)"/>
   <text x="800" y="424" text-anchor="middle" dominant-baseline="middle" aria-label="TEOCHEW PEOPLE"
         fill="#F4F0E6" filter="url(#title-shadow)"
-        font-family="Arial, Helvetica, sans-serif" font-size="112" font-weight="700"
+        font-family="'Bebas Neue', 'DIN Condensed', Impact, 'Arial Narrow', sans-serif" font-size="112" font-weight="700"
         letter-spacing="16"><tspan x="800" y="424">TEOCHEW</tspan><tspan x="800" y="552">PEOPLE</tspan></text>
 </svg>

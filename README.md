@@ -16,7 +16,7 @@
 
 ## npm 包
 
-这个项目已经发布到 npm：[teochew-people-skill](https://www.npmjs.com/package/teochew-people-skill)。
+这个项目可通过 npm 安装：[teochew-people-skill](https://www.npmjs.com/package/teochew-people-skill)。
 
 ```bash
 npx teochew-people-skill --codex
@@ -160,7 +160,7 @@ npx teochew-people-skill --codex --force
 
 本仓库已经准备好 GitHub Actions：
 
-- `CI`：每次推送到 `main`、打开 Pull Request 或手动运行时，会在 Node.js 22 和 24 上执行 skill 校验与 npm 打包预检查。
+- `CI`：每次推送到 `main`、打开 Pull Request 或手动运行时，会在 Node.js 22 和 24 上执行完整 `npm test` 与 npm 打包预检查。
 - `Publish npm package`：发布 GitHub Release 或手动运行时，会先校验再发布到 npmjs.com。它按 npm Trusted Publishing 方式设计，不需要把长期 npm token 放进 GitHub Secrets。
 
 更细的说明见 [GitHub Workflows 说明](docs/github-workflows.md)。
@@ -254,18 +254,25 @@ Teochew People (潮汕人) refers here to the wider Chaoshan cultural world: Sha
 │       ├── SKILL.md
 │       ├── agents/
 │       │   └── openai.yaml
-│       └── references/
-│           ├── 00-使用索引.md
-│           ├── 01-范围与称谓.md
-│           ├── 02-风俗礼仪.md
-│           ├── 03-节庆岁时.md
-│           ├── 04-饮食与工夫茶.md
-│           ├── 05-语言戏曲英歌工艺.md
-│           ├── 06-侨乡与社会组织.md
-│           ├── 07-写作模板与审校清单.md
-│           ├── 08-常用词库.md
-│           ├── 09-任务示例.md
-│           └── 90-资料来源.md
+│       ├── raw/
+│       │   ├── 2026-08-15/
+│       │   ├── index.md
+│       │   └── source-review.md
+│       ├── wiki/
+│       │   ├── index.md
+│       │   ├── concepts/
+│       │   ├── customs/
+│       │   ├── current-events/
+│       │   └── guides/
+│       ├── operations/
+│       │   ├── ingest.md
+│       │   ├── query.md
+│       │   ├── research.md
+│       │   ├── evolve.md
+│       │   └── lint.md
+│       ├── wiki-purpose.md
+│       ├── wiki-schema.md
+│       └── wiki-log.md
 ├── scripts/
 │   ├── install-skill.mjs
 │   └── validate-skill.ps1
@@ -276,7 +283,8 @@ Teochew People (潮汕人) refers here to the wider Chaoshan cultural world: Sha
 ## 设计原则
 
 - `SKILL.md` 保持轻量，只放触发说明、使用边界、流程和资料导航。
-- 详细文化资料放进 `references/`，按主题拆分，让 agent 按需读取。
+- `raw/` 先保存来源卡片、分级、限制和 reject/defer 记录，再进入 `wiki/` 做主题页编排。
+- `wiki/` 不说“编译完成”，而是把主题页、分类索引、生产指南和实时页组织好，方便 agent 定位。
 - 事实性内容尽量附来源；涉及最新认定、活动时间、官方称号时需要实时核对。
 - 不把某个地方、家庭或村社的习惯写成整个潮汕通用。
 - 不为真实感编造潮汕话读音、祖训、禁忌或古法。

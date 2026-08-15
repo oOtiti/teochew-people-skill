@@ -4,10 +4,10 @@
 
 ## 当前发布状态
 
-包已经发布到 npmjs.com：
+公开安装入口：
 
 - Package: [`teochew-people-skill`](https://www.npmjs.com/package/teochew-people-skill)
-- Current version: `0.1.1`
+- Current version: 以 `npm view teochew-people-skill version` 或 npm 页面为准
 - GitHub repository: [`oOtiti/teochew-people-skill`](https://github.com/oOtiti/teochew-people-skill)
 
 ## 第一次发布
@@ -66,16 +66,16 @@ npm 的同一个版本号只能发布一次。每次要更新公开包，都要�
 - 增加新能力、补充新的参考资料结构：`npm version minor`
 - 做不兼容的大调整：`npm version major`
 
-例如从 `0.1.0` 更新到 `0.1.1`：
+例如从 `0.1.1` 升级到 `0.2.0`：
 
 ```bash
-npm version patch
+npm version minor
 git push origin main --follow-tags
 ```
 
 然后在 GitHub 页面创建一个 Release，选择刚刚推送的 tag。Release 发布后，`Publish npm package` workflow 会自动运行。
 
-Release tag 要和 `package.json` 版本一致。比如版本是 `0.1.1`，tag 应为 `v0.1.1` 或 `0.1.1`；不一致时 workflow 会停止，避免发错版本。
+Release tag 要和 `package.json` 版本一致。比如版本是 `0.2.0`，tag 应为 `v0.2.0` 或 `0.2.0`；不一致时 workflow 会停止，避免发错版本。
 
 如果这个版本已经在 npm 上发布过，workflow 会自动跳过 `npm publish`，只保留一次成功的 Release 检查记录。这样可以安全补建 GitHub Release，不会因为 npm 禁止重复发布同一版本而把 Actions 跑红。
 
