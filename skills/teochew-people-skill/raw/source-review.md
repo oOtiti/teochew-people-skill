@@ -155,3 +155,17 @@
 
 - 本条是针对事件页把报道发布日期误作活动日的必要补证；在同等可信材料中优先保留可支持人物、动作、器物、声音、空间与明确日期的 canonical，但不以制作价值放宽外推边界。
 - 追加后当前有效统计：A 32、B 12、C 0，共44条准入来源；本节不改写前述历史统计。
+
+## 2026-08-15 — 潮州古城申遗来源可回放性修订
+
+`supersedes: chaozhou-work-priorities-2025 的“当前可访问并可证明推进状态”描述`；来源的原发布者与历史 A 属性不变，但 current replayability 改为 `unavailable`，只允许作为 2025 年历史快照，不再支持当前国内申报阶段。
+
+| 候选 URL | 决定 | 现场结果与理由 |
+| --- | --- | --- |
+| `https://www.chaozhou.gov.cn/czwgltj/gkmlpt/content/3/3949/post_3949124.html` | Retain A as historical snapshot；current status unknown | 2026-08-15 直接请求返回404；搜索索引仍保存精确题名、发布机构、2025-05-31元数据及“加快潮州古城申报世界文化遗产，深化价值研究与策略制定”片段，但没有可实时回放的官方 canonical／同文 PDF。raw 增加 `source_status: unavailable`，不得再称同日打开 |
+| `https://www.zckb001.com/policyDtl/A69D57296AA040818D4B784123540029.html` | Reject as replacement | 商业政策镜像，无原发布者编辑责任，且标注2025-05-18，与官方索引元数据2025-05-31冲突；不以镜像恢复 A 级可回放性 |
+| `https://www.chaozhou.gov.cn/ywdt/czyw/content/post_3939976.html` / `chaozhou-urban-quality-plan-2025` | Admit B as separate source；not a replacement | 潮州市政府页可实时打开，2025-03-20由《潮州日报》记者报道另一份《城乡品质提升年》实施方案，直接写明当时“积极推进”；因是编辑报道而非方案全文评 B。它不替换旧 raw，不与同一地方政策生态伪装成完全独立程序证明，只交叉恢复2025年当时状态的可回放性 |
+| `https://www.chaozhou.gov.cn/attachment/0/554/554423/3940230.pdf` | Reject as same-source replacement | 可检索的2024年国民经济和社会发展计划 PDF 含“加快申报”相近表述，但年份、文件和编辑目的均不同，只能作更早政策线索，不能证明2025工作要点仍在线或2026国内阶段 |
+
+- UNESCO 中国缔约国页于2026-08-15重新打开，当前列出61项已列遗产，全文检索无 `Chaozhou`／`潮州`；这只支持“尚未列入名录”，不能支持地方推进、国内预备程序、提交或拒绝状态。
+- 当前准入统计为 A 32、B 13、C 0，共45条；A 代表旧工作要点的历史官方来源身份，不代表链接当前可回放。事件页以新 B 证明2025年3月当时状态，因2026国内后续阶段仍无来源而维持 `evidence_state: unknown`。

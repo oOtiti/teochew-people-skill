@@ -21,6 +21,7 @@
 | 国家档案局：汕头侨批档案保护与数字化 | A | 国家档案局 | [china-archives-qiaopi-2020](./2026-08-15/china-archives-qiaopi-2020.md) |
 | 实现潮州礼俗“双创”的现实条件与路径初探 | A | 《广东省社会主义学院学报》 | [gdssy-chaozhou-rituals-2024](./2026-08-15/gdssy-chaozhou-rituals-2024.md) |
 | 广东省人民政府关于印发《广州都市圈发展规划》《深圳都市圈发展规划》《珠江口西岸都市圈发展规划》《汕潮揭都市圈发展规划》《湛茂都市圈发展规划》的通知 | A | 广东省人民政府 | [gd-chaoshan-metropolitan-plan-2023](./2026-08-15/gd-chaoshan-metropolitan-plan-2023.md) |
+| 打造高颜值风貌、高质量管理、高品质生活城乡空间 《潮州市“城乡品质提升年”实施方案》印发 | B | 潮州日报（潮州市人民政府门户网站承载） | [chaozhou-urban-quality-plan-2025](./2026-08-15/chaozhou-urban-quality-plan-2025.md) |
 | 揭阳 \| 棉湖镇：从千年古镇到活力新城 | B | 广东省人民政府地方志办公室 | [gd-dfz-mianhu-2025](./2026-08-15/gd-dfz-mianhu-2025.md) |
 | 揭阳市全域旅游发展规划：地方节庆与空间清单 | A | 揭阳市人民政府 | [jieyang-tourism-plan-2018-2035](./2026-08-15/jieyang-tourism-plan-2018-2035.md) |
 | 正统性、地方化与文化的创制——潮州民间神信仰的象征与历史意义 | A | 《史学月刊》／华东师范大学历史人类学研究中心 | [chen-chunsheng-double-loyalty-2001](./2026-08-15/chen-chunsheng-double-loyalty-2001.md) |
