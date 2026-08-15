@@ -37,6 +37,8 @@
 
 这些文件在用户 review 后进入第二期，保证 Skill 的 GREEN 修改、公共事实、演示文稿和视觉资产都基于已确认的研究输入。
 
+第二期必须同时落实用户已批准的界面补充：保留现有 `TEOCHEW PEOPLE` 英雄图，在其下增加一张以英歌舞表演者为鲜明主体的横向史诗展示图。它使用 `editorial_original` 权利状态，不能仿制具体摄影、电影画面、真实人物或队伍标识；服装、脸谱、木槌和动作先由准入来源限定，并验证 16:9、4:5 与 1:1 裁切。
+
 ## Task 1: Capture the current Skill’s RED behavior
 
 **Files:**
@@ -597,6 +599,7 @@ docs/superpowers/evidence/2026-08-15-letter-to-grandma-skill-baseline.md
 docs/superpowers/plans/2026-08-15-letter-to-grandma-research-review.md
 docs/superpowers/research/2026-08-15-letter-to-grandma-source-dossier.md
 docs/superpowers/research/2026-08-15-letter-to-grandma-review-draft.md
+docs/superpowers/specs/2026-08-15-letter-to-grandma-multimedia-wiki-design.md
 scripts/validate-scenarios.mjs
 skills/teochew-people-skill/scripts/wiki-lib.mjs
 skills/teochew-people-skill/wiki-schema.md
