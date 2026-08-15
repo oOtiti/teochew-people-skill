@@ -97,4 +97,3 @@ Run `npm test`, `npm run wiki:status`, local-link audit, badge endpoint audit, `
 - [ ] **Step 5: Commit, push, and open a Draft PR**
 
 Commit the showcase as one intentional feature commit, push `codex/letter-to-grandma-wiki`, and open a Draft PR to `main` describing the multimedia Wiki, four-language home, rights boundaries, browser showcase, and verification evidence.
-
