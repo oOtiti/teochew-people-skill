@@ -64,6 +64,8 @@ TEOCHEW PEOPLE 是一个面向 AI agent 的潮汕文化 LLM Wiki：以可追溯�
 
 ## 快速安装
 
+发布状态以 `npm view teochew-people-skill version` 为准；当 registry 返回 `0.2.0` 时，下列 npm 命令才对应本页介绍的 LLM Wiki 版本。如 registry 仍是旧版，请先使用本节末尾的 GitHub 源安装命令。
+
 Codex：
 
 ```bash
