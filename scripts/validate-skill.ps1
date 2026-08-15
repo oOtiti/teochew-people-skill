@@ -7,6 +7,9 @@ $agentFile = Join-Path $skillDir "agents/openai.yaml"
 $packageFile = Join-Path $root "package.json"
 $installScript = Join-Path $root "scripts/install-skill.mjs"
 $readmeFile = Join-Path $root "README.md"
+$readmeTraditionalFile = Join-Path $root "README.zh-Hant.md"
+$readmeEnglishFile = Join-Path $root "README.en.md"
+$readmeJapaneseFile = Join-Path $root "README.ja.md"
 $licenseFile = Join-Path $root "LICENSE"
 $contributingFile = Join-Path $root "CONTRIBUTING.md"
 $exampleFile = Join-Path $root "examples/before-after.md"
@@ -105,6 +108,9 @@ foreach ($path in @(
     $packageFile,
     $installScript,
     $readmeFile,
+    $readmeTraditionalFile,
+    $readmeEnglishFile,
+    $readmeJapaneseFile,
     $licenseFile,
     $contributingFile,
     $exampleFile,
@@ -207,6 +213,9 @@ $requiredPackageFiles = @(
     "docs/github-workflows.md",
     "docs/publishing.md",
     "README.md",
+    "README.zh-Hant.md",
+    "README.en.md",
+    "README.ja.md",
     "CONTRIBUTING.md",
     "LICENSE"
 )
@@ -266,7 +275,20 @@ foreach ($term in @(
     "(examples/letter-to-grandma-feature.md)",
     "(examples/letter-to-grandma-video-scripts.md)",
     "(examples/video-to-wiki-demo.md)",
-    "(skills/teochew-people-skill/operations/media-ingest.md)"
+    "(skills/teochew-people-skill/operations/media-ingest.md)",
+    "README.zh-Hant.md",
+    "README.en.md",
+    "README.ja.md",
+    "actions/workflows/ci.yml/badge.svg",
+    "img.shields.io/npm/v/teochew-people-skill",
+    "Node.js-%3E%3D18",
+    "License-MIT",
+    "Wiki-55_sources",
+    "Topics-50",
+    "Languages-4",
+    "自进化",
+    "个性化",
+    "越用越好用"
 )) {
     if ($readme -notmatch [regex]::Escape($term)) {
         Fail "README 应包含 '$term'"
@@ -295,8 +317,23 @@ for ($i = 0; $i -lt $expectedReadmeSections.Count; $i++) {
     }
 }
 
-if ($readme -notmatch '(?s)^!\[TEOCHEW PEOPLE\]\(assets/social-preview\.png\)\r?\n\r?\n[^\r\n]+\r?\n\r?\n## 为什么它不是普通资料合集') {
-    Fail "README 顶部必须只有 social preview hero，随后是一段产品定义和规定章节"
+if ($readme -notmatch '(?s)^!\[TEOCHEW PEOPLE\]\(assets/social-preview\.png\)\r?\n\r?\n[^\r\n]+\r?\n\r?\n<p align="center">.+?</p>\r?\n\r?\n<p align="center">.+?</p>\r?\n\r?\n## 为什么它不是普通资料合集') {
+    Fail "README 顶部必须依次包含 social preview、一段产品定义、徽章、语言切换和规定章节"
+}
+
+$localizedReadmes = @(
+    @{ Path = $readmeTraditionalFile; Label = "繁體中文"; Terms = @("自我演進", "個人化", "寫作與影片製作") },
+    @{ Path = $readmeEnglishFile; Label = "English"; Terms = @("evolving", "personalized", "writing and video production") },
+    @{ Path = $readmeJapaneseFile; Label = "日本語"; Terms = @("進化", "パーソナライズ", "文章と動画制作") }
+)
+
+foreach ($localized in $localizedReadmes) {
+    $content = Get-Content -LiteralPath $localized.Path -Raw
+    foreach ($term in @("TEOCHEW PEOPLE", "README.md", "README.zh-Hant.md", "README.en.md", "README.ja.md", "assets/social-preview.png", "assets/yingge-epic.png", "assets/letter-to-grandma-hero.png", "npx teochew-people-skill --codex", "55", "50", "9") + $localized.Terms) {
+        if ($content -notmatch [regex]::Escape($term)) {
+            Fail "$($localized.Label) README 应包含 '$term'"
+        }
+    }
 }
 
 foreach ($forbidden in @("编译过", "编译内容", "Teochew People (潮汕人) Skill")) {

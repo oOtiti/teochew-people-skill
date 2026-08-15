@@ -39,6 +39,9 @@
     "docs/github-workflows.md",
     "docs/publishing.md",
     "README.md",
+    "README.zh-Hant.md",
+    "README.en.md",
+    "README.ja.md",
     "CONTRIBUTING.md",
     "LICENSE"
   ],

@@ -1,8 +1,33 @@
 ![TEOCHEW PEOPLE](assets/social-preview.png)
 
-TEOCHEW PEOPLE 是一个面向 AI agent 的潮汕文化 LLM Wiki：以 55 条可追溯 raw 来源、50 张主题页和 9 个分类索引为公共知识底座，按需检索并持续审计、研究和演进。它优先服务文章、口播与视频生产，让事实、地域和家庭差异，以及人物、动作、器物、声音、空间与顺序都能回到具体来源；它不把任何一次回答或本地经验包装成自动生成的真理。
+TEOCHEW PEOPLE 是一个自进化、个性化的潮汕文化 Skill 与 LLM Wiki：55 条可追溯 raw 来源、50 张主题页和 9 个分类索引构成公共知识底座；经审核的新资料让 Wiki 持续演进，经你明确同意的受众、家庭讲法和表达偏好让输出越来越贴合——越用越好用，但不会把一次回答或私人经验自动写成公共真理。
+
+<p align="center">
+  <a href="https://github.com/oOtiti/teochew-people-skill/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/oOtiti/teochew-people-skill/actions/workflows/ci.yml/badge.svg"></a>
+  <a href="https://www.npmjs.com/package/teochew-people-skill"><img alt="npm" src="https://img.shields.io/npm/v/teochew-people-skill?logo=npm&label=npm"></a>
+  <img alt="Node.js >=18" src="https://img.shields.io/badge/Node.js-%3E%3D18-339933?logo=nodedotjs&logoColor=white">
+  <a href="LICENSE"><img alt="License MIT" src="https://img.shields.io/badge/License-MIT-f0a000.svg"></a>
+  <img alt="Wiki 55 sources" src="https://img.shields.io/badge/Wiki-55_sources-136f63">
+  <img alt="Topics 50" src="https://img.shields.io/badge/Topics-50-8f2d1e">
+  <img alt="Languages 4" src="https://img.shields.io/badge/Languages-4-3949ab">
+</p>
+
+<p align="center">
+  <strong>简体中文</strong> · <a href="README.zh-Hant.md">繁體中文</a> · <a href="README.en.md">English</a> · <a href="README.ja.md">日本語</a>
+</p>
 
 ## 为什么它不是普通资料合集
+
+### WIKI 一览
+
+| 组成 | 它解决什么 | 如何越用越好用 |
+| --- | --- | --- |
+| **公共 Wiki** | 55 条 raw 来源与 50 张 topic 把事实、地点、年代、差异和未知组织成可检索知识 | 新来源先审身份与直接性，再进入 raw 和 topic；错误有日志、有版本、可回退 |
+| **自进化** | `research → ingest → evolve → lint` 把热点核验、来源准入和结构检查连成维护链 | 只沉淀经确认、可长期复用的变化；不是从每次对话自动学习，更不是自动掌握真相 |
+| **个性化** | 项目和用户 local vault 保存受众、选例、家庭讲法与表达偏好 | 只有明确同意才写入；本地层可以调整表达，但不能静默覆盖公共事实 |
+| **内容生产** | topic 同时准备文字、画面、声音、动作、器物、空间和时间码 | 一套证据链派生文章、口播、分镜和审校，输入越精细，输出越可拍、可改、可追溯 |
+
+查询从 [`wiki/index.md`](skills/teochew-people-skill/wiki/index.md) 开始；需要核对时沿 `source_ids` 回到 [`raw/index.md`](skills/teochew-people-skill/raw/index.md)。这是一套会成长的知识工作流，而不是把所有文件一次塞给模型。
 
 ![潮汕人风采：原创英歌舞史诗视觉，长袖彩衣的领舞者与队列在晨光古镇街巷中击打双短槌](assets/yingge-epic.png)
 
