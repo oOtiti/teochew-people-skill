@@ -105,24 +105,44 @@ export async function collectMarkdown(root) {
   const absoluteRoot = path.resolve(root);
   const files = [];
 
-  async function visit(directory) {
-    let entries;
-    try {
-      entries = await readdir(directory, { withFileTypes: true });
-    } catch (error) {
-      if (error.code === "ENOENT") return;
-      throw error;
-    }
-    entries.sort((a, b) => compareText(a.name, b.name));
-    for (const entry of entries) {
-      const candidate = path.join(directory, entry.name);
-      if (entry.isSymbolicLink()) continue;
-      if (entry.isDirectory()) await visit(candidate);
-      else if (entry.isFile() && path.extname(entry.name).toLowerCase() === ".md") files.push(candidate);
+  const rootStats = await lstatIfPresent(absoluteRoot);
+  if (!rootStats) return files;
+  await assertNoLinkedComponents(absoluteRoot, "Markdown corpus");
+  if (!rootStats.isDirectory() || rootStats.isSymbolicLink()) {
+    throw new Error(`Markdown corpus root must be a real directory: ${absoluteRoot}`);
+  }
+
+  async function assertDirectoryUnchanged(directory, expected) {
+    await assertNoLinkedComponents(directory, "Markdown corpus");
+    const current = await lstat(directory);
+    if (!current.isDirectory() || current.isSymbolicLink() || !sameIdentity(expected, current)) {
+      throw new Error(`Markdown corpus directory changed during traversal: ${directory}`);
     }
   }
 
-  await visit(absoluteRoot);
+  async function visit(directory, expectedDirectory) {
+    await assertDirectoryUnchanged(directory, expectedDirectory);
+    const entries = await readdir(directory, { withFileTypes: true });
+    await assertDirectoryUnchanged(directory, expectedDirectory);
+    entries.sort((a, b) => compareText(a.name, b.name));
+    for (const entry of entries) {
+      const candidate = path.join(directory, entry.name);
+      await assertNoLinkedComponents(candidate, "Markdown corpus");
+      const stats = await lstat(candidate);
+      if (stats.isSymbolicLink()) {
+        throw new Error(`Markdown corpus contains a symbolic link, junction, or reparse point: ${candidate}`);
+      }
+      if (stats.isDirectory()) await visit(candidate, stats);
+      else if (stats.isFile()) {
+        if (path.extname(entry.name).toLowerCase() === ".md") files.push(candidate);
+      } else {
+        throw new Error(`Markdown corpus contains an unsupported filesystem entry: ${candidate}`);
+      }
+    }
+    await assertDirectoryUnchanged(directory, expectedDirectory);
+  }
+
+  await visit(absoluteRoot, rootStats);
   return files;
 }
 
@@ -557,9 +577,14 @@ export async function wikiStatus(skillRoot, options = {}) {
     lint.issues.filter(({ code }) => code === "stale-current" || code === "stale-event").map(({ file }) => file),
   );
   let index = "";
+  const indexPath = path.join(root, "wiki", "index.md");
   try {
-    index = await readFile(path.join(root, "wiki", "index.md"), "utf8");
-  } catch {}
+    index = await readFile(indexPath, "utf8");
+  } catch (error) {
+    if (error.code !== "ENOENT") {
+      throw new Error(`wiki/index.md could not be read (${indexPath}): ${error.message}`, { cause: error });
+    }
+  }
   const orphans = pages.filter((page) => {
     const link = `./${relativePath(path.join(root, "wiki"), page.file)}`;
     return !index.includes(`](${link})`);

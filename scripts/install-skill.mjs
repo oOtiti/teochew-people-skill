@@ -277,6 +277,12 @@ async function main() {
   const projectOverlay = options.project
     ? path.join(path.resolve(options.project), ".teochew-people")
     : null;
+  const initializationLayers = [
+    globalVault ? "全局 vault" : null,
+    projectOverlay ? "项目 overlay" : null,
+  ].filter(Boolean);
+  const targetExists = Boolean(lstatIfPresent(target));
+  const initializeOnly = targetExists && !options.force && initializationLayers.length > 0;
 
   if (overlaps(source, target)) throw new Error("Skill source and installation target must not overlap");
   for (const [label, privateTarget] of [
@@ -292,28 +298,42 @@ async function main() {
   }
 
   if (options.dryRun) {
-    console.log(`将复制: ${source}`);
-    console.log(`到: ${target}`);
+    if (initializeOnly) {
+      console.log(`将保留现有 skill: ${target}；仅初始化${initializationLayers.join("和")}`);
+    } else {
+      console.log(`将复制: ${source}`);
+      console.log(`到: ${target}`);
+    }
     if (globalVault) console.log(`将初始化全局 vault: ${globalVault}（保留已有文件）`);
     if (projectOverlay) console.log(`将初始化项目 overlay: ${projectOverlay}（保留已有文件）`);
     return;
   }
 
-  const sourceSnapshot = captureRealSourceTree(source, "Skill source");
-  assertNoLinkedComponents(target, "Skill destination");
-  if (fs.existsSync(target)) {
-    if (!options.force) {
-      throw new Error(`目标已存在: ${target}\n如需覆盖，请加 --force。`);
-    }
+  if (initializeOnly) {
+    assertNoLinkedComponents(target, "Skill destination");
     assertNoLinkedTree(target, "Skill destination");
-    fs.rmSync(target, { recursive: true, force: true });
+    const existing = fs.lstatSync(target);
+    if (!existing.isDirectory() || existing.isSymbolicLink()) {
+      throw new Error(`现有 skill 目标必须是不含链接的真实目录: ${target}`);
+    }
+    console.log(`已保留现有 skill: ${target}；仅初始化${initializationLayers.join("和")}`);
+  } else {
+    const sourceSnapshot = captureRealSourceTree(source, "Skill source");
+    assertNoLinkedComponents(target, "Skill destination");
+    if (targetExists) {
+      if (!options.force) {
+        throw new Error(`目标已存在: ${target}\n如需覆盖，请加 --force。`);
+      }
+      assertNoLinkedTree(target, "Skill destination");
+      fs.rmSync(target, { recursive: true, force: true });
+    }
+
+    fs.mkdirSync(parentDir, { recursive: true });
+    assertNoLinkedComponents(target, "Skill destination");
+    copySourceSnapshot(sourceSnapshot, target);
+
+    console.log(`已安装 Teochew People (潮汕人) Skill 到: ${target}`);
   }
-
-  fs.mkdirSync(parentDir, { recursive: true });
-  assertNoLinkedComponents(target, "Skill destination");
-  copySourceSnapshot(sourceSnapshot, target);
-
-  console.log(`已安装 Teochew People (潮汕人) Skill 到: ${target}`);
 
   if (globalVault) {
     const result = await initVault({ target: globalVault, templateRoot });

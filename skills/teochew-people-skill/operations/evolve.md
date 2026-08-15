@@ -27,6 +27,7 @@
 - 默认安装只替换公共 skill，不会创建 vault：`node scripts/install-skill.mjs --dest <skills-dir>`。
 - 用户明确同意后，使用 `--init-vault` 初始化 `~/.teochew-people`；使用 `--vault <dir>` 可选择其他绝对或相对目录。
 - 用户明确同意后，使用 `--init-project <project-dir>` 初始化项目内的 `.teochew-people`。其内 `.gitignore` 默认忽略全部个性化内容；如要纳入版本控制，先审查私密性，再改成明确 allow 规则或对选定文件使用 `git add -f`。
+- 已完成 skill-only 安装时，可再次使用相同 `--dest` 搭配上述初始化参数；无需 `--force`，安装器会保留现有公共 skill，只初始化选定层。
 - `--force` 只重装公共 skill。安装器初始化 vault 时始终保留已修改的 `profile.md`、本地 raw 与本地 wiki；它不会把私有目录删除后重建。
 - 自动化或发布环境可显式使用 `--no-vault`，保证仅处理公共 skill。
 

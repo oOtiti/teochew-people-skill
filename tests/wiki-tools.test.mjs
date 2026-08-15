@@ -343,6 +343,64 @@ test("installer initializes a private project overlay with opt-in versioning gui
   assert.match(ignore, /version control|git add -f|intentionally/i);
 });
 
+test("installer can initialize a global vault after a skill-only install without rewriting the skill", async () => {
+  const root = await temporaryRoot();
+  const skillParent = path.join(root, "skills");
+  const installedSkill = path.join(skillParent, "teochew-people-skill");
+  const vault = path.join(root, "vault");
+
+  await runInstaller(["--dest", skillParent, "--no-vault"]);
+  await put(installedSkill, "installation-marker.txt", "keep staged install\n");
+
+  const { stdout } = await runInstaller([
+    "--dest",
+    skillParent,
+    "--init-vault",
+    "--vault",
+    vault,
+  ]);
+
+  assert.equal(await readFile(path.join(installedSkill, "installation-marker.txt"), "utf8"), "keep staged install\n");
+  assert.equal(await exists(path.join(vault, "profile.md")), true);
+  assert.match(stdout, /保留现有\s*skill[\s\S]*仅初始化[\s\S]*vault/i);
+});
+
+test("installer can initialize a project overlay after a skill-only install without rewriting the skill", async () => {
+  const root = await temporaryRoot();
+  const skillParent = path.join(root, "skills");
+  const installedSkill = path.join(skillParent, "teochew-people-skill");
+  const projectRoot = path.join(root, "project");
+  const overlay = path.join(projectRoot, ".teochew-people");
+
+  await runInstaller(["--dest", skillParent, "--no-vault"]);
+  await put(installedSkill, "installation-marker.txt", "keep staged install\n");
+
+  const { stdout } = await runInstaller(["--dest", skillParent, "--init-project", projectRoot]);
+
+  assert.equal(await readFile(path.join(installedSkill, "installation-marker.txt"), "utf8"), "keep staged install\n");
+  assert.equal(await exists(path.join(overlay, "profile.md")), true);
+  assert.equal(await exists(path.join(overlay, ".gitignore")), true);
+  assert.match(stdout, /保留现有\s*skill[\s\S]*仅初始化[\s\S]*overlay/i);
+});
+
+test("installer still rejects an ordinary duplicate install and contradictory --no-vault flags", async () => {
+  const root = await temporaryRoot();
+  const skillParent = path.join(root, "skills");
+  const vault = path.join(root, "vault");
+  const projectRoot = path.join(root, "project");
+
+  await runInstaller(["--dest", skillParent, "--no-vault"]);
+  await assert.rejects(runInstaller(["--dest", skillParent]), (error) => /目标已存在/.test(error.stderr || error.message));
+  await assert.rejects(
+    runInstaller(["--dest", path.join(root, "conflict-vault"), "--no-vault", "--init-vault", "--vault", vault]),
+    (error) => /--no-vault cannot be combined/i.test(error.stderr || error.message),
+  );
+  await assert.rejects(
+    runInstaller(["--dest", path.join(root, "conflict-project"), "--no-vault", "--init-project", projectRoot]),
+    (error) => /--no-vault cannot be combined/i.test(error.stderr || error.message),
+  );
+});
+
 test("init-vault CLI resolves --project to the project's private overlay", async () => {
   const root = await temporaryRoot();
   const projectRoot = path.join(root, "project");
@@ -476,6 +534,50 @@ test("installer remains skill-only by default and honors --no-vault", async () =
   assert.equal(await exists(path.join(defaultSkillParent, "teochew-people-skill", "SKILL.md")), true);
   assert.equal(await exists(path.join(explicitSkillParent, "teochew-people-skill", "SKILL.md")), true);
   assert.equal(await exists(path.join(vault, "profile.md")), false);
+});
+
+test("wiki tools fail closed on a linked corpus directory without consuming external content", async () => {
+  const root = await temporaryRoot();
+  const skillRoot = path.join(root, "skill");
+  const external = path.join(root, "external-corpus");
+  const rawIndex = await put(skillRoot, "raw/index.md", "RAW INDEX SENTINEL\n");
+  await put(skillRoot, "raw/source-review.md", "# Source review\n");
+  await put(skillRoot, "wiki/index.md", "WIKI INDEX SENTINEL\n");
+  await put(
+    external,
+    "outside.md",
+    "---\nid: external-secret\ntitle: EXTERNAL CONTENT MUST NOT BE READ\npage_type: source\nsource_tier: A\nsource_url: https://example.test/secret\npublisher: External\naccessed: 2026-08-15\n---\nsecret\n",
+  );
+  await symlink(
+    external,
+    path.join(skillRoot, "raw", "linked-outside"),
+    process.platform === "win32" ? "junction" : "dir",
+  );
+
+  await assert.rejects(buildIndexes(skillRoot), /corpus[\s\S]*(symbolic|junction|reparse|link)/i);
+  const lint = await lintWiki(skillRoot);
+  assert.equal(lint.ok, false);
+  assert.equal(lint.issues.some(({ message }) => /corpus[\s\S]*(symbolic|junction|reparse|link)/i.test(message)), true);
+  assert.equal(lint.issues.some(({ message }) => /EXTERNAL CONTENT MUST NOT BE READ/.test(message)), false);
+  await assert.rejects(wikiStatus(skillRoot), /corpus[\s\S]*(symbolic|junction|reparse|link)/i);
+  assert.equal(await readFile(rawIndex, "utf8"), "RAW INDEX SENTINEL\n");
+});
+
+test("wikiStatus tolerates a missing index but rejects other index read failures", async () => {
+  const root = await temporaryRoot();
+  await put(root, "raw/source-a.md", sourcePage({ id: "source-a", title: "Source A" }));
+  await put(
+    root,
+    "wiki/customs/index.md",
+    "---\nid: category-customs\ntitle: Customs\npage_type: category-index\ncategory: customs\n---\nNavigation.\n",
+  );
+  await put(root, "wiki/customs/topic.md", topicPage({ id: "customs-topic", title: "Topic", category: "customs" }));
+
+  const withoutIndex = await wikiStatus(root, { now: new Date("2026-08-15T00:00:00Z") });
+  assert.equal(withoutIndex.orphans, 1);
+
+  await mkdir(path.join(root, "wiki", "index.md"), { recursive: true });
+  await assert.rejects(wikiStatus(root), /wiki[\\/]index\.md[\s\S]*(read|directory|EISDIR)/i);
 });
 
 test("wikiStatus returns source, page, category, stale, and orphan counts", async () => {
