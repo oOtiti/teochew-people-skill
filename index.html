@@ -473,11 +473,11 @@
 <body>
   <a class="skip-link" href="#main-content" data-i18n="skip">跳到主要内容</a>
 
-  <header class="topbar" aria-label="Project navigation">
+  <header class="topbar" aria-label="项目导航" data-i18n-aria="navigationLabel">
     <a class="brand" href="#top">TEOCHEW <span>PEOPLE</span></a>
     <div class="topbar-tools">
       <a class="repo-link" href="https://github.com/oOtiti/teochew-people-skill" data-i18n="repository">GitHub 仓库 ↗</a>
-      <div class="language-switcher" role="group" aria-label="Language / 语言">
+      <div class="language-switcher" role="group" aria-label="语言选择" data-i18n-aria="languageSwitcherLabel">
         <button type="button" data-language="zh-CN" aria-pressed="true" aria-label="简体中文">简</button>
         <button type="button" data-language="zh-Hant" aria-pressed="false" aria-label="繁體中文">繁</button>
         <button type="button" data-language="en" aria-pressed="false" aria-label="English">EN</button>
@@ -488,7 +488,7 @@
 
   <main id="main-content">
     <section class="hero" id="top" aria-labelledby="hero-title">
-      <img class="hero-media" src="assets/yingge-epic.png" alt="原创编辑视觉：英歌舞者身着长袖彩衣，在晨光古镇街巷中列阵击打双短槌">
+      <img class="hero-media" src="assets/yingge-epic.png" alt="原创编辑视觉：英歌舞者身着长袖彩衣，在晨光古镇街巷中列阵击打双短槌" data-i18n-alt="heroImageAlt">
       <div class="hero-shade" aria-hidden="true"></div>
       <div class="hero-inner">
         <p class="eyebrow" data-i18n="heroEyebrow">潮汕文化 · LLM WIKI · 写作与视频生产</p>
@@ -504,15 +504,15 @@
       </div>
     </section>
 
-    <aside class="badge-rail" aria-label="Project status">
+    <aside class="badge-rail" aria-label="项目状态" data-i18n-aria="statusLabel">
       <div class="badges">
         <a href="https://github.com/oOtiti/teochew-people-skill/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/oOtiti/teochew-people-skill/actions/workflows/ci.yml/badge.svg"></a>
         <a href="https://www.npmjs.com/package/teochew-people-skill"><img alt="npm" src="https://img.shields.io/npm/v/teochew-people-skill?logo=npm&amp;label=npm"></a>
         <img alt="Node.js" src="https://img.shields.io/badge/Node.js-%3E%3D18-339933?logo=nodedotjs&amp;logoColor=white">
         <img alt="MIT" src="https://img.shields.io/badge/License-MIT-cda45e">
-        <img alt="Wiki sources" src="https://img.shields.io/badge/Wiki-55_sources-1f6d64">
-        <img alt="Topics" src="https://img.shields.io/badge/Topics-50-b73226">
-        <img alt="Languages" src="https://img.shields.io/badge/Languages-4-3949ab">
+        <img alt="Wiki 来源" data-i18n-alt="sourcesBadgeAlt" src="https://img.shields.io/badge/Wiki-55_sources-1f6d64">
+        <img alt="主题" data-i18n-alt="topicsBadgeAlt" src="https://img.shields.io/badge/Topics-50-b73226">
+        <img alt="语言" data-i18n-alt="languagesBadgeAlt" src="https://img.shields.io/badge/Languages-4-3949ab">
       </div>
     </aside>
 
@@ -526,7 +526,7 @@
           <p class="section-copy" data-i18n="wikiCopy">这里不是一堆链接，也不是把整个目录塞给模型。raw 保存来源身份与证据边界，topic 把事实、地方差异、生产细节和未知组织成可检索的主题页。</p>
         </div>
 
-        <div class="stats reveal" role="group" aria-label="Wiki counts">
+        <div class="stats reveal" role="group" aria-label="Wiki 数量" data-i18n-aria="countsLabel">
           <div class="stat"><strong>55</strong><span data-i18n="sourcesLabel">经审查 RAW 来源</span></div>
           <div class="stat"><strong>50</strong><span data-i18n="topicsLabel">主题页</span></div>
           <div class="stat"><strong>9</strong><span data-i18n="categoriesLabel">分类索引</span></div>
@@ -563,7 +563,7 @@
     </section>
 
     <section class="yingge-feature" aria-labelledby="yingge-title">
-      <img src="assets/yingge-epic.png" alt="英歌舞原创史诗展示：彩衣、脸谱、双短槌与晨光队列">
+      <img src="assets/yingge-epic.png" alt="英歌舞原创史诗展示：彩衣、脸谱、双短槌与晨光队列" data-i18n-alt="yinggeImageAlt">
       <div class="yingge-content reveal">
         <p class="eyebrow" data-i18n="yinggeEyebrow">潮汕人风采 · 英歌</p>
         <h2 id="yingge-title" data-i18n="yinggeTitle">不是奇观。是队列、声音与地方身份。</h2>
@@ -585,7 +585,7 @@
         </div>
 
         <article class="film-lead reveal">
-          <div class="film-image"><img src="assets/letter-to-grandma-hero.png" alt="原创编辑插画：两代人的手围着空白信纸，窗外夜海连接潮汕屋脊与东南亚岸灯"></div>
+          <div class="film-image"><img src="assets/letter-to-grandma-hero.png" alt="原创编辑插画：两代人的手围着空白信纸，窗外夜海连接潮汕屋脊与东南亚岸灯" data-i18n-alt="filmImageAlt"></div>
           <div class="film-copy">
             <div>
               <p class="quote" data-i18n="filmQuote">电影可以让一封信成为悬念，档案则让它保持证据。</p>
@@ -596,9 +596,9 @@
         </article>
 
         <div class="visual-strip reveal">
-          <figure><img src="assets/letter-to-grandma-timeline.svg" alt="《给阿嬷的情书》备案、上映、展映与海外放映时间线"><figcaption data-i18n="timelineCaption">时间线分开备案、上映、活动、报道与海外放映，不把一个日期偷换成另一个日期。</figcaption></figure>
-          <figure><img src="assets/letter-to-grandma-map.svg" alt="汕潮揭取景、侨批网络与马新放映编辑示意地图"><figcaption data-i18n="mapCaption">示意地图用不同线型区分取景、历史联系和传播节点，不虚构单一家族迁徙路线。</figcaption></figure>
-          <figure><img src="assets/evidence-layers.svg" alt="电影文化写作的五层证据关系图"><figcaption data-i18n="evidenceCaption">监管与档案、主创自述、作品画面、编辑综合、未知内容，五层不能互相冒充。</figcaption></figure>
+          <figure><img src="assets/letter-to-grandma-timeline.svg" alt="《给阿嬷的情书》备案、上映、展映与海外放映时间线" data-i18n-alt="timelineAlt"><figcaption data-i18n="timelineCaption">时间线分开备案、上映、活动、报道与海外放映，不把一个日期偷换成另一个日期。</figcaption></figure>
+          <figure><img src="assets/letter-to-grandma-map.svg" alt="汕潮揭取景、侨批网络与马新放映编辑示意地图" data-i18n-alt="mapAlt"><figcaption data-i18n="mapCaption">示意地图用不同线型区分取景、历史联系和传播节点，不虚构单一家族迁徙路线。</figcaption></figure>
+          <figure><img src="assets/evidence-layers.svg" alt="电影文化写作的五层证据关系图" data-i18n-alt="evidenceAlt"><figcaption data-i18n="evidenceCaption">监管与档案、主创自述、作品画面、编辑综合、未知内容，五层不能互相冒充。</figcaption></figure>
         </div>
 
         <div class="film-actions reveal">
@@ -690,6 +690,8 @@
     const translations = {
       "zh-CN": {
         title: "TEOCHEW PEOPLE · 潮汕文化 LLM Wiki",
+        navigationLabel: "项目导航", languageSwitcherLabel: "语言选择", statusLabel: "项目状态", countsLabel: "Wiki 数量",
+        heroImageAlt: "原创编辑视觉：英歌舞者身着长袖彩衣，在晨光古镇街巷中列阵击打双短槌", yinggeImageAlt: "英歌舞原创史诗展示：彩衣、脸谱、双短槌与晨光队列", filmImageAlt: "原创编辑插画：两代人的手围着空白信纸，窗外夜海连接潮汕屋脊与东南亚岸灯", timelineAlt: "《给阿嬷的情书》备案、上映、展映与海外放映时间线", mapAlt: "汕潮揭取景、侨批网络与马新放映编辑示意地图", evidenceAlt: "电影文化写作的五层证据关系图", sourcesBadgeAlt: "Wiki 来源", topicsBadgeAlt: "主题", languagesBadgeAlt: "语言",
         skip: "跳到主要内容", repository: "GitHub 仓库 ↗",
         heroEyebrow: "潮汕文化 · LLM WIKI · 写作与视频生产",
         heroLead: "一个自进化、个性化的潮汕文化 Skill 与 LLM Wiki。把精挑细选的来源变成可追溯主题、文化细节和真正能用于写作与视频生产的素材。",
@@ -713,6 +715,8 @@
       },
       "zh-Hant": {
         title: "TEOCHEW PEOPLE · 潮汕文化 LLM Wiki",
+        navigationLabel: "項目導覽", languageSwitcherLabel: "語言選擇", statusLabel: "項目狀態", countsLabel: "Wiki 數量",
+        heroImageAlt: "原創編輯視覺：英歌舞者身穿長袖彩衣，在晨光古鎮街巷中列隊敲擊雙短槌", yinggeImageAlt: "英歌舞原創史詩展示：彩衣、臉譜、雙短槌與晨光隊列", filmImageAlt: "原創編輯插畫：兩代人的手圍著空白信紙，窗外夜海連接潮汕屋脊與東南亞岸燈", timelineAlt: "《給阿嬤的情書》備案、上映、展映與海外放映時間線", mapAlt: "汕潮揭取景、僑批網絡與馬新放映編輯示意地圖", evidenceAlt: "電影文化寫作的五層證據關係圖", sourcesBadgeAlt: "Wiki 來源", topicsBadgeAlt: "主題", languagesBadgeAlt: "語言",
         skip: "跳到主要內容", repository: "GitHub 倉庫 ↗",
         heroEyebrow: "潮汕文化 · LLM WIKI · 寫作與影片製作", heroLead: "一個自我演進、個人化的潮汕文化 Skill 與 LLM Wiki。把精挑細選的來源變成可追溯主題、文化細節和真正能用於寫作與影片製作的素材。", exploreWiki: "進入 WIKI", seeShowcase: "查看效果展示", yinggeDisclaimer: "原創編輯視覺 · editorial_original · 非具體演出現場，不對應真實人物、隊伍、臉譜或活動年份。",
         wikiTitle: "先有好輸入，才有好輸出。", wikiCopy: "這裡不是一堆連結，也不是把整個目錄塞給模型。raw 保存來源身分與證據邊界，topic 把事實、地方差異、製作細節和未知組織成可檢索的主題頁。", sourcesLabel: "經審查 RAW 來源", topicsLabel: "主題頁", categoriesLabel: "分類索引", wikiMethodTitle: "來源保留原貌，知識建設索引。", rawCopy: "記錄發布者、日期、層級、地域、可支持論斷、製作細節與限制；拒絕的材料同樣留下審核理由。", topicCopy: "把來源編成主題索引，但不抹平城市、村落、家庭、年代與海外社群之間的差異。", sourceIdsCopy: "每個關鍵事實都能反向回到 raw，不用『據說』或『網上資料』取代責任明確的來源。",
@@ -724,6 +728,8 @@
       },
       en: {
         title: "TEOCHEW PEOPLE · Teochew Culture LLM Wiki",
+        navigationLabel: "Project navigation", languageSwitcherLabel: "Language selector", statusLabel: "Project status", countsLabel: "Wiki counts",
+        heroImageAlt: "Original editorial visual: Yingge performers in long-sleeved dress strike paired short sticks in formation along a dawn-lit old-town street", yinggeImageAlt: "Original epic Yingge showcase with painted faces, paired short sticks, colorful dress, and a dawn formation", filmImageAlt: "Original editorial illustration: two generations' hands frame a blank letter while a night sea joins Teochew rooftops to Southeast Asian shore lights", timelineAlt: "Dear Grandma filing, release, event, reporting, and overseas-screening timeline", mapAlt: "Editorial map of Shantou–Chaozhou–Jieyang locations, qiaopi relations, and Malaysia–Singapore screenings", evidenceAlt: "Five evidence layers for writing about film and culture", sourcesBadgeAlt: "Wiki sources", topicsBadgeAlt: "Topics", languagesBadgeAlt: "Languages",
         skip: "Skip to main content", repository: "GitHub repository ↗",
         heroEyebrow: "Teochew culture · LLM WIKI · writing and video production", heroLead: "An evolving, personalized Teochew culture Skill and LLM Wiki. It turns carefully selected sources into traceable topics, cultural detail, and production-ready material for writing and video.", exploreWiki: "Explore the Wiki", seeShowcase: "See the showcase", yinggeDisclaimer: "Original editorial visual · editorial_original · not a documentary image or a depiction of a specific person, troupe, face-paint system, event, or year.",
         wikiTitle: "Better input makes better output.", wikiCopy: "This is not a link dump or a directory pushed wholesale into a model. raw preserves source identity and evidence boundaries; topics organize facts, local variation, production detail, and unknowns into searchable pages.", sourcesLabel: "reviewed raw sources", topicsLabel: "topic pages", categoriesLabel: "category indexes", wikiMethodTitle: "Keep sources intact. Build navigable knowledge.", rawCopy: "Record publisher, date, tier, geography, supported claims, production detail, and limits; rejected material keeps an auditable decision.", topicCopy: "Compile sources into topic indexes without flattening differences across cities, villages, families, periods, and overseas communities.", sourceIdsCopy: "Every important fact can be traced back through source_ids instead of hiding behind 'it is said' or anonymous web material.",
@@ -735,6 +741,8 @@
       },
       ja: {
         title: "TEOCHEW PEOPLE · 潮汕文化 LLM Wiki",
+        navigationLabel: "プロジェクトナビゲーション", languageSwitcherLabel: "言語選択", statusLabel: "プロジェクト状況", countsLabel: "Wiki 件数",
+        heroImageAlt: "オリジナル編集ビジュアル：長袖の彩衣を着た英歌の演者が、朝日の古い街並みで二本の短棒を打ち鳴らす隊列", yinggeImageAlt: "彩衣、隈取り、二本の短棒、朝日の隊列を描くオリジナル英歌ビジュアル", filmImageAlt: "オリジナル編集イラスト：二世代の手が白紙の手紙を囲み、窓外の夜の海が潮汕の屋根と東南アジアの岸灯を結ぶ", timelineAlt: "『給阿嬤的情書』の届出、公開、催事、報道、海外上映のタイムライン", mapAlt: "汕頭・潮州・揭陽のロケ、僑批の関係、マレーシア・シンガポール上映を示す編集地図", evidenceAlt: "映画と文化を書くための五層の証拠図", sourcesBadgeAlt: "Wiki ソース", topicsBadgeAlt: "トピック", languagesBadgeAlt: "言語",
         skip: "本文へ移動", repository: "GitHub リポジトリ ↗",
         heroEyebrow: "潮汕文化 · LLM WIKI · 文章と動画制作", heroLead: "進化し続ける、パーソナライズ可能な潮汕文化 Skill／LLM Wiki。厳選した情報源を、追跡可能なトピック、文化的ディテール、文章・動画制作に使える素材へ変換します。", exploreWiki: "WIKI を見る", seeShowcase: "制作例を見る", yinggeDisclaimer: "オリジナル編集ビジュアル · editorial_original · 特定の人物、団体、隈取り体系、催事、年代を記録した写真ではありません。",
         wikiTitle: "良い入力から、良い出力へ。", wikiCopy: "リンク集でも、フォルダー全体をモデルへ渡す仕組みでもありません。raw は出典の身元と証拠の境界を保存し、topic は事実、地域差、制作ディテール、未知を検索可能なページへ整理します。", sourcesLabel: "審査済み RAW ソース", topicsLabel: "トピック", categoriesLabel: "分類インデックス", wikiMethodTitle: "出典は原形を保ち、知識には索引をつくる。", rawCopy: "発行者、日付、階層、地域、裏づけ可能な主張、制作ディテール、制約を記録し、不採用資料にも判断理由を残します。", topicCopy: "都市、村、家族、年代、海外コミュニティの差異を消さず、出典をテーマ別インデックスへ編成します。", sourceIdsCopy: "重要な事実は source_ids から raw へ戻れます。匿名の『ネット情報』を責任ある出典の代わりにしません。",
@@ -748,6 +756,8 @@
 
     const languageButtons = [...document.querySelectorAll("[data-language]")];
     const translatable = [...document.querySelectorAll("[data-i18n]")];
+    const ariaTranslatable = [...document.querySelectorAll("[data-i18n-aria]")];
+    const altTranslatable = [...document.querySelectorAll("[data-i18n-alt]")];
 
     function setLanguage(language, persist = false) {
       const dictionary = translations[language] || translations["zh-CN"];
@@ -756,6 +766,14 @@
       for (const element of translatable) {
         const value = dictionary[element.dataset.i18n];
         if (value) element.textContent = value;
+      }
+      for (const element of ariaTranslatable) {
+        const value = dictionary[element.dataset.i18nAria];
+        if (value) element.setAttribute("aria-label", value);
+      }
+      for (const element of altTranslatable) {
+        const value = dictionary[element.dataset.i18nAlt];
+        if (value) element.setAttribute("alt", value);
       }
       for (const button of languageButtons) {
         button.setAttribute("aria-pressed", String(button.dataset.language === language));

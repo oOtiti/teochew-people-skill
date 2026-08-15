@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
+import vm from "node:vm";
 
 const requiredProjectPageTokens = [
   'data-language="zh-CN"',
@@ -46,6 +47,87 @@ test("project showcase exposes the multilingual Wiki and production surface", as
   assert.match(page, /<link rel="icon" href="data:image\/svg\+xml,/);
   assert.match(page, /<main\b[^>]*id="main-content"/);
   assert.match(page, /<img\b[^>]*alt="[^"]+"/);
+});
+
+test("language switching localizes document state and accessible labels", async () => {
+  const page = await readFile(new URL("../index.html", import.meta.url), "utf8");
+  const script = page.match(/<script>([\s\S]*?)<\/script>/)?.[1];
+  assert.ok(script, "inline language script is missing");
+
+  class FakeElement {
+    constructor(dataset = {}) {
+      this.dataset = dataset;
+      this.attributes = new Map();
+      this.textContent = "";
+    }
+
+    addEventListener(type, listener) {
+      this[`${type}Listener`] = listener;
+    }
+
+    setAttribute(name, value) {
+      this.attributes.set(name, String(value));
+    }
+
+    getAttribute(name) {
+      return this.attributes.get(name) ?? null;
+    }
+  }
+
+  const keysFor = (attribute) => [...page.matchAll(new RegExp(`${attribute}="([^"]+)"`, "g"))]
+    .map((match) => new FakeElement({ [attribute.replace(/^data-/, "").replace(/-([a-z])/g, (_, letter) => letter.toUpperCase())]: match[1] }));
+  const languageButtons = [...page.matchAll(/data-language="([^"]+)"/g)]
+    .map((match) => new FakeElement({ language: match[1] }));
+  const translatable = keysFor("data-i18n");
+  const ariaLabels = keysFor("data-i18n-aria");
+  const altTexts = keysFor("data-i18n-alt");
+  const stored = new Map();
+  const document = {
+    documentElement: { lang: "" },
+    title: "",
+    querySelectorAll(selector) {
+      return {
+        "[data-language]": languageButtons,
+        "[data-i18n]": translatable,
+        "[data-i18n-aria]": ariaLabels,
+        "[data-i18n-alt]": altTexts,
+        "[data-copy]": [],
+      }[selector] ?? [];
+    },
+  };
+  const context = vm.createContext({
+    document,
+    localStorage: {
+      getItem: (key) => stored.get(key) ?? null,
+      setItem: (key, value) => stored.set(key, value),
+    },
+    navigator: {},
+    window: { setTimeout() {} },
+  });
+
+  vm.runInContext(script, context);
+  assert.equal(typeof context.setLanguage, "function");
+
+  const expectations = {
+    "zh-CN": ["项目导航", "语言选择", "项目状态", "Wiki 数量"],
+    "zh-Hant": ["項目導覽", "語言選擇", "項目狀態", "Wiki 數量"],
+    en: ["Project navigation", "Language selector", "Project status", "Wiki counts"],
+    ja: ["プロジェクトナビゲーション", "言語選択", "プロジェクト状況", "Wiki 件数"],
+  };
+
+  for (const [language, expectedLabels] of Object.entries(expectations)) {
+    context.setLanguage(language, true);
+    assert.equal(document.documentElement.lang, language);
+    assert.ok(document.title.startsWith("TEOCHEW PEOPLE"));
+    assert.deepEqual(ariaLabels.map((element) => element.getAttribute("aria-label")), expectedLabels);
+    assert.ok(altTexts.length >= 6);
+    assert.ok(altTexts.every((element) => element.getAttribute("alt")), `${language} has an empty localized alt`);
+    assert.deepEqual(
+      languageButtons.map((button) => button.getAttribute("aria-pressed")),
+      languageButtons.map((button) => String(button.dataset.language === language)),
+    );
+  }
+  assert.equal(stored.get("teochewPeopleLanguage"), "ja");
 });
 
 test("npm package includes the live project showcase", async () => {
