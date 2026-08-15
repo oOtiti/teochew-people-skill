@@ -14,8 +14,9 @@
 2. 检查页面的证据状态、地域限定、新鲜度与 production facets。
 3. 需要确认论断时沿 `source_ids` 读取 `raw/index.md` 和相应来源记录，不整库加载。
 4. 解析 `<project>/.teochew-people`、`~/.teochew-people` 与 bundled public wiki；本地层只补充语境，不覆盖公共事实。
-5. 页面陈旧、含糊、冲突，或涉及当前状态、日程、热点与在任人物时转入 research。
-6. 输出时区分 verified、synthesis、varies、unknown，并给出来源与核验日期。
+5. 用户用“以后”“之后”等说法提出持久偏好时，先确认偏好只影响本地语境和表达，不改变公共事实；这类说法本身不等于持久化授权。明确说明尚未保存，并询问用户是否同意写入 local vault；只有得到明确同意才转入 evolve。
+6. 页面陈旧、含糊、冲突，或涉及当前状态、日程、热点与在任人物时转入 research。
+7. 输出时区分 verified、synthesis、varies、unknown，并给出来源与核验日期。
 
 ## 写入边界
 
