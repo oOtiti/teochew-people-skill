@@ -10,6 +10,7 @@ $readmeFile = Join-Path $root "README.md"
 $readmeTraditionalFile = Join-Path $root "README.zh-Hant.md"
 $readmeEnglishFile = Join-Path $root "README.en.md"
 $readmeJapaneseFile = Join-Path $root "README.ja.md"
+$projectPageFile = Join-Path $root "index.html"
 $licenseFile = Join-Path $root "LICENSE"
 $contributingFile = Join-Path $root "CONTRIBUTING.md"
 $exampleFile = Join-Path $root "examples/before-after.md"
@@ -111,6 +112,7 @@ foreach ($path in @(
     $readmeTraditionalFile,
     $readmeEnglishFile,
     $readmeJapaneseFile,
+    $projectPageFile,
     $licenseFile,
     $contributingFile,
     $exampleFile,
@@ -216,6 +218,7 @@ $requiredPackageFiles = @(
     "README.zh-Hant.md",
     "README.en.md",
     "README.ja.md",
+    "index.html",
     "CONTRIBUTING.md",
     "LICENSE"
 )
@@ -335,6 +338,7 @@ foreach ($localized in $localizedReadmes) {
         "README.zh-Hant.md",
         "README.en.md",
         "README.ja.md",
+        "index.html",
         "assets/social-preview.png",
         "assets/yingge-epic.png",
         "assets/letter-to-grandma-hero.png",
@@ -354,6 +358,31 @@ foreach ($localized in $localizedReadmes) {
         if ($content -notmatch [regex]::Escape($term)) {
             Fail "$($localized.Label) README 应包含 '$term'"
         }
+    }
+}
+
+$projectPage = Get-Content -LiteralPath $projectPageFile -Raw
+foreach ($term in @(
+    "TEOCHEW PEOPLE",
+    "data-language=`"zh-CN`"",
+    "data-language=`"zh-Hant`"",
+    "data-language=`"en`"",
+    "data-language=`"ja`"",
+    "assets/yingge-epic.png",
+    "assets/letter-to-grandma-hero.png",
+    "examples/letter-to-grandma-feature.md",
+    "examples/letter-to-grandma-video-scripts.md",
+    "examples/video-to-wiki-demo.md",
+    "editorial_original",
+    "link_only",
+    "local overlay",
+    "prefers-reduced-motion",
+    "55",
+    "50",
+    "9"
+)) {
+    if ($projectPage -notmatch [regex]::Escape($term)) {
+        Fail "项目展示页应包含 '$term'"
     }
 }
 

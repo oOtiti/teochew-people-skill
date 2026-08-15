@@ -27,7 +27,7 @@ The page is a visual companion to the four Markdown homepages, not a second fact
 - Type: system grotesk for the monumental English lockup, Song/Ming system serif for cultural prose, condensed utility labels through letter spacing rather than an external font download.
 - Layout: cinematic hero, then disciplined editorial bands with asymmetrical image/text splits. Avoid a dashboard-card look.
 - Signature: the hero image is interrupted by an oversized outlined `PEOPLE` word that becomes solid as the page enters; this turns the crowd into the identity instead of treating the image as decoration.
-- Motion: one restrained load sequence and small scroll reveals, disabled under `prefers-reduced-motion`.
+- Motion: one restrained hero load sequence, disabled under `prefers-reduced-motion`. All later content remains immediately visible so full-page capture, printing, automation, and no-scroll previews never produce empty bands.
 
 ## Localization
 
@@ -45,4 +45,3 @@ Provide Simplified Chinese, Traditional Chinese, English, and Japanese in the sa
 ## Verification contract
 
 Automated tests must require the four language controls, the three primary project counts, all seven badge meanings, the two major hero assets, film/video demo links, rights terminology, local-only preference storage, reduced-motion CSS, and package inclusion. Browser QA must cover desktop and mobile screenshots plus language switching and broken-resource checks.
-

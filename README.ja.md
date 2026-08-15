@@ -13,7 +13,8 @@ TEOCHEW PEOPLE は、進化し続けるパーソナライズ可能な潮汕文�
 </p>
 
 <p align="center">
-  <a href="README.md">简体中文</a> · <a href="README.zh-Hant.md">繁體中文</a> · <a href="README.en.md">English</a> · <strong><a href="README.ja.md">日本語</a></strong>
+  <a href="README.md">简体中文</a> · <a href="README.zh-Hant.md">繁體中文</a> · <a href="README.en.md">English</a> · <strong><a href="README.ja.md">日本語</a></strong><br>
+  <a href="index.html">プロジェクト展示</a>
 </p>
 
 ## このプロジェクトについて

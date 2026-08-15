@@ -13,7 +13,8 @@ TEOCHEW PEOPLE 是一个自进化、个性化的潮汕文化 Skill 与 LLM Wiki�
 </p>
 
 <p align="center">
-  <strong>简体中文</strong> · <a href="README.zh-Hant.md">繁體中文</a> · <a href="README.en.md">English</a> · <a href="README.ja.md">日本語</a>
+  <strong>简体中文</strong> · <a href="README.zh-Hant.md">繁體中文</a> · <a href="README.en.md">English</a> · <a href="README.ja.md">日本語</a><br>
+  <a href="index.html">项目展示页</a>
 </p>
 
 ## 为什么它不是普通资料合集

@@ -13,7 +13,8 @@ TEOCHEW PEOPLE is an evolving, personalized Teochew culture Skill and LLM Wiki. 
 </p>
 
 <p align="center">
-  <a href="README.md">简体中文</a> · <a href="README.zh-Hant.md">繁體中文</a> · <strong><a href="README.en.md">English</a></strong> · <a href="README.ja.md">日本語</a>
+  <a href="README.md">简体中文</a> · <a href="README.zh-Hant.md">繁體中文</a> · <strong><a href="README.en.md">English</a></strong> · <a href="README.ja.md">日本語</a><br>
+  <a href="index.html">Project showcase</a>
 </p>
 
 ## What it is
