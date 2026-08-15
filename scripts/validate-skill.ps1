@@ -147,7 +147,8 @@ $mediaIngestContract = @(
     @{ Label = "时间码"; Pattern = '(timecode|时间码)' },
     @{ Label = "说话者与画面观察分离"; Pattern = '(speaker_claim|说话者).{0,100}(frame_observation|画面观察)' },
     @{ Label = "禁止无授权完整转录"; Pattern = '(不得|禁止|不能).{0,80}(完整逐字稿|完整转录|全文转录)' },
-    @{ Label = "用户背景默认本地覆盖"; Pattern = '(用户背景|用户素材|家庭材料).{0,100}(local overlay|本地覆盖层)' }
+    @{ Label = "用户背景默认本地覆盖"; Pattern = '(用户背景|用户素材|家庭材料).{0,100}(local overlay|本地覆盖层)' },
+    @{ Label = "派生素材逐项声明媒体类型与权利"; Pattern = '(每个拟用素材|每项素材).{0,100}media_type.{0,100}rights_status' }
 )
 
 foreach ($requirement in $mediaIngestContract) {
@@ -258,7 +259,14 @@ foreach ($term in @(
     "npx teochew-people-skill --codex",
     "npx teochew-people-skill --claude",
     "(examples/showcase-article.md)",
-    "(examples/showcase-video.md)"
+    "(examples/showcase-video.md)",
+    "assets/yingge-epic.png",
+    "原创编辑视觉，非具体演出现场",
+    "assets/letter-to-grandma-hero.png",
+    "(examples/letter-to-grandma-feature.md)",
+    "(examples/letter-to-grandma-video-scripts.md)",
+    "(examples/video-to-wiki-demo.md)",
+    "(skills/teochew-people-skill/operations/media-ingest.md)"
 )) {
     if ($readme -notmatch [regex]::Escape($term)) {
         Fail "README 应包含 '$term'"

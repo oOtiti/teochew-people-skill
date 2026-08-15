@@ -28,6 +28,7 @@
 | 备案公示查询结果：给阿嬷的情书 | A | — | 国家电影局 | [national-film-filing-letter-to-grandma-2023](./2026-08-15/national-film-filing-letter-to-grandma-2023.md) |
 | 实现潮州礼俗“双创”的现实条件与路径初探 | A | — | 《广东省社会主义学院学报》 | [gdssy-chaozhou-rituals-2024](./2026-08-15/gdssy-chaozhou-rituals-2024.md) |
 | 广东省人民政府关于印发《广州都市圈发展规划》《深圳都市圈发展规划》《珠江口西岸都市圈发展规划》《汕潮揭都市圈发展规划》《湛茂都市圈发展规划》的通知 | A | — | 广东省人民政府 | [gd-chaoshan-metropolitan-plan-2023](./2026-08-15/gd-chaoshan-metropolitan-plan-2023.md) |
+| 我的光影故事2025丨非遗英歌正燃：从古老鼓点到时代强音 | B | — | 新华社（新华网） | [xinhua-chaoyang-yingge-visuals-2026](./2026-08-15/xinhua-chaoyang-yingge-visuals-2026.md) |
 | 打造高颜值风貌、高质量管理、高品质生活城乡空间 《潮州市“城乡品质提升年”实施方案》印发 | B | — | 潮州日报（潮州市人民政府门户网站承载） | [chaozhou-urban-quality-plan-2025](./2026-08-15/chaozhou-urban-quality-plan-2025.md) |
 | 揭阳 \| 棉湖镇：从千年古镇到活力新城 | B | — | 广东省人民政府地方志办公室 | [gd-dfz-mianhu-2025](./2026-08-15/gd-dfz-mianhu-2025.md) |
 | 揭阳市全域旅游发展规划：地方节庆与空间清单 | A | — | 揭阳市人民政府 | [jieyang-tourism-plan-2018-2035](./2026-08-15/jieyang-tourism-plan-2018-2035.md) |
