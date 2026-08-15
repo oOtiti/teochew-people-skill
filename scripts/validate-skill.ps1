@@ -329,7 +329,28 @@ $localizedReadmes = @(
 
 foreach ($localized in $localizedReadmes) {
     $content = Get-Content -LiteralPath $localized.Path -Raw
-    foreach ($term in @("TEOCHEW PEOPLE", "README.md", "README.zh-Hant.md", "README.en.md", "README.ja.md", "assets/social-preview.png", "assets/yingge-epic.png", "assets/letter-to-grandma-hero.png", "npx teochew-people-skill --codex", "55", "50", "9") + $localized.Terms) {
+    foreach ($term in @(
+        "TEOCHEW PEOPLE",
+        "README.md",
+        "README.zh-Hant.md",
+        "README.en.md",
+        "README.ja.md",
+        "assets/social-preview.png",
+        "assets/yingge-epic.png",
+        "assets/letter-to-grandma-hero.png",
+        "npx teochew-people-skill --codex --no-vault",
+        "npx teochew-people-skill --claude --no-vault",
+        "npx teochew-people-skill --dest /path/to/skills --no-vault",
+        "npx teochew-people-skill --codex --init-vault",
+        "npx teochew-people-skill --codex --init-project /path/to/project",
+        "editorial_original",
+        "link_only",
+        "local overlay",
+        "MIT License",
+        "55",
+        "50",
+        "9"
+    ) + $localized.Terms) {
         if ($content -notmatch [regex]::Escape($term)) {
             Fail "$($localized.Label) README 应包含 '$term'"
         }
