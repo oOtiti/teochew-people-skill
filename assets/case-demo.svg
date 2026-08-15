@@ -1,208 +1,94 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
-  <title id="title">《给阿嬷的情书》文化分析动态演示</title>
-  <desc id="desc">Teochew People Skill turns a generic film comment into a layered Chaoshan cultural analysis through qiaopi letters, A-ma, Teochew language, and diaspora memory.</desc>
+  <title id="title">《给阿嬷的情书》写作案例</title>
+  <desc id="desc">A restrained before-and-after teaching graphic showing how source-grounded Teochew context improves a generic film comment.</desc>
   <defs>
-    <linearGradient id="paperBg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#fffaf0"/>
-      <stop offset="43%" stop-color="#f7e3bf"/>
-      <stop offset="100%" stop-color="#cfe9df"/>
+    <linearGradient id="sea" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#061522"/>
+      <stop offset="0.58" stop-color="#0A2231"/>
+      <stop offset="1" stop-color="#0D2D3E"/>
     </linearGradient>
-    <linearGradient id="heroInk" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#24140f"/>
-      <stop offset="55%" stop-color="#7a261d"/>
-      <stop offset="100%" stop-color="#0c625d"/>
+    <linearGradient id="after-panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#102F40"/>
+      <stop offset="1" stop-color="#16394A"/>
     </linearGradient>
-    <linearGradient id="filmGrad" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#111827"/>
-      <stop offset="100%" stop-color="#4b211b"/>
-    </linearGradient>
-    <linearGradient id="goldLine" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#b43b2b"/>
-      <stop offset="48%" stop-color="#c88a2d"/>
-      <stop offset="100%" stop-color="#0f766e"/>
-    </linearGradient>
-    <pattern id="ricePaper" width="84" height="84" patternUnits="userSpaceOnUse">
-      <path d="M0 33 C18 24 36 45 54 33 C66 25 75 28 84 33" fill="none" stroke="#8a6a45" stroke-width="1" opacity="0.08"/>
-      <path d="M15 0 C9 18 31 35 18 54 C12 63 13 74 19 84" fill="none" stroke="#0f766e" stroke-width="1" opacity="0.055"/>
-    </pattern>
-    <filter id="softShadow" x="-18%" y="-18%" width="136%" height="136%">
-      <feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#3b2014" flood-opacity="0.18"/>
-    </filter>
-    <filter id="lift" x="-12%" y="-12%" width="124%" height="124%">
-      <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#2b1711" flood-opacity="0.14"/>
+    <filter id="panel-shadow" x="-12%" y="-16%" width="124%" height="132%">
+      <feDropShadow dx="0" dy="12" stdDeviation="18" flood-color="#02080D" flood-opacity="0.42"/>
     </filter>
     <style>
-      .titleText { font: 800 48px system-ui, -apple-system, "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; fill: url(#heroInk); letter-spacing: 0; }
-      .subText { font: 500 22px system-ui, -apple-system, "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; fill: #5e463a; letter-spacing: 0; }
-      .panelTitle { font: 800 23px system-ui, -apple-system, "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; fill: #6f241b; letter-spacing: 0; }
-      .body { font: 600 24px system-ui, -apple-system, "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; fill: #2a211d; letter-spacing: 0; }
-      .bodySmall { font: 500 18px system-ui, -apple-system, "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; fill: #684d41; letter-spacing: 0; }
-      .mono { font: 700 18px ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace; fill: #fffaf0; letter-spacing: 0; }
-      .chip { font: 800 19px system-ui, -apple-system, "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; fill: #fffaf0; letter-spacing: 0; }
-      .caption { font: 600 16px system-ui, -apple-system, "Segoe UI", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif; fill: #806051; letter-spacing: 0; }
-      .flowLine { stroke-dasharray: 950; stroke-dashoffset: 950; animation: drawFlow 7.5s ease-in-out infinite; }
-      .scan { animation: scanMove 7.5s ease-in-out infinite; }
-      .floatSlow { animation: floatSlow 5.5s ease-in-out infinite; }
-      .floatFast { animation: floatFast 4.6s ease-in-out infinite; }
-      .stageA { animation: stageA 7.5s ease-in-out infinite; }
-      .stageB { animation: stageB 7.5s ease-in-out infinite; }
-      .stageC { animation: stageC 7.5s ease-in-out infinite; }
-      .spark1 { animation: blink 7.5s ease-in-out infinite 0.8s; }
-      .spark2 { animation: blink 7.5s ease-in-out infinite 1.6s; }
-      .spark3 { animation: blink 7.5s ease-in-out infinite 2.4s; }
-      .pulse { transform-origin: center; animation: pulse 2.8s ease-in-out infinite; }
-      .writing { stroke-dasharray: 420; stroke-dashoffset: 420; animation: writeLine 7.5s ease-in-out infinite; }
-      @keyframes drawFlow {
-        0%, 10% { stroke-dashoffset: 950; opacity: 0.25; }
-        42%, 82% { stroke-dashoffset: 0; opacity: 1; }
-        100% { stroke-dashoffset: 0; opacity: 0.28; }
-      }
-      @keyframes scanMove {
-        0%, 12% { transform: translateX(-250px); opacity: 0; }
-        24%, 62% { opacity: 0.85; }
-        78%, 100% { transform: translateX(490px); opacity: 0; }
-      }
-      @keyframes floatSlow {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-9px); }
-      }
-      @keyframes floatFast {
-        0%, 100% { transform: translateY(0) rotate(0deg); }
-        50% { transform: translateY(-7px) rotate(1.4deg); }
-      }
-      @keyframes stageA {
-        0%, 18% { opacity: 1; transform: translateY(0); }
-        22%, 68% { opacity: 1; transform: translateY(0); }
-        84%, 100% { opacity: 0.55; transform: translateY(-5px); }
-      }
-      @keyframes stageB {
-        0%, 26% { opacity: 0.62; transform: translateY(8px); }
-        36%, 76% { opacity: 1; transform: translateY(0); }
-        90%, 100% { opacity: 0.55; transform: translateY(-5px); }
-      }
-      @keyframes stageC {
-        0%, 40% { opacity: 0.62; transform: translateY(8px); }
-        50%, 86% { opacity: 1; transform: translateY(0); }
-        96%, 100% { opacity: 0.6; transform: translateY(-3px); }
-      }
-      @keyframes blink {
-        0%, 25%, 100% { opacity: 0.15; transform: scale(0.9); }
-        42%, 72% { opacity: 1; transform: scale(1); }
-      }
-      @keyframes pulse {
-        0%, 100% { transform: scale(1); opacity: 0.95; }
-        50% { transform: scale(1.045); opacity: 1; }
-      }
-      @keyframes writeLine {
-        0%, 38% { stroke-dashoffset: 420; opacity: 0.35; }
-        56%, 88% { stroke-dashoffset: 0; opacity: 0.95; }
-        100% { stroke-dashoffset: 0; opacity: 0.42; }
-      }
+      .sans { font-family: "Microsoft YaHei", "Noto Sans CJK SC", "PingFang SC", Arial, sans-serif; }
+      .salt { fill: #F4F0E6; }
+      .mist { fill: #AFC2C8; }
+      .muted { fill: #8199A2; }
+      .eyebrow { font-size: 14px; font-weight: 700; letter-spacing: 3px; }
+      .headline { font-size: 34px; font-weight: 700; letter-spacing: 0.5px; }
+      .subhead { font-size: 17px; font-weight: 400; }
+      .panel-label { font-size: 15px; font-weight: 700; letter-spacing: 2px; }
+      .quote { font-size: 23px; font-weight: 600; }
+      .body { font-size: 17px; font-weight: 400; }
+      .body-strong { font-size: 18px; font-weight: 700; }
+      .lens { font-size: 16px; font-weight: 600; }
     </style>
   </defs>
 
-  <rect width="1280" height="720" fill="url(#paperBg)"/>
-  <rect width="1280" height="720" fill="url(#ricePaper)"/>
-  <path d="M0 112 C154 75 306 73 468 114 C624 154 784 152 956 108 C1090 74 1192 78 1280 96 L1280 0 L0 0 Z" fill="#b43b2b" opacity="0.13"/>
-  <path d="M0 620 C168 575 322 601 492 633 C694 671 868 636 1040 587 C1148 556 1230 566 1280 584 L1280 720 L0 720 Z" fill="#0f766e" opacity="0.13"/>
+  <rect width="1280" height="720" fill="url(#sea)"/>
+  <rect x="0" y="0" width="12" height="720" fill="#C34B38"/>
 
-  <g class="floatSlow">
-    <circle cx="1094" cy="102" r="25" fill="#fff7e9" opacity="0.92"/>
-    <circle cx="1139" cy="102" r="25" fill="#fff7e9" opacity="0.92"/>
-    <circle cx="1184" cy="102" r="25" fill="#fff7e9" opacity="0.92"/>
-    <path d="M1078 94 H1200" stroke="#7a261d" stroke-width="4" stroke-linecap="round" opacity="0.78"/>
-    <path d="M1112 124 H1172" stroke="#0f766e" stroke-width="4" stroke-linecap="round" opacity="0.52"/>
-  </g>
+  <g class="sans">
+    <text x="64" y="62" class="eyebrow" fill="#D7A84B">CASE STUDY · SOURCE-GROUNDED WRITING</text>
+    <text x="64" y="108" class="headline salt">《给阿嬷的情书》：从泛泛影评到地方经验</text>
+    <text x="64" y="140" class="subhead mist">Skill 先校准范围与来源，再把侨批、代际和乡音写进具体场景。</text>
 
-  <text x="64" y="76" class="titleText">《给阿嬷的情书》案例演示</text>
-  <text x="66" y="113" class="subText">从泛泛影评，到有侨批、阿嬷、乡音与大潮汕文化圈的分析路径</text>
-
-  <g filter="url(#softShadow)">
-    <rect x="58" y="154" width="335" height="426" rx="24" fill="#fffaf1"/>
-    <rect x="472" y="154" width="335" height="426" rx="24" fill="#fffaf1"/>
-    <rect x="887" y="154" width="335" height="426" rx="24" fill="#fffaf1"/>
-  </g>
-
-  <g>
-    <rect x="58" y="154" width="335" height="58" rx="24" fill="#7a261d"/>
-    <text x="86" y="192" class="mono">01 INPUT</text>
-    <text x="86" y="247" class="panelTitle">普通模型容易写成</text>
-    <text x="86" y="298" class="body">“潮汕方言亲情片”</text>
-    <text x="86" y="345" class="body">“潮汕人很重家庭”</text>
-    <text x="86" y="392" class="body">“地方特色，很感人”</text>
-    <path d="M86 438 H334" stroke="#d8b48a" stroke-width="2"/>
-    <text x="86" y="474" class="bodySmall">问题：泛、窄、标签化。</text>
-    <text x="86" y="505" class="bodySmall">错过侨批、下南洋、乡音。</text>
-    <text x="86" y="536" class="bodySmall">也容易把潮汕写成单点。</text>
-  </g>
-
-  <g filter="url(#lift)" class="floatFast">
-    <rect x="519" y="190" width="240" height="146" rx="18" fill="url(#filmGrad)"/>
-    <rect x="540" y="211" width="198" height="86" rx="10" fill="#fff0d6" opacity="0.93"/>
-    <circle cx="559" cy="316" r="7" fill="#f5c56d"/>
-    <circle cx="591" cy="316" r="7" fill="#f5c56d"/>
-    <circle cx="623" cy="316" r="7" fill="#f5c56d"/>
-    <path d="M560 244 C590 222 625 222 653 246 C674 264 701 261 721 239" fill="none" stroke="#7a261d" stroke-width="5" stroke-linecap="round"/>
-    <path d="M566 270 H714" stroke="#0f766e" stroke-width="5" stroke-linecap="round" opacity="0.75"/>
-  </g>
-
-  <g>
-    <rect x="472" y="154" width="335" height="58" rx="24" fill="#0f766e"/>
-    <text x="500" y="192" class="mono">02 SKILL LENS</text>
-    <text x="500" y="374" class="panelTitle">先换分析镜头</text>
-
-    <g class="stageA">
-      <rect x="500" y="404" width="258" height="40" rx="20" fill="#7a261d"/>
-      <text x="520" y="431" class="chip">侨批：钱与信一起回家</text>
+    <g filter="url(#panel-shadow)">
+      <rect x="64" y="182" width="422" height="454" rx="10" fill="#0C202D" stroke="#35505C"/>
+      <rect x="794" y="182" width="422" height="454" rx="10" fill="url(#after-panel)" stroke="#54717B"/>
     </g>
-    <g class="stageB">
-      <rect x="500" y="456" width="258" height="40" rx="20" fill="#0f766e"/>
-      <text x="520" y="483" class="chip">阿嬷：代际情感入口</text>
+
+    <rect x="64" y="182" width="422" height="6" rx="3" fill="#C34B38"/>
+    <text x="92" y="229" class="panel-label" fill="#E47A69">BEFORE · 泛化表达</text>
+    <line x1="92" y1="251" x2="458" y2="251" stroke="#35505C"/>
+
+    <text x="92" y="305" class="quote salt">“潮汕方言亲情片”</text>
+    <text x="92" y="353" class="quote salt">“潮汕人很重家庭”</text>
+    <text x="92" y="401" class="quote salt">“地方特色，很感人”</text>
+
+    <rect x="92" y="454" width="366" height="112" rx="6" fill="#142A36"/>
+    <text x="116" y="490" class="body-strong" fill="#E47A69">问题</text>
+    <text x="116" y="523" class="body mist">标签很满，细节很少；</text>
+    <text x="116" y="551" class="body mist">侨批、下南洋与乡音都被略过。</text>
+
+    <text x="640" y="211" text-anchor="middle" class="panel-label" fill="#D7A84B">SKILL LENS</text>
+    <line x1="640" y1="234" x2="640" y2="556" stroke="#D7A84B" stroke-width="2" stroke-opacity="0.55"/>
+
+    <g>
+      <circle cx="640" cy="291" r="7" fill="#C34B38"/>
+      <rect x="519" y="265" width="242" height="52" rx="26" fill="#0D2A3A" stroke="#4F6B76"/>
+      <text x="640" y="297" text-anchor="middle" class="lens salt">侨批 · 钱与信一起回家</text>
     </g>
-    <g class="stageC">
-      <rect x="500" y="508" width="258" height="40" rx="20" fill="#b87920"/>
-      <text x="520" y="535" class="chip">乡音：不可替代的亲近</text>
+    <g>
+      <circle cx="640" cy="394" r="7" fill="#D7A84B"/>
+      <rect x="519" y="368" width="242" height="52" rx="26" fill="#0D2A3A" stroke="#4F6B76"/>
+      <text x="640" y="400" text-anchor="middle" class="lens salt">阿嬷 · 代际情感入口</text>
     </g>
-  </g>
+    <g>
+      <circle cx="640" cy="497" r="7" fill="#AFC2C8"/>
+      <rect x="519" y="471" width="242" height="52" rx="26" fill="#0D2A3A" stroke="#4F6B76"/>
+      <text x="640" y="503" text-anchor="middle" class="lens salt">乡音 · 不可替代的亲近</text>
+    </g>
 
-  <g filter="url(#lift)" class="floatSlow">
-    <path d="M908 238 L1148 216 L1175 421 L934 449 Z" fill="#fff4db"/>
-    <path d="M925 268 L1133 249" stroke="#b87920" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
-    <path class="writing" d="M934 303 C973 292 999 306 1034 294 C1076 280 1116 294 1144 281" fill="none" stroke="#7a261d" stroke-width="5" stroke-linecap="round"/>
-    <path class="writing" d="M944 344 C989 329 1029 348 1070 334 C1107 322 1131 330 1155 318" fill="none" stroke="#0f766e" stroke-width="5" stroke-linecap="round"/>
-    <path d="M957 404 C998 390 1039 411 1083 398 C1116 388 1143 389 1163 378" fill="none" stroke="#b87920" stroke-width="4" stroke-linecap="round" opacity="0.76"/>
-    <circle cx="1137" cy="390" r="28" fill="#b43b2b" opacity="0.14"/>
-    <circle cx="1137" cy="390" r="17" fill="none" stroke="#b43b2b" stroke-width="4" opacity="0.42"/>
-  </g>
+    <rect x="794" y="182" width="422" height="6" rx="3" fill="#D7A84B"/>
+    <text x="822" y="229" class="panel-label" fill="#E7C779">AFTER · 有据可写</text>
+    <line x1="822" y1="251" x2="1188" y2="251" stroke="#54717B"/>
 
-  <g>
-    <rect x="887" y="154" width="335" height="58" rx="24" fill="#b87920"/>
-    <text x="915" y="192" class="mono">03 OUTPUT</text>
-    <text x="915" y="473" class="panelTitle">输出不再只是“感人”</text>
-    <text x="915" y="511" class="bodySmall">它会写出：远方如何回到家，</text>
-    <text x="915" y="540" class="bodySmall">乡音如何保存亲密关系，</text>
-    <text x="915" y="569" class="bodySmall">汕潮揭与海外潮人如何同场。</text>
-  </g>
+    <text x="822" y="302" class="body-strong salt">输出不再只是“感人”</text>
+    <text x="822" y="350" class="body mist">远方如何借一封侨批回到家；</text>
+    <text x="822" y="388" class="body mist">阿嬷如何成为代际记忆的入口；</text>
+    <text x="822" y="426" class="body mist">乡音如何保存不可替代的亲密；</text>
+    <text x="822" y="464" class="body mist">汕、潮、揭与海外潮人如何同场。</text>
 
-  <path class="flowLine" d="M398 365 C430 337 448 311 472 286 C505 252 544 240 595 251 C684 270 715 327 807 329 C844 330 862 306 887 284" fill="none" stroke="url(#goldLine)" stroke-width="8" stroke-linecap="round"/>
-  <path class="scan" d="M455 162 V578" stroke="#fff7e9" stroke-width="18" stroke-linecap="round" opacity="0.38"/>
-  <path class="scan" d="M458 162 V578" stroke="#b43b2b" stroke-width="3" stroke-linecap="round" opacity="0.42"/>
+    <rect x="822" y="512" width="366" height="54" rx="6" fill="#D7A84B" fill-opacity="0.12" stroke="#D7A84B" stroke-opacity="0.52"/>
+    <text x="1005" y="546" text-anchor="middle" class="body-strong" fill="#F1D89A">具体细节，必须回到来源与地方差异</text>
 
-  <g class="pulse" filter="url(#lift)">
-    <circle cx="640" cy="630" r="46" fill="#7a261d"/>
-    <circle cx="640" cy="630" r="38" fill="#fff7e9" opacity="0.12"/>
-    <text x="609" y="637" class="mono">Skill</text>
+    <line x1="64" y1="676" x2="1216" y2="676" stroke="#35505C"/>
+    <text x="64" y="703" class="eyebrow muted">TEOCHEW PEOPLE · WRITING AND VIDEO PRODUCTION</text>
   </g>
-  <g class="spark1">
-    <path d="M410 610 l9 20 l21 4 l-19 10 l2 22 l-16 -15 l-20 8 l9 -20 l-14 -17 l22 2 Z" fill="#b87920"/>
-  </g>
-  <g class="spark2">
-    <path d="M830 602 l8 18 l19 4 l-17 10 l2 20 l-15 -13 l-18 7 l8 -18 l-13 -15 l20 1 Z" fill="#0f766e"/>
-  </g>
-  <g class="spark3">
-    <path d="M748 108 l7 16 l17 3 l-15 9 l1 18 l-13 -12 l-17 7 l7 -17 l-11 -13 l17 1 Z" fill="#b43b2b"/>
-  </g>
-
-  <path d="M84 656 H1196" stroke="#2a211d" stroke-opacity="0.16" stroke-width="2"/>
-  <text x="88" y="688" class="caption">Teochew People (潮汕人) Skill：让 agent 先学会范围、分寸、来源与地方感。</text>
 </svg>
