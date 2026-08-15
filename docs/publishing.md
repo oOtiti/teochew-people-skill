@@ -1,110 +1,111 @@
 # npm 发布与更新指南
 
-这份文档给维护者使用，说明如何第一次发布、如何更新版本，以及 GitHub Actions 自动发布怎么配置。
+本文件供维护者使用。`0.2.0` 是这次 LLM Wiki 结构升级的 release target；版本号写进仓库不代表已经发布，必须先完成证据、结构、行为与 tarball 四类检查。
 
-## 当前发布状态
+## 发布目标
 
-公开安装入口：
+- Package：[`teochew-people-skill`](https://www.npmjs.com/package/teochew-people-skill)
+- Repository：[`oOtiti/teochew-people-skill`](https://github.com/oOtiti/teochew-people-skill)
+- Target version：`0.2.0`
+- 实际公开版本：以 `npm view teochew-people-skill version` 为准
 
-- Package: [`teochew-people-skill`](https://www.npmjs.com/package/teochew-people-skill)
-- Current version: 以 `npm view teochew-people-skill version` 或 npm 页面为准
-- GitHub repository: [`oOtiti/teochew-people-skill`](https://github.com/oOtiti/teochew-people-skill)
+## 0.2.0 release gate
 
-## 第一次发布
+在准备 tag 或 GitHub Release 前，从干净 checkout 运行：
 
-第一次发布建议先在本机完成，因为 npm 需要确认你的账号具备发布权限。
+```bash
+npm ci
+npm run wiki:index:check
+npm run wiki:lint
+npm test
+npm run pack:check
+```
 
-1. 登录 npm：
+全部命令必须返回 `0`。另外检查 `git diff --check`，确认没有空白错误；若 raw 或 topic 在验证中发生变化，重新生成索引后从头执行。
+
+这些门槛分别证明：
+
+- `wiki:index:check`：raw／wiki 索引与当前语料一致，没有手改生成文件。
+- `wiki:lint`：frontmatter、唯一 ID、source IDs、related 路径、证据门槛与 freshness 合法。
+- `npm test`：行为场景、安装器、wiki 工具、索引、lint 与结构验证通过。
+- `pack:check`：npm dry-run 能列出将要公开的文件。
+
+## 审计 tarball
+
+用机器可读输出复核精确清单：
+
+```bash
+npm pack --dry-run --json
+```
+
+必须看到：
+
+- public `skills/teochew-people-skill/`，包括 raw、wiki、operations、维护脚本、vault templates 和 `agents/openai.yaml`；
+- 根目录安装脚本、公开 docs 与 examples；
+- `assets/hero-background.png`、`assets/hero.svg`、`assets/social-preview.png`、`assets/case-demo.svg`；
+- README、CONTRIBUTING、LICENSE、package metadata。
+
+必须确认不存在：
+
+- `~/.teochew-people` 或任何复制进工作区的用户 vault；
+- 任意项目 `.teochew-people` overlay；
+- 私有家庭资料、profile、授权原件、私有 raw；
+- `.worktrees`、`node_modules`、缓存、日志、临时文件、`.env`、token 或 OTP；
+- 上一次 `npm pack` 产生的 `.tgz`。
+
+`vault-templates/` 是无用户数据的公开模板，可以发布；实际 vault 永不发布。发现私有路径后先停止发布并修正允许清单，不要依赖发布后删除。
+
+## 首次发布与 Trusted Publishing
+
+若包还未建立，维护者可在本机完成首次发布：
 
 ```bash
 npm login
-```
-
-2. 确认当前账号：
-
-```bash
 npm whoami
-```
-
-3. 运行本地检查：
-
-```bash
-npm run validate
-npm run pack:check
-```
-
-4. 发布公开包：
-
-```bash
 npm publish --access public
 ```
 
-如果 npm 提示需要 OTP，输入 npm 双重验证里的 6 位动态码。这个码通常来自你设置 npm 2FA 时绑定的 Authenticator 应用或安全密钥，不是 GitHub 的验证码，也不是普通邮箱登录验证码。
+OTP 来自 npm 账号配置的验证方式，不是 GitHub 验证码。不要把 token、恢复码、OTP 或 `.env` 写进仓库。
 
-## 配置 Trusted Publishing
+首次发布后，在 npm 包设置中配置 Trusted Publisher：
 
-第一次包发布成功后，建议在 npmjs.com 为包配置 Trusted Publishing。这样以后可以通过 GitHub Release 自动发布，不需要在 GitHub Secrets 里保存长期 npm token，也能让 npm 为发布生成 provenance。
+- Organization or user：`oOtiti`
+- Repository：`teochew-people-skill`
+- Workflow filename：`publish-npm.yml`
+- Environment name：留空
 
-在 npmjs.com 进入包设置后，找到 Trusted Publisher，选择 GitHub Actions，并填写：
+GitHub Actions 由 OIDC 临时证明发布来源，不需要长期 npm token。工作流的实际行为见 [github-workflows.md](./github-workflows.md)。
 
-- Organization or user: `oOtiti`
-- Repository: `teochew-people-skill`
-- Workflow filename: `publish-npm.yml`
-- Environment name: 留空
+## 创建 0.2.0 Release
 
-保存后，GitHub 的 `.github/workflows/publish-npm.yml` 就可以通过 OIDC 发布这个包。
+1. 确认 `package.json` 与 `package-lock.json` 都是 `0.2.0`。
+2. 确认完整 release gate 与 tarball 人工审计通过。
+3. 推送已经审查的默认分支。
+4. 创建 tag `v0.2.0`（工作流也接受无 `v` 的 `0.2.0`，但项目统一优先使用 `v0.2.0`）。
+5. 发布 GitHub Release，观察 `Publish npm package` workflow。
 
-不要把 npm token 放进仓库，也不要长期保留为了第一次发布临时生成的 token。
+Release tag 与 `package.json` 不一致时工作流会停止。npm 的同一版本只能发布一次；若 `0.2.0` 已存在，自动流程会跳过重复 publish。
 
-## 更新 npm 包
-
-npm 的同一个版本号只能发布一次。每次要更新公开包，都要先升级 `package.json` 里的版本号。
-
-常用版本号规则：
-
-- 修正文案、补资料、改 README：`npm version patch`
-- 增加新能力、补充新的参考资料结构：`npm version minor`
-- 做不兼容的大调整：`npm version major`
-
-例如从 `0.1.1` 升级到 `0.2.0`：
+## 发布后验证
 
 ```bash
-npm version minor
-git push origin main --follow-tags
+npm view teochew-people-skill@0.2.0 version
+npm view teochew-people-skill@0.2.0 dist.tarball
+npm pack teochew-people-skill@0.2.0 --dry-run --json
 ```
 
-然后在 GitHub 页面创建一个 Release，选择刚刚推送的 tag。Release 发布后，`Publish npm package` workflow 会自动运行。
-
-Release tag 要和 `package.json` 版本一致。比如版本是 `0.2.0`，tag 应为 `v0.2.0` 或 `0.2.0`；不一致时 workflow 会停止，避免发错版本。
-
-如果这个版本已经在 npm 上发布过，workflow 会自动跳过 `npm publish`，只保留一次成功的 Release 检查记录。这样可以安全补建 GitHub Release，不会因为 npm 禁止重复发布同一版本而把 Actions 跑红。
-
-如果暂时不使用 GitHub Release，也可以本地手动发布：
+确认 registry 返回 `0.2.0`，tarball URL 可访问，公开包仍包含 raw／wiki／operations／scripts／docs／examples／四项视觉资产，且没有任何私有 vault 或项目 overlay。然后用临时目录做一次真实安装验证：
 
 ```bash
-npm run validate
-npm run pack:check
-npm publish --access public
+npx teochew-people-skill@0.2.0 --dest /path/to/temporary-skills --no-vault
 ```
 
-## 发布后检查
+确认安装目标只有 public skill，没有创建 `~/.teochew-people`。
 
-发布完成后，检查 npm 当前版本：
+## 后续版本
 
-```bash
-npm view teochew-people-skill version
-```
+- 只修文字或小范围资料错误：patch。
+- 增加兼容的新主题、工作流或能力：minor。
+- 引入不兼容的 schema、命令或安装行为：major。
 
-用户即可安装：
-
-```bash
-npx teochew-people-skill --codex
-npx teochew-people-skill --claude
-```
-
-## 注意事项
-
-- 不要把 npm token、恢复码、邮箱验证码或 `.env` 文件提交到仓库。
-- 发布前先看 `npm run pack:check` 输出，确认包里没有本地缓存、临时文件或私密资料。
-- 已发布到 npm 的版本号不能覆盖；发现小错误时发布下一个 patch 版本。
-- 如果 GitHub Actions 发布失败，优先检查 npm Trusted Publisher 里的 workflow 文件名是否精确等于 `publish-npm.yml`。
+不要覆盖已经发布的版本。发现问题时修复、重新跑完整 release gate，并发布新的版本号。

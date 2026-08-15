@@ -1,4 +1,4 @@
 interface:
-  display_name: "Teochew People (潮汕人)"
-  short_description: "用于潮汕人与粤东潮汕文化写作审校"
-  default_prompt: "使用 $teochew-people-skill 写一段准确、有地方感、不过度概括的潮汕文化说明。"
+  display_name: "TEOCHEW PEOPLE"
+  short_description: "基于来源、可持续演进的潮汕文化写作、视频知识库与本地个性化"
+  default_prompt: "使用 $teochew-people-skill 从公共主题页和 raw 来源整理可追溯事实、地方差异与写作分镜细节；如我已授权本地 vault，再按其中偏好个性化。"

@@ -1,61 +1,75 @@
-# GitHub Workflows 说明
+# GitHub Workflows
 
-本仓库使用 GitHub Actions 做两类自动化：检查质量，以及发布 npm 包。
+本仓库用 GitHub Actions 做跨版本基础检查和 npm 发布。工作流是自动化底线，不替代 `0.2.0` 的完整 release gate；维护者仍需在发布前完成 wiki 索引、lint、测试和 tarball 审计。
 
-## 什么是 workflow
-
-Workflow 是 GitHub Actions 里的“自动化流程”。它写在 `.github/workflows/*.yml` 文件里，由事件触发，例如：
-
-- 有人向 `main` 推送代码。
-- 有人打开或更新 Pull Request。
-- 维护者发布 GitHub Release。
-- 维护者在 GitHub 页面手动点击运行。
-
-每个 workflow 由一个或多个 job 组成。job 会在 GitHub 提供的云端机器上运行命令，比如安装 Node.js、运行校验脚本、打包检查、发布 npm 包。
-
-## 本仓库有哪些 workflow
-
-### `CI`
+## CI
 
 文件：`.github/workflows/ci.yml`
 
-触发时机：
+触发：
 
-- 推送到 `main`。
-- 打开或更新 Pull Request。
+- 推送到 `main`；
+- 打开或更新 Pull Request；
 - 手动运行。
 
-它会做这些事：
+CI 在 Node.js 22 与 24 上执行：
 
-- 在 Node.js 22 和 Node.js 24 上检查仓库。
-- 运行 `npm test`，覆盖行为场景、安装器单测、wiki 索引检查、wiki lint 和结构校验。
-- 运行 `npm run pack:check`，确认 npm 包里会带上需要发布的文件。
+```bash
+npm ci
+npm test
+npm run pack:check
+```
 
-### `Publish npm package`
+`npm test` 覆盖行为场景、安装器单测、wiki index check、wiki lint 和结构校验；`pack:check` 展示 npm dry-run tarball。Pull Request 仍应在本地或独立验证任务中审阅完整命令输出与 tarball 清单：
+
+```bash
+npm run wiki:index:check
+npm run wiki:lint
+npm test
+npm run pack:check
+```
+
+其中前两条是为了在需要时把索引或证据错误单独暴露到日志里；CI 本身以 `npm test` 为总门槛。
+
+## Publish npm package
 
 文件：`.github/workflows/publish-npm.yml`
 
-触发时机：
+触发：
 
-- 发布 GitHub Release。
-- 手动运行。
+- 发布 GitHub Release；
+- 维护者手动运行。
 
-它会做这些事：
+工作流使用 Node.js 24，校验 Release tag 与 `package.json` 版本一致，运行结构校验与打包预检查，再通过 npm Trusted Publishing／OIDC 发布到 npmjs.com。若该版本已经存在，则跳过重复发布。仓库不保存长期 npm token。
 
-- 拉取当前代码。
-- 使用 Node.js 24。
-- 确认 GitHub Release 的 tag 和 `package.json` 版本一致，例如 `vX.Y.Z` 对应 `X.Y.Z`。
-- 先跑完整校验和打包预检查。
-- 通过 npm Trusted Publishing 发布到 npmjs.com，并携带 npm provenance。
+自动发布开始前，Release 审核人必须确认完整 `0.2.0` release gate 已通过：
 
-这个 workflow 不把 npm 密钥写进仓库。它依赖 npm 和 GitHub Actions 之间的 OIDC 信任关系，发布时由 GitHub 临时证明“这次发布来自这个公开仓库的这个 workflow”。
+1. `npm run wiki:index:check`
+2. `npm run wiki:lint`
+3. `npm test`
+4. `npm run pack:check`
+5. 审阅 `npm pack --dry-run --json` 的精确文件清单
 
-公开安装入口是 npmjs.com：[teochew-people-skill](https://www.npmjs.com/package/teochew-people-skill)。
+## Tarball 边界
 
-## 为什么没有加 GitHub Packages 发布
+公开包应包含：
 
-GitHub 侧边栏推荐的 “Publish Node.js Package to GitHub Packages” 是发布到 GitHub Packages，不是发布到 npmjs.com。
+- `skills/teochew-people-skill/` 下的 `SKILL.md`、raw、wiki、operations、维护脚本、vault templates 与 UI 元数据；
+- 根目录安装脚本、`docs/` 中的公开工作流与发布说明、`examples/` 中的 before/after 和两份 showcase；
+- `assets/hero-background.png`、`assets/hero.svg`、`assets/social-preview.png`、`assets/case-demo.svg`；
+- README、CONTRIBUTING、LICENSE 与包元数据。
 
-这个项目现在的包名是 `teochew-people-skill`，更适合公开搜索和直接 `npx teochew-people-skill --codex` 使用。GitHub Packages 的 npm 包通常需要 scoped 包名，例如 `@oOtiti/teochew-people-skill`，安装时还要配置 GitHub npm registry，对普通使用者不如 npmjs.com 直观。
+公开包绝不能包含：
 
-所以本仓库优先发布到 npmjs.com；GitHub Packages 以后如果需要企业内部分发，再单独加。
+- 用户 `~/.teochew-people`；
+- 项目 `.teochew-people` overlay；
+- 家庭资料、授权原件、私有 raw 或 profile；
+- 工作区 `.worktrees`、缓存、日志、临时文件与打包产物。
+
+`package.json#files` 是允许清单，发布前仍要人工检查 dry-run 输出。视觉资产存在于仓库不等于一定入包；四个文件必须逐一出现在 tarball 清单中。
+
+## 为什么发布到 npmjs.com
+
+公开入口是 [`teochew-people-skill`](https://www.npmjs.com/package/teochew-people-skill)，支持直接运行 `npx teochew-people-skill --codex --no-vault`。GitHub Packages 通常要求 scoped 包名和额外 registry 配置，不是当前公开分发路径。
+
+维护者操作见 [publishing.md](./publishing.md)。

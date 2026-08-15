@@ -1,327 +1,161 @@
-# Teochew People (潮汕人) Skill
+![TEOCHEW PEOPLE](assets/social-preview.png)
 
-[![npm version](https://img.shields.io/npm/v/teochew-people-skill?color=0b7285&label=npm)](https://www.npmjs.com/package/teochew-people-skill)
-[![CI](https://github.com/oOtiti/teochew-people-skill/actions/workflows/ci.yml/badge.svg)](https://github.com/oOtiti/teochew-people-skill/actions/workflows/ci.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+TEOCHEW PEOPLE 是一个面向 AI agent 的潮汕文化 LLM Wiki：以可追溯的 raw 来源、已经建设好的主题页与分类索引为公共知识底座，按需检索并持续审计、研究和演进。它优先服务文章、口播与视频生产，让事实、地域和家庭差异，以及人物、动作、器物、声音、空间与顺序都能回到具体来源；它不把任何一次回答或本地经验包装成自动生成的真理。
 
-![Teochew People (潮汕人) Skill 项目预览图](assets/social-preview.png)
+## 为什么它不是普通资料合集
 
-让 AI 写潮汕文化时，少一点泛泛而谈，多一点地方感和分寸感。
+普通资料夹解决“文件放在哪里”，却很少回答“这句话能写多远”。本项目把知识分成互相可追踪的两层：
 
-`teochew-people-skill` 是一个面向 Codex、Claude Code 等 AI agent 的中文 skill。项目对外英文名使用 **Teochew People (潮汕人)**：`Teochew people` 是海外和英文语境里更常见、更有辨识度的潮人/潮汕人说法；`teochew-people-skill` 则作为 npm 包名、skill 目录名和调用名，保持安装与使用一致。
+- `raw/` 保存来源身份、A／B／C 层级、适用地域、可支持论断、制作细节与限制；未准入来源留在追加式 `source-review.md` 的 Reject／defer 记录中，不进入证据链。
+- `wiki/` 用主题页和分类索引组织定义、已确认事实、地方差异、相近概念、当代变化、未知边界与生产细节。topic 的 `source_ids` 可以反向定位 raw，而不是只给一个模糊“参考资料”列表。
 
-这个 skill 用于围绕粤东潮汕文化圈进行写作、审校、解释、研究和本地化。它帮助模型在写 Teochew people / 潮汕人、潮汕风俗、工夫茶、潮剧、英歌、粿品、潮汕菜、侨批、祠堂、善堂、营老爷、出花园等内容时，避免把潮州单点误写成全部潮汕，也避免把地方文化写成刻板印象或猎奇段子。
+因此，[拜老爷](skills/teochew-people-skill/wiki/customs/拜老爷.md)与[营老爷](skills/teochew-people-skill/wiki/customs/营老爷.md)会分成两个主题；[潮州古城申遗状态](skills/teochew-people-skill/wiki/current-events/潮州古城申遗边界-2026.md)会保留核验日，不把“推进申报”写成“已经入选”。
 
-这里的“潮汕”按更宽的粤东大潮汕文化圈理解，重点覆盖汕头、潮州、揭阳及海内外潮人社群。潮州是重要组成部分，但不是全部潮汕。
+## 它如何持续成长
 
-## npm 包
+五个操作入口构成一条可重复审计的维护链：
 
-这个项目可通过 npm 安装：[teochew-people-skill](https://www.npmjs.com/package/teochew-people-skill)。
+| 操作 | 什么时候使用 | 产出或边界 |
+| --- | --- | --- |
+| [ingest](skills/teochew-people-skill/operations/ingest.md) | 找到候选资料时 | 先判来源与独立性；录用才建 raw，拒绝也留理由 |
+| [query](skills/teochew-people-skill/operations/query.md) | 回答、写作、审校或制作时 | 从索引开始，首轮最多读 3 个 topic，再沿 source IDs 核对 |
+| [research](skills/teochew-people-skill/operations/research.md) | 资料陈旧、冲突、空缺或涉及当前状态时 | 先选来源再成文；当前事实实时核验 |
+| [evolve](skills/teochew-people-skill/operations/evolve.md) | 发现可长期复用且证据充分的变化时 | 公共事实、本地知识与项目覆盖分层写入；一次性回答不沉淀 |
+| [lint](skills/teochew-people-skill/operations/lint.md) | 公共语料变化或发布前 | 检查字段、证据门槛、断链、新鲜度和确定性索引 |
 
-```bash
-npx teochew-people-skill --codex
-npx teochew-people-skill --claude
-```
+这些动作不会宣称系统“自动掌握真相”。来源分级、文化论断、地方边界和冲突处理仍需可复查的人类判断；索引生成和结构检查才交给确定性工具。
 
-GitHub 仓库和 npm 包通过 `package.json` 里的 `repository`、README 徽章、GitHub About 链接和发布 workflow 互相指向。GitHub 侧边栏里的 Packages 区域显示的是 GitHub Packages，不是 npmjs.com；本项目的公开分发渠道以 npmjs.com 为主。
+## 为写作和视频生产准备的知识
 
-## 名字怎么理解
+主题页不仅保存“是什么”，也用 `claim_roles` 标记定义、历史、地理范围、画面、声音、动作顺序、器物与生活经验。内容制作者可以从[场景细节索引](skills/teochew-people-skill/wiki/guides/场景细节索引.md)选材，再按[写作生产](skills/teochew-people-skill/wiki/guides/写作生产.md)和[短视频口播与分镜](skills/teochew-people-skill/wiki/guides/短视频口播与分镜.md)把“口播事实—来源—镜头依据”对齐。
 
-- **Teochew People (潮汕人)**：面向英文读者、海外潮人社群、GitHub/NPM 项目展示时优先使用。
-- **潮汕人**：面向中文读者时使用，强调粤东潮汕文化圈和海内外潮人社群。
-- **潮人**：适合侨乡、同乡会、宗亲会、海外社群、文化社团语境。
-- **潮州人 / Teochew**：可用于历史潮州府、潮州话、海外 Teochew 社群等语境，但不要把“潮州”机械等同于整个潮汕。
-- **teochew-people-skill**：只作为技术名使用，包括 skill 名、包名、安装目录和命令。
+示范文章从一张供桌写到一条街巷，但同时守住地方边界：
 
-## 一个具体案例
+> 学者陈平原在 2025 年对潮州青龙庙会的一次观察中，记录队伍穿街约四小时，锣鼓与人声交叠，参与者喊出“兴啊”。这些动作和声音很具体，但它们只属于这次具名观察。
 
-比如分析 2026 年 4 月 30 日上映的潮汕方言电影《给阿嬷的情书》时，普通模型很容易只写成“方言亲情片”或“潮汕人很重家庭”。使用这个 skill，agent 会先抓住更有潮汕文化辨识度的线索：
+阅读全文与证据表：[《从一张供桌到一条街巷》](examples/showcase-article.md)。
 
-![《给阿嬷的情书》动态分析演示](assets/case-demo.svg)
+同一证据链还派生出可拍的 60 秒脚本：
 
-- 片名里的“阿嬷”不是普通亲昵称呼，而是潮汕家庭代际情感的入口。
-- 影片以侨批家书为核心线索，可以连接潮汕侨乡、下南洋、跨海汇款、家书往返和家国记忆。
-- 潮汕话不是点缀，而是人物关系、家庭伦理和地方记忆的声音载体。
-- 汕头、潮州、揭阳及海外潮人社群共同构成故事背景，不能把它简化成单一“潮州文化”。
-- 适合写成“阿嬷、侨批、乡音、远方和家”的分析，不适合写成“潮汕人都恋家”这种标签。
+> 00:37–00:50：具体到神明称谓，也不能见名就下结论。2024 年走访的潮州、汕头 17 处伯公场所里，同一称谓可有不同辨识，也有标识不明。
 
-示例提问：
+分镜同时标出 `source_detail`、创意转场、人物／庙宇授权和现场确认项。查看完整口播与时间码：[《60 秒视频：一张供桌，不等于一支巡行队伍》](examples/showcase-video.md)。
 
-```text
-使用 $teochew-people-skill，分析电影《给阿嬷的情书》为什么适合作为 Teochew People (潮汕人) 文化传播案例，重点写侨批、阿嬷、潮汕话和大潮汕文化圈，不要写成泛泛的亲情片影评。
-```
+## 知识如何保持全面和客观
 
-示例输出方向：
+- 范围以汕头、潮州、揭阳为核心，继续下钻县区、村社、家庭、年代与海外潮人社群；不把潮州市等同全部潮汕。
+- 稳定核心事实至少由一个直接 A 来源，或两个独立且直接的 B 来源支持。百科与搜索摘要只用于找线索，不自动成为核心证据。
+- `verified`、`synthesis`、`varies`、`unknown` 分开表达。来源越具体，论断范围也越具体；制作细节丰富不能补偿弱证据。
+- 当前官方状态、日程与在任人物实时核验；开放事件页按新鲜度复查。申请不等于入选，规划不等于完成。
+- 只摘要必要事实，不复制长篇文章、图片、电影、唱词或音频。家庭、未成年人、宗教参与者、庙宇与现场素材先处理版权、隐私、肖像和安全。
+- 可以解释信俗及其社会文化语境，但不输出统一神明表、供品表、咒语、禁忌、择日或可执行仪轨。
 
-```text
-《给阿嬷的情书》真正动人的地方，不只是祖孙亲情，而是把潮汕人的“家”写成了一条跨海的线。侨批让远方不再抽象：它既是钱，也是信，是下南洋的人寄回故土的牵挂。阿嬷守着的不只是一段往事，也是一个家庭如何在乡音、等待和记忆里延续下来。潮汕话在片中因此不只是方言对白，而是亲人之间最自然、也最难被翻译的情感方式。
-```
+完整规则见[公共 wiki 的目的与边界](skills/teochew-people-skill/wiki-purpose.md)、[Wiki schema 与证据规则](skills/teochew-people-skill/wiki-schema.md)和[事实与来源口径](skills/teochew-people-skill/wiki/guides/事实与来源口径.md)。
 
-## 为什么值得用
+## 个性化如何工作
 
-普通模型写潮汕文化时，常见问题是：
+知识按 `<project>/.teochew-people` → `~/.teochew-people` → bundled public wiki 的顺序解析：
 
-- 把“潮州”等同于“潮汕”。
-- 把一个村、一个姓氏、一个家庭的做法写成全体潮汕通用。
-- 把工夫茶、英歌、牛肉火锅当成潮汕文化全部。
-- 编造“古法”“祖训”“禁忌”“潮汕话读音”。
-- 把宗族、信俗、婚嫁、性别议题写得猎奇或武断。
+- 项目层保存当前项目的受众、选例与表达约束。
+- 用户层保存经明确同意的写作偏好、家庭讲法与授权本地材料。
+- 公共层提供可发布、可追溯的共同事实底座。
 
-这个 skill 的作用不是替用户写一篇百科，而是给 agent 一套“潮汕文化写作的判断框架”：什么时候用、什么时候不用、该读哪些资料、怎么写得准确、有温度、不过度概括。
-
-## 适合做什么
-
-- 写潮汕文化介绍、展览前言、文旅文案、公众号文章。
-- 写短视频脚本、口播稿、标题、菜品介绍、品牌故事。
-- 写出花园、节庆、家族纪念、长辈祝福等温和得体的中文。
-- 审校已有文案，指出范围错误、刻板印象、伪民俗和没有来源的说法。
-- 作为模板，fork 后改造成客家、广府、闽南、吴语、东北民俗等地域文化 skill。
-
-## 不适合做什么
-
-- 不适合替代学术论文、族谱考证、地方志编纂或正式出版物审稿。
-- 不适合给出具体祭拜流程、风水择日、宗教仪轨或家族规矩。
-- 不适合编造潮汕话读音、古法、祖训、禁忌或“老一辈都这么说”。
-- 不适合把潮汕文化包装成单一城市标签、商业成功学或猎奇民俗。
+本地层可以要求“优先揭阳案例”或“采用本家称谓”，但不能静默覆盖公共事实。发生冲突时并列来源、标明层级并请求确认。安装默认只部署公共 skill；只有用户明确同意后才初始化 vault。私有 vault、项目 overlay 与临时材料永不进入 npm 包。
 
 ## 快速安装
 
-### Codex
-
-通过 npm 安装：
+Codex：
 
 ```bash
-npx teochew-people-skill --codex
+npx teochew-people-skill --codex --no-vault
 ```
 
-现在也可以直接从 GitHub 安装：
+Claude Code：
 
 ```bash
-npx github:oOtiti/teochew-people-skill --codex
+npx teochew-people-skill --claude --no-vault
 ```
 
-从本仓库本地安装：
+自定义 skills 父目录：
 
 ```bash
-npm run install:codex
+npx teochew-people-skill --dest /path/to/skills --no-vault
 ```
 
-默认安装到：
-
-```text
-$CODEX_HOME/skills/teochew-people-skill
-```
-
-如果没有设置 `CODEX_HOME`，则安装到：
-
-```text
-~/.codex/skills/teochew-people-skill
-```
-
-### Claude Code
-
-通过 npm 安装：
+明确同意建立个性化层后，再单独使用：
 
 ```bash
-npx teochew-people-skill --claude
+npx teochew-people-skill --codex --init-vault
+npx teochew-people-skill --codex --init-project /path/to/project
 ```
 
-现在也可以直接从 GitHub 安装：
-
-```bash
-npx github:oOtiti/teochew-people-skill --claude
-```
-
-从本仓库本地安装：
-
-```bash
-npm run install:claude
-```
-
-默认安装到：
-
-```text
-~/.claude/skills/teochew-people-skill
-```
-
-### 自定义目录
-
-```bash
-npx teochew-people-skill --dest /path/to/skills
-```
-
-目标目录已存在时，安装器会停止并提示；确认覆盖时加：
-
-```bash
-npx teochew-people-skill --codex --force
-```
-
-## 项目自动化
-
-本仓库已经准备好 GitHub Actions：
-
-- `CI`：每次推送到 `main`、打开 Pull Request 或手动运行时，会在 Node.js 22 和 24 上执行完整 `npm test` 与 npm 打包预检查。
-- `Publish npm package`：发布 GitHub Release 或手动运行时，会先校验再发布到 npmjs.com。它按 npm Trusted Publishing 方式设计，不需要把长期 npm token 放进 GitHub Secrets。
-
-更细的说明见 [GitHub Workflows 说明](docs/github-workflows.md)。
-
-## 维护者发布
-
-第一次发布 npm 包时，维护者需要先在本机登录 npm，并确认账号已满足 npm 的发布要求：
-
-```bash
-npm login
-npm whoami
-npm run validate
-npm run pack:check
-npm publish --access public
-```
-
-之后每次更新都要先升级版本号，例如：
-
-```bash
-npm version patch
-git push origin main --follow-tags
-```
-
-然后在 GitHub 创建 Release，触发自动发布。完整步骤见 [npm 发布与更新指南](docs/publishing.md)。
+已存在的 public skill 不会被静默覆盖；确认重装时加 `--force`。安装器保留已经修改的 vault 文件，不会把私有目录删除后重建。GitHub 源也可直接安装：`npx github:oOtiti/teochew-people-skill --codex --no-vault`。
 
 ## 使用示例
 
-Codex 中可以这样说：
+概念辨析与内容生产：
 
 ```text
-使用 $teochew-people-skill，帮我写一段 Teochew People (潮汕人) 文化展览前言，重点不要只写潮州。
+使用 $teochew-people-skill，解释拜老爷和营老爷的区别，并写成 60 秒口播。每个事实给 topic/raw ID，地方个案不要外推，镜头标 source_detail 或 editorial_structure。
 ```
+
+当前事实核验：
 
 ```text
-使用 $teochew-people-skill，检查这段潮汕文旅文案有没有刻板印象，并给我一版改写。
+使用 $teochew-people-skill，核验“潮州古城申遗成功了吗”。先读事件页，再实时打开地方、国家与 UNESCO 官方页面；输出核验日、能证明与不能证明的内容。
 ```
+
+本地个性化：
 
 ```text
-使用 $teochew-people-skill，给孩子出花园写一段长辈可以念出来的祝福。
+使用 $teochew-people-skill，为揭阳家庭受众写一篇工夫茶文章。公共事实沿 topic/raw 核对；按我的本地 vault 调整选例和语气，但本家做法单独标注，不写回公共 wiki。
 ```
 
-Claude Code 中可以这样调用：
+更多修订示例见 [Before / After](examples/before-after.md)。
+
+## 知识结构
 
 ```text
-/teochew-people-skill 写一个 60 秒短视频脚本，解释英歌为什么有感染力，但不要猎奇化。
+skills/teochew-people-skill/
+├── SKILL.md                 # 薄路由器：触发、边界与按需读取
+├── agents/openai.yaml       # UI 元数据
+├── raw/
+│   ├── 2026-08-15/         # 已准入来源卡
+│   ├── index.md            # 确定性生成的来源索引
+│   └── source-review.md    # Admit、Reject、defer 追加式账本
+├── wiki/
+│   ├── index.md            # 公共主题总索引
+│   ├── concepts/ customs/ food/ arts-language/
+│   ├── places/ society-diaspora/ people-organizations/
+│   ├── current-events/     # 带日期和状态的事件页
+│   └── guides/             # 写作、分镜、事实与审校指南
+├── operations/             # ingest/query/research/evolve/lint
+├── scripts/                # 索引、lint、状态与 vault 工具
+├── assets/vault-template/  # 私有层模板，不含用户数据
+├── wiki-purpose.md
+├── wiki-schema.md
+└── wiki-log.md
 ```
 
-更多 before/after 示例见 [examples/before-after.md](examples/before-after.md)。
+从[公共 wiki 索引](skills/teochew-people-skill/wiki/index.md)开始查询；需要审查证据时再进入[原始资料索引](skills/teochew-people-skill/raw/index.md)。
 
-## 效果预览
+## 贡献资料与主题页
 
-原文：
+贡献采用 source-first 顺序：先把候选来源及录用／拒绝理由追加到 `raw/source-review.md`，录用后建立 raw 来源卡，最后才更新 topic。Issue [#1](https://github.com/oOtiti/teochew-people-skill/issues/1) 是完整范例：Issue 本身只证明内容需求，因此作为文化事实来源被 Reject；后续用期刊、国家非遗、具名报道与地方研究建立证据链，再补齐拜老爷、营老爷与地方神明主题页。
 
-```text
-潮汕文化就是潮州文化，潮汕人都喝功夫茶、看潮剧、拜老爷。
-```
+请先阅读 [CONTRIBUTING.md](CONTRIBUTING.md)。新增或改写内容要保留 evidence state、地方／家庭／年代差异、热点日期、版权与隐私边界；完成后重建索引并运行 lint 与测试。
 
-使用 skill 后的改写方向：
+## 验证、版本与许可证
 
-```text
-潮州是潮汕文化的重要源流和重镇，但潮汕文化圈还包括汕头、揭阳及海内外潮人社群。工夫茶、潮剧、英歌、粿品、侨批和各地年俗，共同构成了潮汕人关于家、乡、礼数与远方的记忆。不同地方、不同家庭的做法并不完全一样，真正值得写的，正是这些生活细节里的地方感。
-```
-
-再比如英文/双语项目介绍中，skill 会倾向这样处理：
-
-```text
-Teochew People (潮汕人) refers here to the wider Chaoshan cultural world: Shantou, Chaozhou, Jieyang, nearby Teochew-speaking communities, and the overseas Teochew diaspora. The point is not to reduce the culture to one city or one stereotype, but to write from living details: gongfu tea, Teochew opera, Yingge dance, rice cakes, qiaopi letters, clan halls, charity halls, family rituals, and the sound of the Teochew language.
-```
-
-## 仓库结构
-
-```text
-.
-├── README.md
-├── package.json
-├── package-lock.json
-├── LICENSE
-├── CONTRIBUTING.md
-├── docs/
-│   ├── github-workflows.md
-│   └── publishing.md
-├── .github/
-│   └── workflows/
-│       ├── ci.yml
-│       └── publish-npm.yml
-├── examples/
-│   └── before-after.md
-├── skills/
-│   ├── README.md
-│   └── teochew-people-skill/
-│       ├── SKILL.md
-│       ├── agents/
-│       │   └── openai.yaml
-│       ├── raw/
-│       │   ├── 2026-08-15/
-│       │   ├── index.md
-│       │   └── source-review.md
-│       ├── wiki/
-│       │   ├── index.md
-│       │   ├── concepts/
-│       │   ├── customs/
-│       │   ├── current-events/
-│       │   └── guides/
-│       ├── operations/
-│       │   ├── ingest.md
-│       │   ├── query.md
-│       │   ├── research.md
-│       │   ├── evolve.md
-│       │   └── lint.md
-│       ├── wiki-purpose.md
-│       ├── wiki-schema.md
-│       └── wiki-log.md
-├── scripts/
-│   ├── install-skill.mjs
-│   └── validate-skill.ps1
-└── .githooks/
-    └── pre-commit
-```
-
-## 设计原则
-
-- `SKILL.md` 保持轻量，只放触发说明、使用边界、流程和资料导航。
-- `raw/` 先保存来源卡片、分级、限制和 reject/defer 记录，再进入 `wiki/` 做主题页编排。
-- `wiki/` 不说“编译完成”，而是把主题页、分类索引、生产指南和实时页组织好，方便 agent 定位。
-- 事实性内容尽量附来源；涉及最新认定、活动时间、官方称号时需要实时核对。
-- 不把某个地方、家庭或村社的习惯写成整个潮汕通用。
-- 不为真实感编造潮汕话读音、祖训、禁忌或古法。
-- 英文对外介绍优先使用 `Teochew People (潮汕人)`，但内容解释要覆盖粤东潮汕文化圈，不把 Teochew 简化成单一潮州城市身份。
-
-## 本地验证
+当前特性版本为 `0.2.0`。本地发布门槛：
 
 ```bash
-npm run validate
+npm run wiki:index:check
+npm run wiki:lint
+npm test
 npm run pack:check
 ```
 
-Windows PowerShell 也可以直接运行：
+`npm run pack:check` 应包含 `package.json` 明确声明的 public skill、raw、wiki、operations、维护脚本、docs、examples 与公开预览素材；不得包含用户 `~/.teochew-people`、项目 `.teochew-people`、私有资料或临时文件。工作流见 [GitHub Workflows](docs/github-workflows.md)，维护者发布步骤见 [npm 发布指南](docs/publishing.md)。
 
-```powershell
-pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/validate-skill.ps1
-```
-
-启用仓库内 hook：
-
-```bash
-git config core.hooksPath .githooks
-```
-
-提交时 `.githooks/pre-commit` 会自动运行 skill 验证。
-
-## 贡献
-
-欢迎补充可靠资料、地方差异、写作模板和审校案例。请先读 [CONTRIBUTING.md](CONTRIBUTING.md)。
-
-最欢迎的贡献：
-
-- 更具体的汕头、潮州、揭阳、普宁、潮阳、潮南、惠来、揭西等地资料。
-- 可靠来源，尤其是方志、博物馆、非遗、政府、学术和深度报道。
-- 真实但不泄露隐私的 before/after 审校案例。
-- 对刻板印象、范围混淆、伪民俗表达的修正。
-
-## License
-
-MIT
+代码与内容按 [MIT License](LICENSE) 发布；外部来源、图片、影片、音乐及现场素材仍各自受原权利与许可约束。
