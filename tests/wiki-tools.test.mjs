@@ -93,9 +93,9 @@ async function installerFixture(root) {
   return { fixtureInstaller, fixtureRoot, source };
 }
 
-function sourcePage({ id, title, tier = "A", url = "https://example.test/source", status = "" }) {
+function sourcePage({ id, title, tier = "A", url = "https://example.test/source", status = "", extra = "" }) {
   const statusLine = status ? `source_status: ${status}\n` : "";
-  return `---\nid: ${id}\ntitle: ${title}\npage_type: source\nsource_tier: ${tier}\nsource_url: ${url}\npublisher: Example Publisher\naccessed: 2026-08-01\n${statusLine}---\nSource notes.\n`;
+  return `---\nid: ${id}\ntitle: ${title}\npage_type: source\nsource_tier: ${tier}\nsource_url: ${url}\npublisher: Example Publisher\naccessed: 2026-08-01\n${statusLine}${extra}---\nSource notes.\n`;
 }
 
 function topicPage({
@@ -241,6 +241,156 @@ test("lintWiki reports broken evidence, metadata, link, tier, and freshness rule
     assert.equal(codes.has(code), true, `expected lint issue ${code}`);
   }
   assert.equal(result.ok, false);
+});
+
+test("lintWiki validates media source evidence and rights metadata", async () => {
+  const root = await temporaryRoot();
+  await put(root, "raw/index.md", "<!-- GENERATED: wiki-index -->\n");
+  await put(root, "raw/source-review.md", "# Source review\n");
+  await put(
+    root,
+    "raw/valid-video.md",
+    sourcePage({
+      id: "valid-video",
+      title: "Valid video",
+      extra:
+        "media_type: video\nrights_status: link_only\nmedia_duration: 00:03:12\ntranscript_status: verified_excerpt\ntimecode_scope: 00:00:08-00:01:10\n",
+    }),
+  );
+  await put(
+    root,
+    "raw/broken-video.md",
+    sourcePage({
+      id: "broken-video",
+      title: "Broken video",
+      extra:
+        "media_type: stream\nrights_status: copied\ntranscript_status: complete\ntimecode_scope: first minute\n",
+    }),
+  );
+
+  const result = await lintWiki(root, { now: new Date("2026-08-15T00:00:00Z") });
+  const brokenIssues = result.issues.filter(({ file }) => file === "raw/broken-video.md");
+  const codes = new Set(brokenIssues.map(({ code }) => code));
+
+  for (const code of [
+    "missing-media-metadata",
+    "invalid-media-type",
+    "invalid-rights-status",
+    "invalid-transcript-status",
+    "invalid-timecode-scope",
+  ]) {
+    assert.equal(codes.has(code), true, `expected lint issue ${code}`);
+  }
+  assert.equal(result.issues.some(({ file }) => file === "raw/valid-video.md"), false);
+});
+
+test("lintWiki requires media source evidence to declare media_type when media metadata is present", async () => {
+  const root = await temporaryRoot();
+  await put(root, "raw/index.md", "<!-- GENERATED: wiki-index -->\n");
+  await put(root, "raw/source-review.md", "# Source review\n");
+  await put(
+    root,
+    "raw/rights-only.md",
+    sourcePage({ id: "rights-only", title: "Rights only", extra: "rights_status: link_only\n" }),
+  );
+  await put(
+    root,
+    "raw/duration-only.md",
+    sourcePage({ id: "duration-only", title: "Duration only", extra: "media_duration: 00:03:12\n" }),
+  );
+  await put(
+    root,
+    "raw/transcript-only.md",
+    sourcePage({ id: "transcript-only", title: "Transcript only", extra: "transcript_status: partial\n" }),
+  );
+  await put(
+    root,
+    "raw/timecode-only.md",
+    sourcePage({ id: "timecode-only", title: "Timecode only", extra: "timecode_scope: 00:00:08-00:01:10\n" }),
+  );
+
+  const result = await lintWiki(root, { now: new Date("2026-08-15T00:00:00Z") });
+
+  for (const file of [
+    "raw/rights-only.md",
+    "raw/duration-only.md",
+    "raw/transcript-only.md",
+    "raw/timecode-only.md",
+  ]) {
+    const issueForFile = result.issues.find(({ code, file: issueFile, message }) =>
+      code === "missing-media-metadata" &&
+      issueFile === file &&
+      /media_type/.test(message));
+    assert.ok(issueForFile, `expected missing media_type issue for ${file}`);
+  }
+});
+
+test("lintWiki validates media source evidence clock values and scope boundaries", async () => {
+  const root = await temporaryRoot();
+  await put(root, "raw/index.md", "<!-- GENERATED: wiki-index -->\n");
+  await put(root, "raw/source-review.md", "# Source review\n");
+  await put(
+    root,
+    "raw/bad-duration.md",
+    sourcePage({
+      id: "bad-duration",
+      title: "Bad duration",
+      extra: "media_type: video\nrights_status: link_only\nmedia_duration: 00:99:00\ntranscript_status: unavailable\n",
+    }),
+  );
+  await put(
+    root,
+    "raw/reversed-scope.md",
+    sourcePage({
+      id: "reversed-scope",
+      title: "Reversed scope",
+      extra:
+        "media_type: video\nrights_status: link_only\nmedia_duration: 00:03:12\ntranscript_status: verified_excerpt\ntimecode_scope: 00:02:00-00:01:00\n",
+    }),
+  );
+  await put(
+    root,
+    "raw/scope-past-duration.md",
+    sourcePage({
+      id: "scope-past-duration",
+      title: "Scope past duration",
+      extra:
+        "media_type: video\nrights_status: link_only\nmedia_duration: 00:03:12\ntranscript_status: verified_excerpt\ntimecode_scope: 00:03:00-00:03:30\n",
+    }),
+  );
+
+  const result = await lintWiki(root, { now: new Date("2026-08-15T00:00:00Z") });
+  const issueCodesByFile = new Map();
+  for (const { file, code } of result.issues) {
+    if (!issueCodesByFile.has(file)) issueCodesByFile.set(file, new Set());
+    issueCodesByFile.get(file).add(code);
+  }
+
+  assert.equal(issueCodesByFile.get("raw/bad-duration.md")?.has("invalid-media-duration"), true);
+  assert.equal(issueCodesByFile.get("raw/reversed-scope.md")?.has("invalid-timecode-scope"), true);
+  assert.equal(issueCodesByFile.get("raw/scope-past-duration.md")?.has("invalid-timecode-scope"), true);
+});
+
+test("lintWiki rejects video-only media source evidence fields on images", async () => {
+  const root = await temporaryRoot();
+  await put(root, "raw/index.md", "<!-- GENERATED: wiki-index -->\n");
+  await put(root, "raw/source-review.md", "# Source review\n");
+  await put(
+    root,
+    "raw/still-image.md",
+    sourcePage({
+      id: "still-image",
+      title: "Still image",
+      extra:
+        "media_type: image\nrights_status: editorial_original\nmedia_duration: 00:00:05\ntranscript_status: partial\ntimecode_scope: 00:00:00-00:00:05\n",
+    }),
+  );
+
+  const result = await lintWiki(root, { now: new Date("2026-08-15T00:00:00Z") });
+  const imageIssues = result.issues.filter(({ file }) => file === "raw/still-image.md");
+  const codes = new Set(imageIssues.map(({ code }) => code));
+
+  assert.equal(codes.has("invalid-media-fields"), true);
 });
 
 test("initVault creates a vault and preserves modified files on a second run", async () => {

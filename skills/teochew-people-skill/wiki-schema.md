@@ -24,6 +24,24 @@
 
 来源页可选用 `source_status: unavailable` 标明 canonical 已无法回放。这不改变来源发布时的层级，但该页只能作带日期的历史快照或检索线索；raw 索引必须显式显示此状态。未设置 `source_status` 不等于承诺链接永久可用，当前事实仍须按新鲜度规则复核。
 
+## 媒体来源字段
+
+当 `page_type: source` 页面记录音视频或图像证据时，可补充以下字段：
+
+- `media_type`：只允许 `video`、`audio`、`image`。
+- `rights_status`：只允许 `official_or_licensed`、`link_only`、`editorial_original`。
+- `media_duration`：视频或音频必填，格式固定为 `HH:MM:SS`。
+- `transcript_status`：视频或音频必填，只允许 `verified_excerpt`、`partial`、`unavailable`。
+- `timecode_scope`：当 `transcript_status` 不是 `unavailable` 时必填，格式固定为 `HH:MM:SS-HH:MM:SS`。
+
+只要出现任一媒体字段，就必须声明 `media_type`。`media_duration` 与 `timecode_scope` 不仅要符合 `HH:MM:SS` / `HH:MM:SS-HH:MM:SS` 书写格式，还要满足分钟与秒数小于 60、时间范围起点不晚于终点、且在已声明 `media_duration` 时终点不得超过总时长。
+
+`media_type: image` 不得携带 `media_duration`、`transcript_status` 或 `timecode_scope`；lint 会以 `invalid-media-fields` 拒绝这些只适用于音视频的字段。
+
+媒体来源默认只保存链接、权属状态、必要摘要和可核验的时间范围。完整转录仅在明确拥有许可时才可保存；否则只记录经人工核对的摘录。基于单帧或截图的观察必须限定为可直接看见的内容，不能外推人物身份、年代、地点归属或未经证实的因果关系。
+
+凡涉及潮汕话、专有人名、地名或口述细节，必须经过人工听辨或人工复核，不能只依赖自动语音识别、字幕抓取或机器翻译后直接入库。
+
 ## 受控值
 
 证据状态 `evidence_state`：
