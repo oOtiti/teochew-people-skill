@@ -22,6 +22,8 @@
 
 `page_type: category-index` 仅用于分类导航页，必填 `id`, `title`, `page_type`, `category`。分类页不承载文化论断，也不要求来源字段。
 
+来源页可选用 `source_status: unavailable` 标明 canonical 已无法回放。这不改变来源发布时的层级，但该页只能作带日期的历史快照或检索线索；raw 索引必须显式显示此状态。未设置 `source_status` 不等于承诺链接永久可用，当前事实仍须按新鲜度规则复核。
+
 ## 受控值
 
 证据状态 `evidence_state`：

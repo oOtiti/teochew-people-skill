@@ -3,7 +3,7 @@ id: ihchina-gongfu-tea-2008
 title: "茶艺（潮州工夫茶艺）"
 page_type: source
 source_tier: A
-source_url: "https://www.ihchina.cn/Article/Index/detail?id=15247"
+source_url: "https://www.ihchina.cn/art/detail/id/15247.html"
 publisher: "中国非物质文化遗产网·中国非物质文化遗产数字博物馆"
 accessed: "2026-08-15"
 geographic_scope: "广东省潮州市"
@@ -29,3 +29,5 @@ topic_scope: "工夫茶、茶器、正式表演程序、国家级名录"
 ## 限制与偏差
 
 项目页描述的是代表性、展示性的茶艺，不等于每个家庭的日常泡茶流程。不能把完整程序强加给所有地区，也不能仅凭此页宣称某一步骤是唯一正宗做法。
+
+原收录路径 `https://www.ihchina.cn/Article/Index/detail?id=15247` 在本轮复核中超时；同一官方站点、同一项目 ID 的现行页面为 frontmatter 中的 `source_url`。

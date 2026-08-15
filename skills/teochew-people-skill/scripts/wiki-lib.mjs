@@ -18,6 +18,7 @@ const PROJECT_OVERLAY_IGNORE = `# Teochew People project overlays are private by
 !.gitignore
 `;
 const SOURCE_TIERS = new Set(["A", "B", "C"]);
+const SOURCE_STATUSES = new Set(["unavailable"]);
 const EVIDENCE_STATES = new Set(["verified", "synthesis", "varies", "unknown"]);
 const FRESHNESS_VALUES = new Set(["enduring", "current", "event"]);
 const CORE_CLAIM_ROLES = new Set(["definition", "history", "geographic_scope"]);
@@ -194,10 +195,13 @@ function renderRawIndex(skillRoot, sources) {
     lines.push("_当前没有已收录的公开来源。_", "");
     return lines.join("\n");
   }
-  lines.push("| 来源 | 层级 | 发布者 | 文件 |", "| --- | --- | --- | --- |");
+  lines.push("| 来源 | 层级 | 状态 | 发布者 | 文件 |", "| --- | --- | --- | --- | --- |");
   for (const source of sources) {
     const link = `./${relativePath(path.join(skillRoot, "raw"), source.file)}`;
-    lines.push(`| ${escapeTable(source.title)} | ${escapeTable(source.source_tier)} | ${escapeTable(source.publisher)} | [${escapeTable(source.id)}](${link}) |`);
+    const sourceStatus = source.source_status === "unavailable"
+      ? "unavailable（不可回放）"
+      : source.source_status || "—";
+    lines.push(`| ${escapeTable(source.title)} | ${escapeTable(source.source_tier)} | ${escapeTable(sourceStatus)} | ${escapeTable(source.publisher)} | [${escapeTable(source.id)}](${link}) |`);
   }
   lines.push("");
   return lines.join("\n");
@@ -346,6 +350,9 @@ export async function lintWiki(skillRoot, options = {}) {
       if (missing.length) issues.push(issue("missing-metadata", record.relative, `Missing: ${missing.join(", ")}`));
       if (!SOURCE_TIERS.has(record.source_tier)) {
         issues.push(issue("invalid-source-tier", record.relative, `Source tier must be A, B, or C; received '${record.source_tier}'`));
+      }
+      if (record.source_status && !SOURCE_STATUSES.has(record.source_status)) {
+        issues.push(issue("invalid-source-status", record.relative, `Source status must be unavailable when present; received '${record.source_status}'`));
       }
       continue;
     }

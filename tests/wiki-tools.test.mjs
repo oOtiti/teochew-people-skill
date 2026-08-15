@@ -93,8 +93,9 @@ async function installerFixture(root) {
   return { fixtureInstaller, fixtureRoot, source };
 }
 
-function sourcePage({ id, title, tier = "A", url = "https://example.test/source" }) {
-  return `---\nid: ${id}\ntitle: ${title}\npage_type: source\nsource_tier: ${tier}\nsource_url: ${url}\npublisher: Example Publisher\naccessed: 2026-08-01\n---\nSource notes.\n`;
+function sourcePage({ id, title, tier = "A", url = "https://example.test/source", status = "" }) {
+  const statusLine = status ? `source_status: ${status}\n` : "";
+  return `---\nid: ${id}\ntitle: ${title}\npage_type: source\nsource_tier: ${tier}\nsource_url: ${url}\npublisher: Example Publisher\naccessed: 2026-08-01\n${statusLine}---\nSource notes.\n`;
 }
 
 function topicPage({
@@ -143,7 +144,7 @@ test("buildIndexes sorts topic pages by category and title and omits category in
   const root = await temporaryRoot();
   await put(root, "raw/source-review.md", "# Source review\n");
   await put(root, "raw/index.md", "<!-- GENERATED: wiki-index -->\n");
-  await put(root, "raw/source-b.md", sourcePage({ id: "source-b", title: "Source Beta" }));
+  await put(root, "raw/source-b.md", sourcePage({ id: "source-b", title: "Source Beta", status: "unavailable" }));
   await put(root, "raw/source-a.md", sourcePage({ id: "source-a", title: "Source Alpha" }));
   await put(root, "wiki/index.md", "<!-- GENERATED: wiki-index -->\n");
   await put(
@@ -167,6 +168,7 @@ test("buildIndexes sorts topic pages by category and title and omits category in
   );
   assert.equal(result.pages.some(({ pageType }) => pageType === "category-index"), false);
   assert.match(result.rawIndex, /Source Alpha[\s\S]*Source Beta/);
+  assert.match(result.rawIndex, /Source Beta[^\n]*unavailable/);
   assert.doesNotMatch(result.rawIndex, /Source review/i);
 });
 
@@ -175,7 +177,7 @@ test("lintWiki reports broken evidence, metadata, link, tier, and freshness rule
   await put(root, "raw/index.md", "<!-- GENERATED: wiki-index -->\n");
   await put(root, "raw/source-review.md", "# Source review\n");
   await put(root, "raw/a.md", sourcePage({ id: "source-a", title: "Source A" }));
-  await put(root, "raw/duplicate.md", sourcePage({ id: "source-a", title: "Duplicate", tier: "Z" }));
+  await put(root, "raw/duplicate.md", sourcePage({ id: "source-a", title: "Duplicate", tier: "Z", status: "broken" }));
   await put(root, "raw/c.md", sourcePage({ id: "source-c", title: "Source C", tier: "C" }));
   await put(root, "wiki/index.md", "<!-- GENERATED: wiki-index -->\n");
   await put(
@@ -232,6 +234,7 @@ test("lintWiki reports broken evidence, metadata, link, tier, and freshness rule
     "broken-related-link",
     "missing-metadata",
     "invalid-source-tier",
+    "invalid-source-status",
     "c-only-core-claim",
     "stale-event",
   ]) {
