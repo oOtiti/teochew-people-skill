@@ -9,6 +9,7 @@ const REQUIRED_FIELDS = [
   "rights_status",
   "creator",
   "creation_method",
+  "dimensions",
   "source_ids",
   "alt",
   "disclaimer",
@@ -52,6 +53,37 @@ async function admittedSourceIds(root) {
 function isWithin(parent, target) {
   const relative = path.relative(parent, target);
   return relative !== "" && !relative.startsWith(`..${path.sep}`) && relative !== ".." && !path.isAbsolute(relative);
+}
+
+function parseDeclaredDimensions(value) {
+  if (typeof value !== "string") return null;
+  const match = value.match(/^([1-9]\d*)x([1-9]\d*)$/);
+  if (!match) return null;
+  return { width: Number(match[1]), height: Number(match[2]) };
+}
+
+async function readAssetDimensions(target) {
+  const extension = path.extname(target).toLowerCase();
+  if (extension === ".png") {
+    const image = await readFile(target);
+    const signature = "89504e470d0a1a0a";
+    if (image.length < 24 || image.subarray(0, 8).toString("hex") !== signature) return null;
+    return { width: image.readUInt32BE(16), height: image.readUInt32BE(20) };
+  }
+
+  if (extension === ".svg") {
+    const svg = await readFile(target, "utf8");
+    const viewBox = svg.match(
+      /\bviewBox\s*=\s*["']\s*[-+]?\d*\.?\d+\s+[-+]?\d*\.?\d+\s+([1-9]\d*(?:\.\d+)?)\s+([1-9]\d*(?:\.\d+)?)\s*["']/i,
+    );
+    if (viewBox) return { width: Number(viewBox[1]), height: Number(viewBox[2]) };
+
+    const width = svg.match(/\bwidth\s*=\s*["']([1-9]\d*(?:\.\d+)?)(?:px)?["']/i);
+    const height = svg.match(/\bheight\s*=\s*["']([1-9]\d*(?:\.\d+)?)(?:px)?["']/i);
+    if (width && height) return { width: Number(width[1]), height: Number(height[1]) };
+  }
+
+  return null;
 }
 
 export async function validateMediaManifest(
@@ -108,6 +140,10 @@ export async function validateMediaManifest(
     if (typeof entry.disclaimer !== "string" || entry.disclaimer.trim().length < 12) {
       issues.push(issue("missing-disclaimer", "Disclaimer must be at least 12 characters.", label));
     }
+    const declaredDimensions = parseDeclaredDimensions(entry.dimensions);
+    if (entry.dimensions !== undefined && entry.dimensions !== null && entry.dimensions !== "" && !declaredDimensions) {
+      issues.push(issue("invalid-dimensions", "Dimensions must use positive integer WIDTHxHEIGHT format.", label));
+    }
     if (!Array.isArray(entry.source_ids) || entry.source_ids.length === 0) {
       issues.push(issue("missing-source-ids", "At least one admitted source id is required.", label));
     } else {
@@ -138,6 +174,22 @@ export async function validateMediaManifest(
     } catch {
       issues.push(issue("missing-asset", `Asset file does not exist: '${entry.path}'.`, label));
       continue;
+    }
+
+    const actualDimensions = await readAssetDimensions(target);
+    if (!actualDimensions) {
+      issues.push(issue("unreadable-asset-dimensions", "Asset dimensions could not be read from PNG or SVG metadata.", label));
+    } else if (
+      declaredDimensions &&
+      (declaredDimensions.width !== actualDimensions.width || declaredDimensions.height !== actualDimensions.height)
+    ) {
+      issues.push(
+        issue(
+          "dimensions-mismatch",
+          `Declared ${entry.dimensions}, actual ${actualDimensions.width}x${actualDimensions.height}.`,
+          label,
+        ),
+      );
     }
 
     if (path.extname(target).toLowerCase() === ".svg") {

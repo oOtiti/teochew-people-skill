@@ -24,6 +24,7 @@ function item(overrides = {}) {
     rights_status: "editorial_original",
     creator: "TEOCHEW PEOPLE",
     creation_method: "hand-authored SVG",
+    dimensions: "1200x675",
     source_ids: ["example-source"],
     alt: "原创编辑视觉，用抽象线条说明跨海家庭资料关系",
     disclaimer: "非历史照片、非电影剧照、非具体活动现场。",
@@ -134,4 +135,31 @@ test("validateMediaManifest rejects SVG files that fetch remote images", async (
     result.issues.some(({ code }) => code === "remote-svg-image"),
     true,
   );
+});
+
+test("validateMediaManifest requires valid dimensions that match the asset", async () => {
+  const root = await validRoot();
+  await put(
+    root,
+    "assets/media-manifest.json",
+    JSON.stringify(
+      {
+        version: 1,
+        items: [
+          item({ id: "missing-dimensions", dimensions: undefined }),
+          item({ id: "invalid-dimensions", dimensions: "1200 by 675" }),
+          item({ id: "mismatched-dimensions", dimensions: "800x450" }),
+        ],
+      },
+      null,
+      2,
+    ),
+  );
+
+  const result = await validateMediaManifest(root);
+  const codes = new Set(result.issues.map(({ code }) => code));
+
+  for (const code of ["missing-dimensions", "invalid-dimensions", "dimensions-mismatch"]) {
+    assert.equal(codes.has(code), true, `expected ${code}`);
+  }
 });
