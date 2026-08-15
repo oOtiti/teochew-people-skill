@@ -10,6 +10,11 @@ $readmeFile = Join-Path $root "README.md"
 $licenseFile = Join-Path $root "LICENSE"
 $contributingFile = Join-Path $root "CONTRIBUTING.md"
 $exampleFile = Join-Path $root "examples/before-after.md"
+$showcaseArticleFile = Join-Path $root "examples/showcase-article.md"
+$showcaseVideoFile = Join-Path $root "examples/showcase-video.md"
+$heroBackgroundFile = Join-Path $root "assets/hero-background.png"
+$heroFile = Join-Path $root "assets/hero.svg"
+$socialPreviewFile = Join-Path $root "assets/social-preview.png"
 $caseDemoFile = Join-Path $root "assets/case-demo.svg"
 $requiredSkillFiles = @(
     "wiki-purpose.md",
@@ -89,7 +94,20 @@ foreach ($category in $requiredWikiCategories) {
     }
 }
 
-foreach ($path in @($packageFile, $installScript, $readmeFile, $licenseFile, $contributingFile, $exampleFile, $caseDemoFile)) {
+foreach ($path in @(
+    $packageFile,
+    $installScript,
+    $readmeFile,
+    $licenseFile,
+    $contributingFile,
+    $exampleFile,
+    $showcaseArticleFile,
+    $showcaseVideoFile,
+    $heroBackgroundFile,
+    $heroFile,
+    $socialPreviewFile,
+    $caseDemoFile
+)) {
     if (-not (Test-Path -LiteralPath $path)) {
         Fail "缺少公开发布文件: $($path.Substring($root.Length + 1))"
     }
@@ -133,8 +151,61 @@ if ($package.name -ne "teochew-people-skill") {
     Fail "package.json 的 name 应为 teochew-people-skill"
 }
 
+if ($package.version -ne "0.2.0") {
+    Fail "package.json 的 version 应为 0.2.0"
+}
+
 if (-not $package.bin.'teochew-people-skill') {
     Fail "package.json 应提供 teochew-people-skill 命令"
+}
+
+$requiredPackageFiles = @(
+    "skills/teochew-people-skill",
+    "scripts/install-skill.mjs",
+    "examples",
+    "assets/hero-background.png",
+    "assets/hero.svg",
+    "assets/social-preview.png",
+    "assets/case-demo.svg",
+    "docs/github-workflows.md",
+    "docs/publishing.md",
+    "README.md",
+    "CONTRIBUTING.md",
+    "LICENSE"
+)
+$packageFiles = @($package.files)
+foreach ($required in $requiredPackageFiles) {
+    if ($packageFiles -notcontains $required) {
+        Fail "package.json files 应包含 '$required'"
+    }
+}
+
+foreach ($entry in $packageFiles) {
+    $normalized = ([string]$entry).Replace('\', '/').TrimStart('./')
+    if ($normalized -in @("", ".", "*", "**", "**/*") -or
+        $normalized -match '(^|/)\.teochew-people(/|$)' -or
+        $normalized -match '(^|/)\.(worktrees|git)(/|$)' -or
+        $normalized -match '(^|/)(private|tmp|temp)(/|$)') {
+        Fail "package.json files 不得包含宽泛或私有路径 '$entry'"
+    }
+}
+
+foreach ($keyword in @("llm-wiki", "knowledge-base", "潮汕文化", "Teochew", "source-grounded")) {
+    if (@($package.keywords) -notcontains $keyword) {
+        Fail "package.json keywords 应包含 '$keyword'"
+    }
+}
+
+foreach ($term in @("source-grounded", "LLM wiki", "knowledge base", "Teochew", "writing", "video")) {
+    if ($package.description -notmatch [regex]::Escape($term)) {
+        Fail "package.json description 应包含 '$term'"
+    }
+}
+
+$packageLockFile = Join-Path $root "package-lock.json"
+$packageLock = Get-Content -LiteralPath $packageLockFile -Raw | ConvertFrom-Json -AsHashtable
+if ($packageLock["version"] -ne "0.2.0" -or $packageLock["packages"][""]["version"] -ne "0.2.0") {
+    Fail "package-lock.json 的根版本应为 0.2.0"
 }
 
 $installer = Get-Content -LiteralPath $installScript -Raw
@@ -145,9 +216,48 @@ foreach ($term in @("--codex", "--claude", "--dest", "--force", "skills", "teoch
 }
 
 $readme = Get-Content -LiteralPath $readmeFile -Raw
-foreach ($term in @("Teochew People (潮汕人) Skill", "assets/case-demo.svg", "名字怎么理解", "一个具体案例", "给阿嬷的情书", "为什么值得用", "快速安装", "使用示例", "效果预览", "npx teochew-people-skill --codex", "npx teochew-people-skill --claude")) {
+foreach ($term in @(
+    "assets/social-preview.png",
+    "TEOCHEW PEOPLE",
+    "npx teochew-people-skill --codex",
+    "npx teochew-people-skill --claude",
+    "(examples/showcase-article.md)",
+    "(examples/showcase-video.md)"
+)) {
     if ($readme -notmatch [regex]::Escape($term)) {
         Fail "README 应包含 '$term'"
+    }
+}
+
+$expectedReadmeSections = @(
+    "为什么它不是普通资料合集",
+    "它如何持续成长",
+    "为写作和视频生产准备的知识",
+    "知识如何保持全面和客观",
+    "个性化如何工作",
+    "快速安装",
+    "使用示例",
+    "知识结构",
+    "贡献资料与主题页",
+    "验证、版本与许可证"
+)
+$actualReadmeSections = @([regex]::Matches($readme, '(?m)^## (.+?)\r?$') | ForEach-Object { $_.Groups[1].Value })
+if ($actualReadmeSections.Count -ne $expectedReadmeSections.Count) {
+    Fail "README 应且仅应包含 $($expectedReadmeSections.Count) 个规定的 H2 章节"
+}
+for ($i = 0; $i -lt $expectedReadmeSections.Count; $i++) {
+    if ($actualReadmeSections[$i] -ne $expectedReadmeSections[$i]) {
+        Fail "README 第 $($i + 1) 个 H2 应为 '$($expectedReadmeSections[$i])'"
+    }
+}
+
+if ($readme -notmatch '(?s)^!\[TEOCHEW PEOPLE\]\(assets/social-preview\.png\)\r?\n\r?\n[^\r\n]+\r?\n\r?\n## 为什么它不是普通资料合集') {
+    Fail "README 顶部必须只有 social preview hero，随后是一段产品定义和规定章节"
+}
+
+foreach ($forbidden in @("编译过", "编译内容", "Teochew People (潮汕人) Skill")) {
+    if ($readme -match [regex]::Escape($forbidden)) {
+        Fail "README 不应包含旧产品表达 '$forbidden'"
     }
 }
 

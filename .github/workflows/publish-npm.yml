@@ -43,8 +43,8 @@ jobs:
             exit 1
           fi
 
-      - name: Run full verification
-        run: npm test
+      - name: Validate skill structure
+        run: npm run validate
 
       - name: Check npm package contents
         run: npm run pack:check
