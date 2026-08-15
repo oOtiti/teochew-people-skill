@@ -5,7 +5,7 @@ import os from "node:os";
 import path from "node:path";
 import { promisify } from "node:util";
 import { fileURLToPath } from "node:url";
-import { mkdtemp, mkdir, readFile, rm, symlink, writeFile } from "node:fs/promises";
+import { copyFile, mkdtemp, mkdir, readFile, rm, symlink, writeFile } from "node:fs/promises";
 
 import {
   buildIndexes,
@@ -19,6 +19,13 @@ const temporaryRoots = [];
 const execFileAsync = promisify(execFile);
 const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const installerScript = path.join(repositoryRoot, "scripts", "install-skill.mjs");
+const wikiLibraryScript = path.join(
+  repositoryRoot,
+  "skills",
+  "teochew-people-skill",
+  "scripts",
+  "wiki-lib.mjs",
+);
 const vaultInitializerScript = path.join(
   repositoryRoot,
   "skills",
@@ -55,7 +62,11 @@ async function exists(candidate) {
 }
 
 function runInstaller(args, options = {}) {
-  return execFileAsync(process.execPath, [installerScript, ...args], {
+  return runInstallerAt(installerScript, args, options);
+}
+
+function runInstallerAt(script, args, options = {}) {
+  return execFileAsync(process.execPath, [script, ...args], {
     cwd: options.cwd || repositoryRoot,
     encoding: "utf8",
     windowsHide: true,
@@ -68,6 +79,18 @@ function runVaultInitializer(args, options = {}) {
     encoding: "utf8",
     windowsHide: true,
   });
+}
+
+async function installerFixture(root) {
+  const fixtureRoot = path.join(root, "fixture-repo");
+  const fixtureInstaller = path.join(fixtureRoot, "scripts", "install-skill.mjs");
+  const source = path.join(fixtureRoot, "skills", "teochew-people-skill");
+  await mkdir(path.dirname(fixtureInstaller), { recursive: true });
+  await mkdir(path.join(source, "scripts"), { recursive: true });
+  await copyFile(installerScript, fixtureInstaller);
+  await copyFile(wikiLibraryScript, path.join(source, "scripts", "wiki-lib.mjs"));
+  await put(source, "SKILL.md", "# Fixture skill\n");
+  return { fixtureInstaller, fixtureRoot, source };
 }
 
 function sourcePage({ id, title, tier = "A", url = "https://example.test/source" }) {
@@ -365,6 +388,55 @@ test("project initialization refuses a junction that escapes the resolved overla
     (error) => /symbolic|junction|reparse|unsafe/i.test(error.stderr || error.message),
   );
   assert.equal(await exists(path.join(external, "profile.md")), false);
+});
+
+test("installer rejects a source-tree junction before deleting an existing installation", async () => {
+  const root = await temporaryRoot();
+  const { fixtureInstaller, fixtureRoot, source } = await installerFixture(root);
+  const external = path.join(root, "external-junction-data");
+  const skillParent = path.join(root, "installed-skills");
+  const installedSkill = path.join(skillParent, "teochew-people-skill");
+  await put(external, "secret.txt", "must never be installed\n");
+  await symlink(external, path.join(source, "linked-outside"), process.platform === "win32" ? "junction" : "dir");
+  await put(installedSkill, "existing-marker.txt", "preserve before source validation\n");
+
+  await assert.rejects(
+    runInstallerAt(fixtureInstaller, ["--dest", skillParent, "--force"], { cwd: fixtureRoot }),
+    (error) => /symbolic|junction|reparse/i.test(error.stderr || error.message),
+  );
+
+  assert.equal(
+    await readFile(path.join(installedSkill, "existing-marker.txt"), "utf8"),
+    "preserve before source validation\n",
+  );
+  assert.equal(await exists(path.join(installedSkill, "linked-outside", "secret.txt")), false);
+});
+
+test("installer rejects an ordinary source-tree symlink when the platform permits creating one", async (t) => {
+  const root = await temporaryRoot();
+  const { fixtureInstaller, fixtureRoot, source } = await installerFixture(root);
+  const externalFile = await put(root, "external-file.txt", "must never be installed\n");
+  const skillParent = path.join(root, "installed-skills");
+  const installedSkill = path.join(skillParent, "teochew-people-skill");
+  await put(installedSkill, "existing-marker.txt", "preserve before source validation\n");
+
+  try {
+    await symlink(externalFile, path.join(source, "linked-file.txt"), "file");
+  } catch (error) {
+    if (error.code !== "EPERM") throw error;
+    t.diagnostic("ordinary file symlinks require extra privileges; the mandatory junction case runs separately");
+    return;
+  }
+
+  await assert.rejects(
+    runInstallerAt(fixtureInstaller, ["--dest", skillParent, "--force"], { cwd: fixtureRoot }),
+    (error) => /symbolic|junction|reparse/i.test(error.stderr || error.message),
+  );
+  assert.equal(
+    await readFile(path.join(installedSkill, "existing-marker.txt"), "utf8"),
+    "preserve before source validation\n",
+  );
+  assert.equal(await exists(path.join(installedSkill, "linked-file.txt")), false);
 });
 
 test("installer dry-run prints every resolved target without creating directories", async () => {

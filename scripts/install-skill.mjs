@@ -91,6 +91,19 @@ function overlaps(left, right) {
   return isWithin(left, right) || isWithin(right, left);
 }
 
+function lstatIfPresent(candidate) {
+  try {
+    return fs.lstatSync(candidate);
+  } catch (error) {
+    if (error.code === "ENOENT") return null;
+    throw error;
+  }
+}
+
+function sameIdentity(left, right) {
+  return left.dev === right.dev && left.ino === right.ino && left.birthtimeMs === right.birthtimeMs;
+}
+
 function assertNoLinkedComponents(candidate, label) {
   const absolute = path.resolve(candidate);
   const parsed = path.parse(absolute);
@@ -98,8 +111,9 @@ function assertNoLinkedComponents(candidate, label) {
   let current = parsed.root;
   for (const part of parts) {
     current = path.join(current, part);
-    if (!fs.existsSync(current)) break;
-    if (fs.lstatSync(current).isSymbolicLink()) {
+    const stats = lstatIfPresent(current);
+    if (!stats) break;
+    if (stats.isSymbolicLink()) {
       throw new Error(`${label} contains a symbolic link, junction, or reparse point: ${current}`);
     }
   }
@@ -118,6 +132,125 @@ function assertNoLinkedTree(candidate, label) {
       throw new Error(`${label} contains a symbolic link, junction, or reparse point: ${child}`);
     }
     if (entry.isDirectory()) assertNoLinkedTree(child, label);
+  }
+}
+
+function captureRealSourceTree(sourceRoot, label) {
+  const absoluteRoot = path.resolve(sourceRoot);
+  assertNoLinkedComponents(absoluteRoot, label);
+  const rootStats = fs.lstatSync(absoluteRoot);
+  if (!rootStats.isDirectory() || rootStats.isSymbolicLink()) {
+    throw new Error(`${label} must be a real directory without symbolic links, junctions, or reparse points`);
+  }
+
+  const entries = [];
+
+  function assertDirectoryUnchanged(directory, expected) {
+    assertNoLinkedComponents(directory, label);
+    const current = fs.lstatSync(directory);
+    if (!current.isDirectory() || current.isSymbolicLink() || !sameIdentity(expected, current)) {
+      throw new Error(`${label} directory changed during validation: ${directory}`);
+    }
+  }
+
+  function captureFile(file, relative, expected) {
+    let descriptor;
+    try {
+      descriptor = fs.openSync(file, "r");
+      const opened = fs.fstatSync(descriptor);
+      if (
+        !opened.isFile() ||
+        !sameIdentity(expected, opened) ||
+        opened.size !== expected.size ||
+        opened.mtimeMs !== expected.mtimeMs
+      ) {
+        throw new Error(`${label} entry changed during validation: ${relative}`);
+      }
+      const content = fs.readFileSync(descriptor);
+      const afterRead = fs.fstatSync(descriptor);
+      if (
+        !sameIdentity(opened, afterRead) ||
+        afterRead.size !== opened.size ||
+        afterRead.mtimeMs !== opened.mtimeMs
+      ) {
+        throw new Error(`${label} entry changed while it was being read: ${relative}`);
+      }
+      return { relative, type: "file", content, mode: opened.mode };
+    } finally {
+      if (descriptor !== undefined) fs.closeSync(descriptor);
+    }
+  }
+
+  function visit(directory, expectedDirectory) {
+    assertDirectoryUnchanged(directory, expectedDirectory);
+    const names = fs.readdirSync(directory).sort((left, right) => left.localeCompare(right, "en"));
+    assertDirectoryUnchanged(directory, expectedDirectory);
+
+    for (const name of names) {
+      const candidate = path.join(directory, name);
+      const relative = path.relative(absoluteRoot, candidate);
+      if (!isWithin(absoluteRoot, candidate)) throw new Error(`Unsafe ${label} entry: ${name}`);
+      const stats = fs.lstatSync(candidate);
+      if (stats.isSymbolicLink()) {
+        throw new Error(`${label} contains a symbolic link, junction, or reparse point: ${candidate}`);
+      }
+      if (stats.isDirectory()) {
+        entries.push({ relative, type: "directory", mode: stats.mode });
+        visit(candidate, stats);
+      } else if (stats.isFile()) {
+        entries.push(captureFile(candidate, relative, stats));
+      } else {
+        throw new Error(`${label} contains an unsupported filesystem entry: ${candidate}`);
+      }
+    }
+    assertDirectoryUnchanged(directory, expectedDirectory);
+  }
+
+  visit(absoluteRoot, rootStats);
+  return { root: absoluteRoot, entries, mode: rootStats.mode };
+}
+
+function copySourceSnapshot(snapshot, target) {
+  const destinationRoot = path.resolve(target);
+  assertNoLinkedComponents(destinationRoot, "Skill destination");
+  fs.mkdirSync(destinationRoot, { recursive: true, mode: snapshot.mode });
+  assertNoLinkedComponents(destinationRoot, "Skill destination");
+  const rootStats = fs.lstatSync(destinationRoot);
+  if (!rootStats.isDirectory() || rootStats.isSymbolicLink()) {
+    throw new Error("Skill destination must be a real directory without symbolic links, junctions, or reparse points");
+  }
+  const realRoot = fs.realpathSync(destinationRoot);
+
+  function assertDestinationSafe(destination) {
+    if (!isWithin(destinationRoot, destination)) throw new Error(`Unsafe skill destination: ${destination}`);
+    assertNoLinkedComponents(destination, "Skill destination");
+    const currentRoot = fs.lstatSync(destinationRoot);
+    if (!currentRoot.isDirectory() || currentRoot.isSymbolicLink() || !sameIdentity(rootStats, currentRoot)) {
+      throw new Error("Skill destination root changed during installation");
+    }
+    let existing = destination;
+    while (!lstatIfPresent(existing)) {
+      const parent = path.dirname(existing);
+      if (parent === existing || !isWithin(destinationRoot, parent)) {
+        throw new Error(`Unsafe skill destination: ${destination}`);
+      }
+      existing = parent;
+    }
+    if (!isWithin(realRoot, fs.realpathSync(existing))) {
+      throw new Error(`Skill destination resolves outside its root: ${destination}`);
+    }
+  }
+
+  for (const entry of snapshot.entries) {
+    const destination = path.resolve(destinationRoot, entry.relative);
+    assertDestinationSafe(destination);
+    if (entry.type === "directory") {
+      fs.mkdirSync(destination, { mode: entry.mode });
+    } else {
+      assertDestinationSafe(path.dirname(destination));
+      fs.writeFileSync(destination, entry.content, { flag: "wx", mode: entry.mode });
+    }
+    assertDestinationSafe(destination);
   }
 }
 
@@ -166,7 +299,7 @@ async function main() {
     return;
   }
 
-  assertNoLinkedComponents(source, "Skill source");
+  const sourceSnapshot = captureRealSourceTree(source, "Skill source");
   assertNoLinkedComponents(target, "Skill destination");
   if (fs.existsSync(target)) {
     if (!options.force) {
@@ -178,7 +311,7 @@ async function main() {
 
   fs.mkdirSync(parentDir, { recursive: true });
   assertNoLinkedComponents(target, "Skill destination");
-  fs.cpSync(source, target, { recursive: true });
+  copySourceSnapshot(sourceSnapshot, target);
 
   console.log(`已安装 Teochew People (潮汕人) Skill 到: ${target}`);
 
