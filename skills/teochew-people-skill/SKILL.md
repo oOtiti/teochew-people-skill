@@ -21,14 +21,16 @@ description: 面向 Teochew People (潮汕人) 与更广义粤东潮汕文化圈
 
 1. 每次先读 [wiki/index.md](./wiki/index.md)，再按问题选主题；首轮最多加载 3 个主题页。
 2. 需要核对论断时，沿主题页的 `source_ids` 查 [raw/index.md](./raw/index.md) 与对应 raw 记录。
-3. 资料陈旧、含糊、相互冲突，或问题涉及当前事实时，执行 [operations/research.md](./operations/research.md)。当前官方状态、活动日程与仍在任的人物必须实时核验。
-4. 只有经确认、可长期复用的更新才执行 [operations/evolve.md](./operations/evolve.md)；一次性回答不沉淀。
+3. 输入含视频、音频、图片、字幕或家庭素材时，先执行 [operations/media-ingest.md](./operations/media-ingest.md)，再决定是否进入 raw。
+4. 资料陈旧、含糊、相互冲突，或问题涉及当前事实时，执行 [operations/research.md](./operations/research.md)。当前官方状态、活动日程与仍在任的人物必须实时核验。
+5. 只有经确认、可长期复用的更新才执行 [operations/evolve.md](./operations/evolve.md)；一次性回答不沉淀。
 
 本地知识按以下顺序解析：`<project>/.teochew-people` → `~/.teochew-people` → bundled public wiki。前两层是 local vault 或项目覆盖层，只能补充用户语境与表达偏好；不得静默覆盖有来源的公共事实。冲突时并列呈现、标明层级，并请求确认或进入 research。
 
 ## 操作入口
 
 - 收录来源：[operations/ingest.md](./operations/ingest.md)
+- 摄取视频、音频与图片：[operations/media-ingest.md](./operations/media-ingest.md)
 - 回答与创作：[operations/query.md](./operations/query.md)
 - 外部核验：[operations/research.md](./operations/research.md)
 - 持久更新：[operations/evolve.md](./operations/evolve.md)
@@ -41,3 +43,5 @@ description: 面向 Teochew People (潮汕人) 与更广义粤东潮汕文化圈
 写作前确定地域、年代、受众和文体；把可核对事实、综合判断、地方差异与未知内容分开。使用页面的 `claim_roles` 选择定义、历史、地理范围、画面、声音、动作、器物或生活经验，只把有证据的细节写进成稿。涉及传统时使用“在某地／某些家庭”“资料显示”等限定，避免“潮汕人都”“统一流程”。
 
 视频脚本先建立“口播事实—来源—镜头依据”三列，再安排节奏。分镜中的人物动作、器物、声音与空间必须来自 `visual_detail`、`sound_detail`、`action_sequence`、`object_detail` 等有来源字段；推演镜头须标为重现或示意。拜老爷与营老爷不得混写为同一场景，单一地区素材不得包装成全潮汕通用画面。输出末尾列出核验依据与仍需现场确认的镜头。
+
+公开视频先判断权利；公开可访问不等于可再利用。只取任务所需时间码，并区分说话者陈述、旁白、字幕和画面观察；不得因能播放就保存完整逐字稿、截图、电影片段或音轨。用户家庭材料默认留在 local overlay，本人明确授权前不进入公共 wiki。项目原创编辑视觉必须登记、注明“非历史照片／非具体现场”，并与史料图片分开。完整流程见 [operations/media-ingest.md](./operations/media-ingest.md)。

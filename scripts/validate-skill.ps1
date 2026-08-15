@@ -12,16 +12,23 @@ $contributingFile = Join-Path $root "CONTRIBUTING.md"
 $exampleFile = Join-Path $root "examples/before-after.md"
 $showcaseArticleFile = Join-Path $root "examples/showcase-article.md"
 $showcaseVideoFile = Join-Path $root "examples/showcase-video.md"
+$letterFeatureFile = Join-Path $root "examples/letter-to-grandma-feature.md"
+$letterVideoFile = Join-Path $root "examples/letter-to-grandma-video-scripts.md"
+$videoWikiDemoFile = Join-Path $root "examples/video-to-wiki-demo.md"
 $heroBackgroundFile = Join-Path $root "assets/hero-background.png"
 $heroFile = Join-Path $root "assets/hero.svg"
 $socialPreviewFile = Join-Path $root "assets/social-preview.png"
 $caseDemoFile = Join-Path $root "assets/case-demo.svg"
+$letterHeroFile = Join-Path $root "assets/letter-to-grandma-hero.png"
+$yinggeEpicFile = Join-Path $root "assets/yingge-epic.png"
+$mediaManifestFile = Join-Path $root "assets/media-manifest.json"
 $requiredSkillFiles = @(
     "wiki-purpose.md",
     "wiki-schema.md",
     "wiki-log.md",
     "agents/openai.yaml",
     "operations/ingest.md",
+    "operations/media-ingest.md",
     "operations/query.md",
     "operations/research.md",
     "operations/evolve.md",
@@ -103,10 +110,16 @@ foreach ($path in @(
     $exampleFile,
     $showcaseArticleFile,
     $showcaseVideoFile,
+    $letterFeatureFile,
+    $letterVideoFile,
+    $videoWikiDemoFile,
     $heroBackgroundFile,
     $heroFile,
     $socialPreviewFile,
-    $caseDemoFile
+    $caseDemoFile,
+    $letterHeroFile,
+    $yinggeEpicFile,
+    $mediaManifestFile
 )) {
     if (-not (Test-Path -LiteralPath $path)) {
         Fail "缺少公开发布文件: $($path.Substring($root.Length + 1))"
@@ -126,6 +139,20 @@ $bundledText = Get-ChildItem -LiteralPath $skillDir -File -Recurse |
 foreach ($term in @("raw", "wiki", "research", "evolve", "local vault", "拜老爷", "营老爷", "TEOCHEW PEOPLE", "ingest", "query", "lint")) {
     if ($bundledText -notmatch [regex]::Escape($term)) {
         Fail "技能内容应包含 '$term'"
+    }
+}
+
+$mediaIngestContract = @(
+    @{ Label = "公开可访问不等于可再利用"; Pattern = '公开可访问.{0,20}不等于.{0,20}(可再利用|可复制|可下载)' },
+    @{ Label = "时间码"; Pattern = '(timecode|时间码)' },
+    @{ Label = "说话者与画面观察分离"; Pattern = '(speaker_claim|说话者).{0,100}(frame_observation|画面观察)' },
+    @{ Label = "禁止无授权完整转录"; Pattern = '(不得|禁止|不能).{0,80}(完整逐字稿|完整转录|全文转录)' },
+    @{ Label = "用户背景默认本地覆盖"; Pattern = '(用户背景|用户素材|家庭材料).{0,100}(local overlay|本地覆盖层)' }
+)
+
+foreach ($requirement in $mediaIngestContract) {
+    if ($bundledText -notmatch $requirement.Pattern) {
+        Fail "技能内容缺少媒体摄取规则: $($requirement.Label)"
     }
 }
 
@@ -167,6 +194,15 @@ $requiredPackageFiles = @(
     "assets/hero.svg",
     "assets/social-preview.png",
     "assets/case-demo.svg",
+    "assets/letter-to-grandma-hero.png",
+    "assets/yingge-epic.png",
+    "assets/letter-to-grandma-timeline.svg",
+    "assets/letter-to-grandma-map.svg",
+    "assets/qiaopi-object-flow.svg",
+    "assets/evidence-layers.svg",
+    "assets/video-to-wiki-flow.svg",
+    "assets/media-manifest.json",
+    "scripts/validate-media-manifest.mjs",
     "docs/github-workflows.md",
     "docs/publishing.md",
     "README.md",
