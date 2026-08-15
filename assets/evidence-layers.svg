@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">电影专题五层证据结构</title>
+  <desc id="desc">区分监管事实、历史档案、主创自述、作品表达、编辑综合与未知边界。</desc>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#071827"/><stop offset="1" stop-color="#24151d"/></linearGradient></defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <text x="105" y="105" fill="#f8f2e3" font-family="Arial, 'Noto Sans SC', sans-serif" font-size="49" font-weight="700">同一篇文章，需要五种证据语气</text>
+  <text x="108" y="150" fill="#9abec9" font-family="Arial, 'Noto Sans SC', sans-serif" font-size="21">相邻出现，不代表可以互相替代</text>
+  <g font-family="Arial, 'Noto Sans SC', sans-serif">
+    <g transform="translate(130 220)">
+      <rect width="1340" height="100" rx="24" fill="#173f52" stroke="#69b1c5" stroke-width="2"/>
+      <circle cx="65" cy="50" r="26" fill="#69b1c5"/><text x="56" y="60" fill="#071827" font-size="28" font-weight="700">1</text>
+      <text x="115" y="44" fill="#f8f2e3" font-size="28" font-weight="700">监管事实 / 历史档案</text>
+      <text x="115" y="76" fill="#c5dce3" font-size="19">备案、上映、版权、名录、馆藏对象——写清机构与日期</text>
+      <text x="1080" y="61" fill="#69b1c5" font-size="20">source_detail</text>
+    </g>
+    <g transform="translate(130 350)">
+      <rect width="1340" height="100" rx="24" fill="#39202a" stroke="#e65a3f" stroke-width="2"/>
+      <circle cx="65" cy="50" r="26" fill="#e65a3f"/><text x="56" y="60" fill="#fff" font-size="28" font-weight="700">2</text>
+      <text x="115" y="44" fill="#f8f2e3" font-size="28" font-weight="700">主创自述</text>
+      <text x="115" y="76" fill="#ead8d4" font-size="19">谁在何处怎样说——必须归因，不升级为历史审计</text>
+      <text x="1030" y="61" fill="#e65a3f" font-size="20">attributed_statement</text>
+    </g>
+    <g transform="translate(130 480)">
+      <rect width="1340" height="100" rx="24" fill="#252d3b" stroke="#9b8bb4" stroke-width="2"/>
+      <circle cx="65" cy="50" r="26" fill="#9b8bb4"/><text x="56" y="60" fill="#fff" font-size="28" font-weight="700">3</text>
+      <text x="115" y="44" fill="#f8f2e3" font-size="28" font-weight="700">作品表达 / 画面观察</text>
+      <text x="115" y="76" fill="#d3cbe0" font-size="19">银幕与视频在某时刻呈现什么——不证明起源、普遍性或身份</text>
+      <text x="1050" y="61" fill="#b8a8d0" font-size="20">frame_observation</text>
+    </g>
+    <g transform="translate(130 610)">
+      <rect width="1340" height="100" rx="24" fill="#3a321f" stroke="#f4d58d" stroke-width="2"/>
+      <circle cx="65" cy="50" r="26" fill="#f4d58d"/><text x="56" y="60" fill="#3a321f" font-size="28" font-weight="700">4</text>
+      <text x="115" y="44" fill="#f8f2e3" font-size="28" font-weight="700">编辑综合</text>
+      <text x="115" y="76" fill="#ece0ba" font-size="19">多源并读后的有限判断——说明推理，不隐藏来源边界</text>
+      <text x="1100" y="61" fill="#f4d58d" font-size="20">synthesis</text>
+    </g>
+    <g transform="translate(130 740)">
+      <rect width="1340" height="82" rx="24" fill="#111922" stroke="#6c7882" stroke-width="2" stroke-dasharray="10 8"/>
+      <text x="42" y="51" fill="#b4bec5" font-size="24" font-weight="700">UNKNOWN</text>
+      <text x="240" y="51" fill="#b4bec5" font-size="20">家庭称谓、具体迁移路线、当前状态——不知道就保留空白</text>
+    </g>
+  </g>
+</svg>
