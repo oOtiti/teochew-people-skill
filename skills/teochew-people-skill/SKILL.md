@@ -34,7 +34,7 @@ description: 面向 Teochew People (潮汕人) 与更广义粤东潮汕文化圈
 - 持久更新：[operations/evolve.md](./operations/evolve.md)
 - 结构审查：[operations/lint.md](./operations/lint.md)
 
-公共编译、索引和 `wiki-log.md` 更新必须串行执行，避免并发写入造成丢失。
+公共主题知识页、生成索引和 `wiki-log.md` 更新必须串行执行，避免并发写入造成丢失。
 
 ## 写作与视频生产
 
