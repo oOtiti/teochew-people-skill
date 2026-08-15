@@ -73,6 +73,7 @@ OTP 来自 npm 账号配置的验证方式，不是 GitHub 验证码。不要把
 - Repository：`teochew-people-skill`
 - Workflow filename：`publish-npm.yml`
 - Environment name：留空
+- Allowed actions：勾选 `npm publish`
 
 GitHub Actions 由 OIDC 临时证明发布来源，不需要长期 npm token。工作流的实际行为见 [github-workflows.md](./github-workflows.md)。
 
