@@ -29,6 +29,7 @@
 | 浅析印尼吉打邦潮州人与中国潮州人婚前习俗之差异 | A | Jurnal Bahasa dan Budaya China, Universitas Bunda Mulia | [ubm-chaoshan-ketapang-marriage-2016](./2026-08-15/ubm-chaoshan-ketapang-marriage-2016.md) |
 | 潘鲁生丨民间成人礼“出花园” | B | 中国文化馆协会／文化在线 | [culturechina-out-garden](./2026-08-15/culturechina-out-garden.md) |
 | 潮剧 | A | 中国非物质文化遗产网·中国非物质文化遗产数字博物馆 | [ihchina-chao-opera-2006](./2026-08-15/ihchina-chao-opera-2006.md) |
+| 潮州と汕頭における伯公信仰考 | B | 関西大学大学院東アジア文化研究科『文化交渉』第14号 | [kansai-bogong-chaozhou-shantou-2025](./2026-08-15/kansai-bogong-chaozhou-shantou-2025.md) |
 | 潮州市文化生态保护区总体规划纲要（征求意见稿） | A | 潮州市文化广电旅游体育局 | [chaozhou-cultural-ecology-draft-2024](./2026-08-15/chaozhou-cultural-ecology-draft-2024.md) |
 | 潮州方言及其特点 | A | 广东省人民政府地方志办公室 | [gd-dfz-teochew-language-2020](./2026-08-15/gd-dfz-teochew-language-2020.md) |
 | 潮州菜烹饪技艺 | A | 中国非物质文化遗产网·中国非物质文化遗产数字博物馆 | [ihchina-chaozhou-cuisine-2021](./2026-08-15/ihchina-chaozhou-cuisine-2021.md) |
@@ -37,6 +38,7 @@
 | 潮汕古建筑营造技艺 | A | 广东省人民政府地方志办公室、汕头市地方志办公室 | [gd-dfz-chaoshan-building-2023](./2026-08-15/gd-dfz-chaoshan-building-2023.md) |
 | 潮汕方言电影《给阿嬷的情书》位居榜首 | B | 羊城晚报 | [yangcheng-letter-to-grandma-2026](./2026-08-15/yangcheng-letter-to-grandma-2026.md) |
 | 潮汕祠堂“十八样”的布局营造及其成因 | A | 《济南大学学报（社会科学版）》 | [jinan-journal-chaoshan-ancestral-halls-2024](./2026-08-15/jinan-journal-chaoshan-ancestral-halls-2024.md) |
+| 王群韬：藏在乡土烟火里的神圣空间 | B | 上海社会科学院（转自《文汇报》） | [sass-sacred-space-2026](./2026-08-15/sass-sacred-space-2026.md) |
 | 电影《给阿嬷的情书》暨新时代广东电影发展座谈会在京举办 | A | 国家电影局 | [national-film-letter-to-grandma-2026](./2026-08-15/national-film-letter-to-grandma-2026.md) |
 | 简介 Brief introduction | A | 新加坡潮州八邑会馆 | [teochew-huay-kuan-history](./2026-08-15/teochew-huay-kuan-history.md) |
 | 粤绣（潮绣） | A | 中国非物质文化遗产网·中国非物质文化遗产数字博物馆 | [ihchina-chao-embroidery-2006](./2026-08-15/ihchina-chao-embroidery-2006.md) |
