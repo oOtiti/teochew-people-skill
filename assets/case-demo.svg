@@ -34,9 +34,9 @@
   <rect x="0" y="0" width="12" height="720" fill="#C34B38"/>
 
   <g class="sans">
-    <text x="64" y="62" class="eyebrow" fill="#D7A84B">CASE STUDY · SOURCE-GROUNDED WRITING</text>
+    <text x="64" y="62" class="eyebrow" fill="#D7A84B">SOURCE → WIKI → OUTPUT</text>
     <text x="64" y="108" class="headline salt">《给阿嬷的情书》：从泛泛影评到地方经验</text>
-    <text x="64" y="140" class="subhead mist">Skill 先校准范围与来源，再把侨批、代际和乡音写进具体场景。</text>
+    <text x="64" y="140" class="subhead mist">原始资料经来源分级与主题页整理后，转化为可用于写作和视频的场景细节。</text>
 
     <g filter="url(#panel-shadow)">
       <rect x="64" y="182" width="422" height="454" rx="10" fill="#0C202D" stroke="#35505C"/>
@@ -44,7 +44,7 @@
     </g>
 
     <rect x="64" y="182" width="422" height="6" rx="3" fill="#C34B38"/>
-    <text x="92" y="229" class="panel-label" fill="#E47A69">BEFORE · 泛化表达</text>
+    <text x="92" y="229" class="panel-label" fill="#E47A69">SOURCE GAP · 泛化表达</text>
     <line x1="92" y1="251" x2="458" y2="251" stroke="#35505C"/>
 
     <text x="92" y="305" class="quote salt">“潮汕方言亲情片”</text>
@@ -56,7 +56,7 @@
     <text x="116" y="523" class="body mist">标签很满，细节很少；</text>
     <text x="116" y="551" class="body mist">侨批、下南洋与乡音都被略过。</text>
 
-    <text x="640" y="211" text-anchor="middle" class="panel-label" fill="#D7A84B">SKILL LENS</text>
+    <text x="640" y="211" text-anchor="middle" class="panel-label" fill="#D7A84B">TOPIC WIKI</text>
     <line x1="640" y1="234" x2="640" y2="556" stroke="#D7A84B" stroke-width="2" stroke-opacity="0.55"/>
 
     <g>
@@ -76,7 +76,7 @@
     </g>
 
     <rect x="794" y="182" width="422" height="6" rx="3" fill="#D7A84B"/>
-    <text x="822" y="229" class="panel-label" fill="#E7C779">AFTER · 有据可写</text>
+    <text x="822" y="229" class="panel-label" fill="#E7C779">OUTPUT · 有据可写</text>
     <line x1="822" y1="251" x2="1188" y2="251" stroke="#54717B"/>
 
     <text x="822" y="302" class="body-strong salt">输出不再只是“感人”</text>
@@ -89,6 +89,6 @@
     <text x="1005" y="546" text-anchor="middle" class="body-strong" fill="#F1D89A">具体细节，必须回到来源与地方差异</text>
 
     <line x1="64" y1="676" x2="1216" y2="676" stroke="#35505C"/>
-    <text x="64" y="703" class="eyebrow muted">TEOCHEW PEOPLE · WRITING AND VIDEO PRODUCTION</text>
+    <text x="64" y="703" class="eyebrow muted">资料编译系统 · 来源分级 / 主题索引 / 生产细节</text>
   </g>
 </svg>
