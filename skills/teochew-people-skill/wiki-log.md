@@ -32,3 +32,18 @@
 - 三张核心页明示禁止统一供品表、路线、方位、咒语、禁忌或择日攻略，不替代当地长辈、庙宇／社区组织或活动主办方。
 - fresh validator 在先独立回答、后读取 rubric 的条件下复测 `distinguish-bai-ying-laoye` 与 `avoid-universal-deity-list`：两者均5/5，总分10/10，所有 must 满足且无 must_not 命中；临时回答未写入仓库。
 - 生成索引后得到43来源、10 topic、9分类；`wiki:index:check`、`wiki:lint`、7场景 fixture、16单测、skill validate、`npm pack --dry-run` 与 `git diff --check` 均通过。
+
+## 2026-08-15 — 完整 topic wiki 迁移
+
+- 在删除旧 `references/` 前完成逐项覆盖比较：`00-09` 共 68 个标题全部映射到新分类索引、49 张 topic 或指南页；`08-常用词库` 的 100 个词条／提示逐项保留为可检索别名、主题词、慎用表达或证据空白提示。映射关系为：`00` → `wiki/index.md` 与九个分类索引；`01` → `concepts/*`、`places/*`；`02-03` → `customs/*` 与 `food/工夫茶.md`；`04` → `food/*`；`05` → `arts-language/*`；`06` → `society-diaspora/*`、`people-organizations/*`；`07` → `guides/事实与来源口径.md`、`写作口径.md`、`审校清单.md`、`写作模板.md`、`短视频口播与分镜.md`；`08` → `guides/常用词库.md`；`09` → `guides/任务示例.md`。
+- `90-资料来源` 的16个 URL 全部已在 `raw/source-review.md` 留下取舍：12个进入准入 raw，4个因失效、无法稳定解析或重复转载而 Reject／defer；没有遗失旧来源去向。
+- 当前公共 wiki 为49张 topic、9个分类：concepts 3、places 6、customs 12（含额外保留的 `庙会与游神`）、food 4、arts-language 5、society-diaspora 5、people-organizations 2、current-events 3、guides 9。全部文化页和事件页具备十一节，来源内细节与创意结构／重现建议分栏。
+- 三张事件页于 `2026-08-15` 实时复核：电影《给阿嬷的情书》2026年4—5月传播节点 `closed`；潮阳英歌2025欧洲五城巡演 `closed`；潮州古城申遗状态 `open`，地方仍为推进申报口径，UNESCO中国已列名录中未见潮州古城，不将申请写成入选。
+- 明确保留证据空白：牛肉分切／部位／汆烫流程、各类粿品单项历史与用途、清明冬至全域做法、潮州歌册直接材料、惠来生活细节，以及家庭礼俗参与率。对应页使用 `unknown` 或受限 `synthesis/varies`，不以弱来源和画面细节填满。
+- 覆盖比较通过后，旧平铺资料可以删除；生成索引成为公共读取入口，raw 与 source-review 继续作为来源层和取舍账本。
+
+## 2026-08-15 — 完整 topic wiki 事件日期修订
+
+- 为避免把报道日误作巡演日，新增 `xinhua-yingge-germany-2025`（B）：新华网 canonical 直接记录2025年1月28日至2月4日德法行程窗口、1月29日哈瑙首场及1月31日法兰克福演出；驻德使馆同题转载只作交叉核验。当前 raw 为44条：A 32、B 12、C 0。
+- 三张事件页均拆分实际事件节点、来源报道日与 `last_checked`：电影页以5月17日座谈为 `event_date`，另记5月16—17日展映和4月30日上映；英歌页以1月29日首场为 `event_date`，1月28日至2月4日只标行程窗口；申遗状态页以2025年5月31日政策来源日期为状态依据，开放状态另按2026年8月15日核验。
+- 宾根、里昂、巴黎逐场确切日期仍未在 admitted raw 中全部物化，保留为 `unknown`；不以行程窗口、报道发布日期或后续成果报道猜测单场日期。
