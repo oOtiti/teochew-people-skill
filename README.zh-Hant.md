@@ -1,6 +1,13 @@
-![TEOCHEW PEOPLE](assets/social-preview.png)
+<p align="center">
+  <img src="assets/social-preview.png" alt="TEOCHEW PEOPLE：潮汕文化 LLM Wiki" width="100%">
+</p>
 
-TEOCHEW PEOPLE 是一個自我演進、個人化的潮汕文化 Skill 與 LLM Wiki：55 條可追溯 raw 來源、50 張主題頁和 9 個分類索引構成公共知識底座；經審核的新資料讓 Wiki 持續成長，經你明確同意的受眾、家庭說法和表達偏好讓輸出愈用愈貼合，但一次回答或私人經驗不會被自動寫成公共真理。
+<h1 align="center">TEOCHEW PEOPLE</h1>
+
+<p align="center">
+  <strong>自我演進、個人化的潮汕文化 Skill 與 LLM Wiki</strong><br>
+  精選來源、建設可追溯主題，為文章、口播和影片製作準備真正可用的文化細節。
+</p>
 
 <p align="center">
   <a href="https://github.com/oOtiti/teochew-people-skill/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/oOtiti/teochew-people-skill/actions/workflows/ci.yml/badge.svg"></a>
@@ -9,15 +16,24 @@ TEOCHEW PEOPLE 是一個自我演進、個人化的潮汕文化 Skill 與 LLM Wi
   <a href="LICENSE"><img alt="License MIT" src="https://img.shields.io/badge/License-MIT-f0a000.svg"></a>
   <img alt="Wiki 55 sources" src="https://img.shields.io/badge/Wiki-55_sources-136f63">
   <img alt="Topics 50" src="https://img.shields.io/badge/Topics-50-8f2d1e">
+  <img alt="Categories 9" src="https://img.shields.io/badge/Categories-9-c79434">
   <img alt="Languages 4" src="https://img.shields.io/badge/Languages-4-3949ab">
 </p>
 
 <p align="center">
-  <a href="README.md">简体中文</a> · <strong><a href="README.zh-Hant.md">繁體中文</a></strong> · <a href="README.en.md">English</a> · <a href="README.ja.md">日本語</a><br>
-  <a href="index.html">項目展示頁</a>
+  <a href="README.md">简体中文</a> · <strong><a href="README.zh-Hant.md">繁體中文</a></strong> · <a href="README.en.md">English</a> · <a href="README.ja.md">日本語</a>
+</p>
+
+<p align="center">
+  <a href="skills/teochew-people-skill/wiki/index.md"><strong>進入公共 WIKI</strong></a> ·
+  <a href="examples/letter-to-grandma-feature.md">閱讀圖文專題</a> ·
+  <a href="examples/letter-to-grandma-video-scripts.md">查看影片腳本</a> ·
+  <a href="#快速安裝">快速安裝</a>
 </p>
 
 ## 這是什麼
+
+TEOCHEW PEOPLE 以 55 條可追溯 raw 來源、50 張主題頁和 9 個分類索引構成公共知識底座。經審核的新資料讓 Wiki 持續成長；經你明確同意的受眾、家庭說法和表達偏好讓輸出愈用愈貼合，但一次回答或私人經驗不會被自動寫成公共真理。
 
 TEOCHEW PEOPLE 不是把一整個資料夾塞給模型的靜態百科。它先用 [`raw/`](skills/teochew-people-skill/raw/index.md) 保存來源身分、層級、可支持論斷和限制，再用 [`wiki/`](skills/teochew-people-skill/wiki/index.md) 建設主題頁、分類索引和生產細節。topic 的 `source_ids` 可以回到 raw；不採用的資料也會在 `source-review.md` 留下理由。
 

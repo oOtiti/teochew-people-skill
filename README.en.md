@@ -1,6 +1,13 @@
-![TEOCHEW PEOPLE](assets/social-preview.png)
+<p align="center">
+  <img src="assets/social-preview.png" alt="TEOCHEW PEOPLE: a Teochew culture LLM Wiki" width="100%">
+</p>
 
-TEOCHEW PEOPLE is an evolving, personalized Teochew culture Skill and LLM Wiki. Its public knowledge base contains 55 traceable raw sources, 50 topic pages, and 9 category indexes. Reviewed evidence makes the Wiki grow; audiences, family language, and editorial preferences improve personalization only with explicit consent—so it becomes more useful with use without turning a one-off answer or private experience into public truth.
+<h1 align="center">TEOCHEW PEOPLE</h1>
+
+<p align="center">
+  <strong>An evolving, personalized Teochew culture Skill and LLM Wiki</strong><br>
+  Carefully selected sources become traceable topics and production-ready detail for writing, narration, and video.
+</p>
 
 <p align="center">
   <a href="https://github.com/oOtiti/teochew-people-skill/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/oOtiti/teochew-people-skill/actions/workflows/ci.yml/badge.svg"></a>
@@ -9,15 +16,24 @@ TEOCHEW PEOPLE is an evolving, personalized Teochew culture Skill and LLM Wiki. 
   <a href="LICENSE"><img alt="License MIT" src="https://img.shields.io/badge/License-MIT-f0a000.svg"></a>
   <img alt="Wiki 55 sources" src="https://img.shields.io/badge/Wiki-55_sources-136f63">
   <img alt="Topics 50" src="https://img.shields.io/badge/Topics-50-8f2d1e">
+  <img alt="Categories 9" src="https://img.shields.io/badge/Categories-9-c79434">
   <img alt="Languages 4" src="https://img.shields.io/badge/Languages-4-3949ab">
 </p>
 
 <p align="center">
-  <a href="README.md">简体中文</a> · <a href="README.zh-Hant.md">繁體中文</a> · <strong><a href="README.en.md">English</a></strong> · <a href="README.ja.md">日本語</a><br>
-  <a href="index.html">Project showcase</a>
+  <a href="README.md">简体中文</a> · <a href="README.zh-Hant.md">繁體中文</a> · <strong><a href="README.en.md">English</a></strong> · <a href="README.ja.md">日本語</a>
+</p>
+
+<p align="center">
+  <a href="skills/teochew-people-skill/wiki/index.md"><strong>Explore the public Wiki</strong></a> ·
+  <a href="examples/letter-to-grandma-feature.md">Read the illustrated feature</a> ·
+  <a href="examples/letter-to-grandma-video-scripts.md">Open the video scripts</a> ·
+  <a href="#install">Install</a>
 </p>
 
 ## What it is
+
+The public knowledge base contains 55 traceable raw sources, 50 topic pages, and 9 category indexes. Reviewed evidence makes the Wiki grow; audiences, family language, and editorial preferences improve personalization only with explicit consent—so it becomes more useful with use without turning a one-off answer or private experience into public truth.
 
 This is not a static encyclopedia that dumps a whole folder into a model. [`raw/`](skills/teochew-people-skill/raw/index.md) records who published a source, its evidence tier, what it can support, production details, and limitations. [`wiki/`](skills/teochew-people-skill/wiki/index.md) turns admitted evidence into navigable topic pages while preserving place, period, family variation, and unknowns.
 

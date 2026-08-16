@@ -1,6 +1,13 @@
-![TEOCHEW PEOPLE](assets/social-preview.png)
+<p align="center">
+  <img src="assets/social-preview.png" alt="TEOCHEW PEOPLE：潮汕文化 LLM Wiki" width="100%">
+</p>
 
-TEOCHEW PEOPLE 是一个自进化、个性化的潮汕文化 Skill 与 LLM Wiki：55 条可追溯 raw 来源、50 张主题页和 9 个分类索引构成公共知识底座；经审核的新资料让 Wiki 持续演进，经你明确同意的受众、家庭讲法和表达偏好让输出越来越贴合——越用越好用，但不会把一次回答或私人经验自动写成公共真理。
+<h1 align="center">TEOCHEW PEOPLE</h1>
+
+<p align="center">
+  <strong>自进化、个性化的潮汕文化 Skill 与 LLM Wiki</strong><br>
+  精挑细选来源，建设可追溯主题，为文章、口播和视频生产准备真正可用的文化细节。
+</p>
 
 <p align="center">
   <a href="https://github.com/oOtiti/teochew-people-skill/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/oOtiti/teochew-people-skill/actions/workflows/ci.yml/badge.svg"></a>
@@ -9,17 +16,24 @@ TEOCHEW PEOPLE 是一个自进化、个性化的潮汕文化 Skill 与 LLM Wiki�
   <a href="LICENSE"><img alt="License MIT" src="https://img.shields.io/badge/License-MIT-f0a000.svg"></a>
   <img alt="Wiki 55 sources" src="https://img.shields.io/badge/Wiki-55_sources-136f63">
   <img alt="Topics 50" src="https://img.shields.io/badge/Topics-50-8f2d1e">
+  <img alt="Categories 9" src="https://img.shields.io/badge/Categories-9-c79434">
   <img alt="Languages 4" src="https://img.shields.io/badge/Languages-4-3949ab">
 </p>
 
 <p align="center">
-  <strong>简体中文</strong> · <a href="README.zh-Hant.md">繁體中文</a> · <a href="README.en.md">English</a> · <a href="README.ja.md">日本語</a><br>
-  <a href="index.html">项目展示页</a>
+  <strong>简体中文</strong> · <a href="README.zh-Hant.md">繁體中文</a> · <a href="README.en.md">English</a> · <a href="README.ja.md">日本語</a>
 </p>
 
-## 为什么它不是普通资料合集
+<p align="center">
+  <a href="skills/teochew-people-skill/wiki/index.md"><strong>进入公共 WIKI</strong></a> ·
+  <a href="examples/letter-to-grandma-feature.md">阅读图文专题</a> ·
+  <a href="examples/letter-to-grandma-video-scripts.md">查看视频脚本</a> ·
+  <a href="#快速安装">快速安装</a>
+</p>
 
-### WIKI 一览
+## 这是一套什么样的 WIKI
+
+TEOCHEW PEOPLE 用 55 条可追溯 raw 来源、50 张主题页和 9 个分类索引构成公共知识底座。经审核的新资料让 Wiki 持续演进；经你明确同意的受众、家庭讲法和表达偏好让输出越来越贴合。它会越用越好用，但不会把一次回答或私人经验自动写成公共真理。
 
 | 组成 | 它解决什么 | 如何越用越好用 |
 | --- | --- | --- |
@@ -33,6 +47,8 @@ TEOCHEW PEOPLE 是一个自进化、个性化的潮汕文化 Skill 与 LLM Wiki�
 ![潮汕人风采：原创英歌舞史诗视觉，长袖彩衣的领舞者与队列在晨光古镇街巷中击打双短槌](assets/yingge-epic.png)
 
 <p align="center"><sub>潮汕人风采｜原创编辑视觉，非具体演出现场；服饰、脸谱与动作不对应单一队伍或固定仪式。</sub></p>
+
+### 为什么它不是普通资料合集
 
 普通资料夹解决“文件放在哪里”，却很少回答“这句话能写多远”。本项目把知识分成互相可追踪的两层：
 

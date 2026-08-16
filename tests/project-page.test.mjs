@@ -138,14 +138,27 @@ test("npm package includes the live project showcase", async () => {
   assert.ok(packageJson.files.includes("index.html"));
 });
 
-test("project home and release validator keep the showcase discoverable", async () => {
-  const [readme, validator] = await Promise.all([
+test("GitHub READMEs are the primary multilingual project showcase", async () => {
+  const [readme, traditional, english, japanese, validator] = await Promise.all([
     readFile(new URL("../README.md", import.meta.url), "utf8"),
+    readFile(new URL("../README.zh-Hant.md", import.meta.url), "utf8"),
+    readFile(new URL("../README.en.md", import.meta.url), "utf8"),
+    readFile(new URL("../README.ja.md", import.meta.url), "utf8"),
     readFile(new URL("../scripts/validate-skill.ps1", import.meta.url), "utf8"),
   ]);
 
-  assert.match(readme, /<a href="index\.html">项目展示页<\/a>/);
-  assert.match(validator, /index\.html/);
+  for (const localizedReadme of [readme, traditional, english, japanese]) {
+    assert.match(localizedReadme, /<h1 align="center">TEOCHEW PEOPLE<\/h1>/);
+    assert.match(localizedReadme, /href="skills\/teochew-people-skill\/wiki\/index\.md"/);
+    assert.match(localizedReadme, /href="examples\/letter-to-grandma-feature\.md"/);
+    assert.match(localizedReadme, /href="examples\/letter-to-grandma-video-scripts\.md"/);
+    assert.match(localizedReadme, /Categories-9/);
+    assert.doesNotMatch(localizedReadme, /<a href="index\.html">/);
+  }
+
+  assert.match(readme, /^## 这是一套什么样的 WIKI$/m);
+  assert.match(readme, /<a href="#快速安装">快速安装<\/a>/);
+  assert.match(validator, /GitHub 仓库首页/);
   assert.match(validator, /assets\/yingge-epic\.png/);
   assert.match(validator, /examples\/letter-to-grandma-feature\.md/);
   assert.match(validator, /examples\/video-to-wiki-demo\.md/);

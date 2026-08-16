@@ -268,6 +268,11 @@ $readme = Get-Content -LiteralPath $readmeFile -Raw
 foreach ($term in @(
     "assets/social-preview.png",
     "TEOCHEW PEOPLE",
+    "<h1 align=`"center`">TEOCHEW PEOPLE</h1>",
+    "href=`"skills/teochew-people-skill/wiki/index.md`"",
+    "href=`"examples/letter-to-grandma-feature.md`"",
+    "href=`"examples/letter-to-grandma-video-scripts.md`"",
+    "href=`"#快速安装`"",
     "npx teochew-people-skill --codex",
     "npx teochew-people-skill --claude",
     "(examples/showcase-article.md)",
@@ -288,6 +293,7 @@ foreach ($term in @(
     "License-MIT",
     "Wiki-55_sources",
     "Topics-50",
+    "Categories-9",
     "Languages-4",
     "自进化",
     "个性化",
@@ -299,7 +305,7 @@ foreach ($term in @(
 }
 
 $expectedReadmeSections = @(
-    "为什么它不是普通资料合集",
+    "这是一套什么样的 WIKI",
     "它如何持续成长",
     "为写作和视频生产准备的知识",
     "知识如何保持全面和客观",
@@ -320,8 +326,23 @@ for ($i = 0; $i -lt $expectedReadmeSections.Count; $i++) {
     }
 }
 
-if ($readme -notmatch '(?s)^!\[TEOCHEW PEOPLE\]\(assets/social-preview\.png\)\r?\n\r?\n[^\r\n]+\r?\n\r?\n<p align="center">.+?</p>\r?\n\r?\n<p align="center">.+?</p>\r?\n\r?\n## 为什么它不是普通资料合集') {
-    Fail "README 顶部必须依次包含 social preview、一段产品定义、徽章、语言切换和规定章节"
+$githubHomeOrder = @(
+    "<img src=`"assets/social-preview.png`"",
+    "<h1 align=`"center`">TEOCHEW PEOPLE</h1>",
+    "actions/workflows/ci.yml/badge.svg",
+    "<strong>简体中文</strong>",
+    "href=`"skills/teochew-people-skill/wiki/index.md`"",
+    "href=`"examples/letter-to-grandma-feature.md`"",
+    "href=`"examples/letter-to-grandma-video-scripts.md`"",
+    "## 这是一套什么样的 WIKI"
+)
+$previousHomePosition = -1
+foreach ($term in $githubHomeOrder) {
+    $homePosition = $readme.IndexOf($term, [System.StringComparison]::Ordinal)
+    if ($homePosition -le $previousHomePosition) {
+        Fail "GitHub 仓库首页应按 hero、品牌、徽章、语言、WIKI/专题/脚本入口和 WIKI 介绍的顺序呈现"
+    }
+    $previousHomePosition = $homePosition
 }
 
 $localizedReadmes = @(
@@ -338,7 +359,10 @@ foreach ($localized in $localizedReadmes) {
         "README.zh-Hant.md",
         "README.en.md",
         "README.ja.md",
-        "index.html",
+        "<h1 align=`"center`">TEOCHEW PEOPLE</h1>",
+        "href=`"skills/teochew-people-skill/wiki/index.md`"",
+        "href=`"examples/letter-to-grandma-feature.md`"",
+        "href=`"examples/letter-to-grandma-video-scripts.md`"",
         "assets/social-preview.png",
         "assets/yingge-epic.png",
         "assets/letter-to-grandma-hero.png",
@@ -353,6 +377,7 @@ foreach ($localized in $localizedReadmes) {
         "MIT License",
         "55",
         "50",
+        "Categories-9",
         "9"
     ) + $localized.Terms) {
         if ($content -notmatch [regex]::Escape($term)) {

@@ -1,6 +1,13 @@
-![TEOCHEW PEOPLE](assets/social-preview.png)
+<p align="center">
+  <img src="assets/social-preview.png" alt="TEOCHEW PEOPLE：潮汕文化 LLM Wiki" width="100%">
+</p>
 
-TEOCHEW PEOPLE は、進化し続けるパーソナライズ可能な潮汕文化 Skill／LLM Wiki です。55件の追跡可能な raw ソース、50件のトピック、9分類を公共知識基盤とし、審査済み資料で Wiki を更新します。読者層、家族内の呼称、表現上の好みは明示的な同意がある場合だけローカル層に保存され、使うほど文章と動画制作に合うようになります。ただし、一度きりの回答や私的経験を公共の事実へ自動変換することはありません。
+<h1 align="center">TEOCHEW PEOPLE</h1>
+
+<p align="center">
+  <strong>進化し続ける、パーソナライズ可能な潮汕文化 Skill／LLM Wiki</strong><br>
+  厳選した出典を追跡可能なトピックへ整理し、文章、ナレーション、動画制作に使える文化的ディテールを届けます。
+</p>
 
 <p align="center">
   <a href="https://github.com/oOtiti/teochew-people-skill/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/oOtiti/teochew-people-skill/actions/workflows/ci.yml/badge.svg"></a>
@@ -9,15 +16,24 @@ TEOCHEW PEOPLE は、進化し続けるパーソナライズ可能な潮汕文�
   <a href="LICENSE"><img alt="License MIT" src="https://img.shields.io/badge/License-MIT-f0a000.svg"></a>
   <img alt="Wiki 55 sources" src="https://img.shields.io/badge/Wiki-55_sources-136f63">
   <img alt="Topics 50" src="https://img.shields.io/badge/Topics-50-8f2d1e">
+  <img alt="Categories 9" src="https://img.shields.io/badge/Categories-9-c79434">
   <img alt="Languages 4" src="https://img.shields.io/badge/Languages-4-3949ab">
 </p>
 
 <p align="center">
-  <a href="README.md">简体中文</a> · <a href="README.zh-Hant.md">繁體中文</a> · <a href="README.en.md">English</a> · <strong><a href="README.ja.md">日本語</a></strong><br>
-  <a href="index.html">プロジェクト展示</a>
+  <a href="README.md">简体中文</a> · <a href="README.zh-Hant.md">繁體中文</a> · <a href="README.en.md">English</a> · <strong><a href="README.ja.md">日本語</a></strong>
+</p>
+
+<p align="center">
+  <a href="skills/teochew-people-skill/wiki/index.md"><strong>公共 WIKI を見る</strong></a> ·
+  <a href="examples/letter-to-grandma-feature.md">図文特集を読む</a> ·
+  <a href="examples/letter-to-grandma-video-scripts.md">動画台本を見る</a> ·
+  <a href="#インストール">インストール</a>
 </p>
 
 ## このプロジェクトについて
+
+55件の追跡可能な raw ソース、50件のトピック、9分類を公共知識基盤とし、審査済み資料で Wiki を更新します。読者層、家族内の呼称、表現上の好みは明示的な同意がある場合だけローカル層に保存され、使うほど文章と動画制作に合うようになります。ただし、一度きりの回答や私的経験を公共の事実へ自動変換することはありません。
 
 これは、資料フォルダーを丸ごとモデルへ渡す静的百科事典ではありません。[`raw/`](skills/teochew-people-skill/raw/index.md) は発行主体、日付、証拠レベル、主張できる範囲、制作向けの細部と限界を保存します。[`wiki/`](skills/teochew-people-skill/wiki/index.md) は採用済み証拠を、地域・年代・家庭差・不明点を残したまま検索可能な topic にまとめます。
 
