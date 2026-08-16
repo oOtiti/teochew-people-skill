@@ -185,6 +185,7 @@ test("GitHub READMEs are the primary multilingual project showcase", async () =>
   assert.match(renderCheck, /https:\/\/api\.github\.com\/markdown/);
   assert.match(renderCheck, /README\.zh-Hant\.md/);
   assert.match(renderCheck, /GitHubFirstScreen/);
+  assert.match(renderCheck, /renderedInstallLink/);
   assert.match(workflow, /npm run readme:render:check/);
   assert.match(workflow, /GITHUB_TOKEN:/);
 });

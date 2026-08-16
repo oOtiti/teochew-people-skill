@@ -49,8 +49,9 @@ npm run pack:check
 1. `npm run wiki:index:check`
 2. `npm run wiki:lint`
 3. `npm test`
-4. `npm run pack:check`
-5. 审阅 `npm pack --dry-run --json` 的精确文件清单
+4. `npm run readme:render:check`
+5. `npm run pack:check`
+6. 审阅 `npm pack --dry-run --json` 的精确文件清单
 
 ## Tarball 边界
 
