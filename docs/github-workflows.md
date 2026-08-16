@@ -17,15 +17,17 @@ CI 在 Node.js 22 与 24 上执行：
 ```bash
 npm ci
 npm test
+npm run readme:render:check
 npm run pack:check
 ```
 
-`npm test` 覆盖行为场景、安装器单测、wiki index check、wiki lint 和结构校验；`pack:check` 展示 npm dry-run tarball。Pull Request 仍应在本地或独立验证任务中审阅完整命令输出与 tarball 清单：
+`npm test` 覆盖行为场景、安装器单测、wiki index check、wiki lint 和结构校验；`readme:render:check` 使用 GitHub Markdown API 验证四语言仓库首屏的实际 GFM 结构与入口顺序；`pack:check` 展示 npm dry-run tarball。CI 通过内置 `GITHUB_TOKEN` 调用 API，避免匿名速率限制。Pull Request 仍应在本地或独立验证任务中审阅完整命令输出与 tarball 清单：
 
 ```bash
 npm run wiki:index:check
 npm run wiki:lint
 npm test
+npm run readme:render:check
 npm run pack:check
 ```
 
@@ -55,7 +57,7 @@ npm run pack:check
 公开包应包含：
 
 - `skills/teochew-people-skill/` 下的 `SKILL.md`、raw、wiki、operations、维护脚本、vault templates 与 UI 元数据；
-- 根目录安装脚本、`docs/` 中的公开工作流与发布说明、`examples/` 中的 before/after 和两份 showcase；
+- 根目录安装／GitHub README 渲染检查脚本、`docs/` 中的公开工作流与发布说明、`examples/` 中的 before/after 和多媒体 showcase；
 - `assets/hero-background.png`、`assets/hero.svg`、`assets/social-preview.png`、`assets/case-demo.svg`；
 - README、CONTRIBUTING、LICENSE 与包元数据。
 

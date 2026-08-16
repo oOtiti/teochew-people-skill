@@ -161,6 +161,7 @@ npm run wiki:index:check
 npm run wiki:lint
 npm run media:check
 npm test
+npm run readme:render:check
 npm run pack:check
 ```
 

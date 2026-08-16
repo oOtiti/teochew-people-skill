@@ -18,6 +18,7 @@ npm ci
 npm run wiki:index:check
 npm run wiki:lint
 npm test
+npm run readme:render:check
 npm run pack:check
 ```
 
@@ -28,6 +29,7 @@ npm run pack:check
 - `wiki:index:check`：raw／wiki 索引与当前语料一致，没有手改生成文件。
 - `wiki:lint`：frontmatter、唯一 ID、source IDs、related 路径、证据门槛与 freshness 合法。
 - `npm test`：行为场景、安装器、wiki 工具、索引、lint 与结构验证通过。
+- `readme:render:check`：GitHub Markdown API 能把四语言 README 渲染成包含 hero、品牌、徽章、语言和 WIKI／专题／脚本入口的仓库首屏。
 - `pack:check`：npm dry-run 能列出将要公开的文件。
 
 ## 审计 tarball

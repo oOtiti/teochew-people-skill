@@ -139,12 +139,15 @@ test("npm package includes the live project showcase", async () => {
 });
 
 test("GitHub READMEs are the primary multilingual project showcase", async () => {
-  const [readme, traditional, english, japanese, validator] = await Promise.all([
+  const [readme, traditional, english, japanese, validator, packageSource, workflow, renderCheck] = await Promise.all([
     readFile(new URL("../README.md", import.meta.url), "utf8"),
     readFile(new URL("../README.zh-Hant.md", import.meta.url), "utf8"),
     readFile(new URL("../README.en.md", import.meta.url), "utf8"),
     readFile(new URL("../README.ja.md", import.meta.url), "utf8"),
     readFile(new URL("../scripts/validate-skill.ps1", import.meta.url), "utf8"),
+    readFile(new URL("../package.json", import.meta.url), "utf8"),
+    readFile(new URL("../.github/workflows/ci.yml", import.meta.url), "utf8"),
+    readFile(new URL("../scripts/validate-github-readmes.mjs", import.meta.url), "utf8").catch(() => ""),
   ]);
 
   for (const localizedReadme of [readme, traditional, english, japanese]) {
@@ -156,10 +159,32 @@ test("GitHub READMEs are the primary multilingual project showcase", async () =>
     assert.doesNotMatch(localizedReadme, /<a href="index\.html">/);
   }
 
+  const orderedFrontScreens = [
+    [readme, ["assets/social-preview.png", "<h1 align=\"center\">", "actions/workflows/ci.yml/badge.svg", "<strong>简体中文</strong>", "skills/teochew-people-skill/wiki/index.md", "examples/letter-to-grandma-feature.md", "examples/letter-to-grandma-video-scripts.md", "href=\"#快速安装\"", "## 这是一套什么样的 WIKI"]],
+    [traditional, ["assets/social-preview.png", "<h1 align=\"center\">", "actions/workflows/ci.yml/badge.svg", "<strong><a href=\"README.zh-Hant.md\">繁體中文", "skills/teochew-people-skill/wiki/index.md", "examples/letter-to-grandma-feature.md", "examples/letter-to-grandma-video-scripts.md", "href=\"#快速安裝\"", "## 這是什麼"]],
+    [english, ["assets/social-preview.png", "<h1 align=\"center\">", "actions/workflows/ci.yml/badge.svg", "<strong><a href=\"README.en.md\">English", "skills/teochew-people-skill/wiki/index.md", "examples/letter-to-grandma-feature.md", "examples/letter-to-grandma-video-scripts.md", "href=\"#install\"", "## What it is"]],
+    [japanese, ["assets/social-preview.png", "<h1 align=\"center\">", "actions/workflows/ci.yml/badge.svg", "<strong><a href=\"README.ja.md\">日本語", "skills/teochew-people-skill/wiki/index.md", "examples/letter-to-grandma-feature.md", "examples/letter-to-grandma-video-scripts.md", "href=\"#インストール\"", "## このプロジェクトについて"]],
+  ];
+  for (const [localizedReadme, tokens] of orderedFrontScreens) {
+    let previousPosition = -1;
+    for (const token of tokens) {
+      const position = localizedReadme.indexOf(token);
+      assert.ok(position > previousPosition, `${token} is missing or out of GitHub first-screen order`);
+      previousPosition = position;
+    }
+  }
+
   assert.match(readme, /^## 这是一套什么样的 WIKI$/m);
   assert.match(readme, /<a href="#快速安装">快速安装<\/a>/);
   assert.match(validator, /GitHub 仓库首页/);
   assert.match(validator, /assets\/yingge-epic\.png/);
   assert.match(validator, /examples\/letter-to-grandma-feature\.md/);
   assert.match(validator, /examples\/video-to-wiki-demo\.md/);
+  const packageJson = JSON.parse(packageSource);
+  assert.equal(packageJson.scripts["readme:render:check"], "node scripts/validate-github-readmes.mjs");
+  assert.match(renderCheck, /https:\/\/api\.github\.com\/markdown/);
+  assert.match(renderCheck, /README\.zh-Hant\.md/);
+  assert.match(renderCheck, /GitHubFirstScreen/);
+  assert.match(workflow, /npm run readme:render:check/);
+  assert.match(workflow, /GITHUB_TOKEN:/);
 });

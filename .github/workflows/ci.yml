@@ -37,5 +37,10 @@ jobs:
       - name: Run full verification
         run: npm test
 
+      - name: Check GitHub README rendering
+        run: npm run readme:render:check
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Check npm package contents
         run: npm run pack:check

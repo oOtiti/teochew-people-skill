@@ -23,6 +23,7 @@
     "index.html",
     "skills/teochew-people-skill",
     "scripts/install-skill.mjs",
+    "scripts/validate-github-readmes.mjs",
     "scripts/validate-media-manifest.mjs",
     "examples",
     "assets/hero-background.png",
@@ -56,6 +57,7 @@
     "test:scenarios": "node scripts/validate-scenarios.mjs",
     "test:unit": "node --test tests/*.test.mjs",
     "media:check": "node scripts/validate-media-manifest.mjs",
+    "readme:render:check": "node scripts/validate-github-readmes.mjs",
     "validate": "pwsh -NoProfile -ExecutionPolicy Bypass -File scripts/validate-skill.ps1",
     "test": "npm run test:scenarios && npm run test:unit && npm run wiki:index:check && npm run wiki:lint && npm run media:check && npm run validate",
     "pack:check": "npm pack --dry-run"

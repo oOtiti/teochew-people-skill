@@ -6,6 +6,7 @@ $skillFile = Join-Path $skillDir "SKILL.md"
 $agentFile = Join-Path $skillDir "agents/openai.yaml"
 $packageFile = Join-Path $root "package.json"
 $installScript = Join-Path $root "scripts/install-skill.mjs"
+$readmeRenderScript = Join-Path $root "scripts/validate-github-readmes.mjs"
 $readmeFile = Join-Path $root "README.md"
 $readmeTraditionalFile = Join-Path $root "README.zh-Hant.md"
 $readmeEnglishFile = Join-Path $root "README.en.md"
@@ -108,6 +109,7 @@ foreach ($category in $requiredWikiCategories) {
 foreach ($path in @(
     $packageFile,
     $installScript,
+    $readmeRenderScript,
     $readmeFile,
     $readmeTraditionalFile,
     $readmeEnglishFile,
@@ -198,6 +200,7 @@ if (-not $package.bin.'teochew-people-skill') {
 $requiredPackageFiles = @(
     "skills/teochew-people-skill",
     "scripts/install-skill.mjs",
+    "scripts/validate-github-readmes.mjs",
     "examples",
     "assets/hero-background.png",
     "assets/hero.svg",
@@ -227,6 +230,10 @@ foreach ($required in $requiredPackageFiles) {
     if ($packageFiles -notcontains $required) {
         Fail "package.json files 应包含 '$required'"
     }
+}
+
+if ($package.scripts.PSObject.Properties["readme:render:check"].Value -ne "node scripts/validate-github-readmes.mjs") {
+    Fail "package.json scripts 应提供 GitHub README 实际渲染检查"
 }
 
 foreach ($entry in $packageFiles) {
@@ -334,6 +341,7 @@ $githubHomeOrder = @(
     "href=`"skills/teochew-people-skill/wiki/index.md`"",
     "href=`"examples/letter-to-grandma-feature.md`"",
     "href=`"examples/letter-to-grandma-video-scripts.md`"",
+    "href=`"#快速安装`"",
     "## 这是一套什么样的 WIKI"
 )
 $previousHomePosition = -1
@@ -346,9 +354,9 @@ foreach ($term in $githubHomeOrder) {
 }
 
 $localizedReadmes = @(
-    @{ Path = $readmeTraditionalFile; Label = "繁體中文"; Terms = @("自我演進", "個人化", "寫作與影片製作") },
-    @{ Path = $readmeEnglishFile; Label = "English"; Terms = @("evolving", "personalized", "writing and video production") },
-    @{ Path = $readmeJapaneseFile; Label = "日本語"; Terms = @("進化", "パーソナライズ", "文章と動画制作") }
+    @{ Path = $readmeTraditionalFile; Label = "繁體中文"; Selected = "<strong><a href=`"README.zh-Hant.md`">繁體中文"; Install = "href=`"#快速安裝`""; FirstSection = "## 這是什麼"; Terms = @("自我演進", "個人化", "寫作與影片製作") },
+    @{ Path = $readmeEnglishFile; Label = "English"; Selected = "<strong><a href=`"README.en.md`">English"; Install = "href=`"#install`""; FirstSection = "## What it is"; Terms = @("evolving", "personalized", "writing and video production") },
+    @{ Path = $readmeJapaneseFile; Label = "日本語"; Selected = "<strong><a href=`"README.ja.md`">日本語"; Install = "href=`"#インストール`""; FirstSection = "## このプロジェクトについて"; Terms = @("進化", "パーソナライズ", "文章と動画制作") }
 )
 
 foreach ($localized in $localizedReadmes) {
@@ -383,6 +391,26 @@ foreach ($localized in $localizedReadmes) {
         if ($content -notmatch [regex]::Escape($term)) {
             Fail "$($localized.Label) README 应包含 '$term'"
         }
+    }
+
+    $localizedHomeOrder = @(
+        "<img src=`"assets/social-preview.png`"",
+        "<h1 align=`"center`">TEOCHEW PEOPLE</h1>",
+        "actions/workflows/ci.yml/badge.svg",
+        $localized.Selected,
+        "href=`"skills/teochew-people-skill/wiki/index.md`"",
+        "href=`"examples/letter-to-grandma-feature.md`"",
+        "href=`"examples/letter-to-grandma-video-scripts.md`"",
+        $localized.Install,
+        $localized.FirstSection
+    )
+    $previousLocalizedPosition = -1
+    foreach ($term in $localizedHomeOrder) {
+        $localizedPosition = $content.IndexOf($term, [System.StringComparison]::Ordinal)
+        if ($localizedPosition -le $previousLocalizedPosition) {
+            Fail "$($localized.Label) GitHub 仓库首页的 hero、品牌、徽章、语言、入口或首节顺序不正确"
+        }
+        $previousLocalizedPosition = $localizedPosition
     }
 }
 
