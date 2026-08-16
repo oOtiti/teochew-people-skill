@@ -166,6 +166,11 @@ test("GitHub READMEs are the primary multilingual project showcase", async () =>
     [japanese, ["assets/social-preview.png", "<h1 align=\"center\">", "actions/workflows/ci.yml/badge.svg", "<strong><a href=\"README.ja.md\">日本語", "skills/teochew-people-skill/wiki/index.md", "examples/letter-to-grandma-feature.md", "examples/letter-to-grandma-video-scripts.md", "href=\"#インストール\"", "## このプロジェクトについて"]],
   ];
   for (const [localizedReadme, tokens] of orderedFrontScreens) {
+    assert.doesNotMatch(
+      localizedReadme,
+      /(?:alt|title)="[^"]*[<>][^"]*"/,
+      "HTML attribute angle brackets must be escaped for the live GitHub repository renderer",
+    );
     let previousPosition = -1;
     for (const token of tokens) {
       const position = localizedReadme.indexOf(token);
@@ -186,6 +191,7 @@ test("GitHub READMEs are the primary multilingual project showcase", async () =>
   assert.match(renderCheck, /README\.zh-Hant\.md/);
   assert.match(renderCheck, /GitHubFirstScreen/);
   assert.match(renderCheck, /renderedInstallLink/);
+  assert.match(renderCheck, /unsafeHtmlAttribute/);
   assert.match(workflow, /npm run readme:render:check/);
   assert.match(workflow, /GITHUB_TOKEN:/);
 });

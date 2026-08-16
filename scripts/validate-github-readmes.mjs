@@ -2,6 +2,7 @@ import { readFile } from "node:fs/promises";
 
 const GITHUB_MARKDOWN_ENDPOINT = "https://api.github.com/markdown";
 const REPOSITORY_CONTEXT = "oOtiti/teochew-people-skill";
+const unsafeHtmlAttribute = /(?:alt|title)="[^"]*[<>][^"]*"/;
 const commonLinks = [
   'href="skills/teochew-people-skill/wiki/index.md"',
   'href="examples/letter-to-grandma-feature.md"',
@@ -83,6 +84,9 @@ async function renderWithGitHub(markdown) {
 
 for (const spec of readmeSpecs) {
   const markdown = await readFile(new URL(`../${spec.file}`, import.meta.url), "utf8");
+  if (unsafeHtmlAttribute.test(markdown)) {
+    throw new Error(`${spec.file}: escape angle brackets inside HTML alt/title attributes for GitHub repository rendering`);
+  }
   const sourceOrder = [
     'src="assets/social-preview.png"',
     '<h1 align="center">TEOCHEW PEOPLE</h1>',

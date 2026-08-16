@@ -12,7 +12,7 @@
 <p align="center">
   <a href="https://github.com/oOtiti/teochew-people-skill/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/oOtiti/teochew-people-skill/actions/workflows/ci.yml/badge.svg"></a>
   <a href="https://www.npmjs.com/package/teochew-people-skill"><img alt="npm" src="https://img.shields.io/npm/v/teochew-people-skill?logo=npm&label=npm"></a>
-  <img alt="Node.js >=18" src="https://img.shields.io/badge/Node.js-%3E%3D18-339933?logo=nodedotjs&logoColor=white">
+  <img alt="Node.js &gt;=18" src="https://img.shields.io/badge/Node.js-%3E%3D18-339933?logo=nodedotjs&logoColor=white">
   <a href="LICENSE"><img alt="License MIT" src="https://img.shields.io/badge/License-MIT-f0a000.svg"></a>
   <img alt="Wiki 55 sources" src="https://img.shields.io/badge/Wiki-55_sources-136f63">
   <img alt="Topics 50" src="https://img.shields.io/badge/Topics-50-8f2d1e">
