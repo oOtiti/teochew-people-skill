@@ -7,7 +7,9 @@
 | 来源 | 层级 | 状态 | 发布者 | 文件 |
 | --- | --- | --- | --- | --- |
 | 2025年潮州市文化广电旅游体育局工作要点 | A | unavailable（不可回放） | 潮州市文化广电旅游体育局 | [chaozhou-work-priorities-2025](./2026-08-15/chaozhou-work-priorities-2025.md) |
+| 2026年度第六批重点作品版权保护预警名单（院线电影） | A | — | 国家版权局（国家电影局承载） | [ncac-film-copyright-warning-letter-to-grandma-2026](./2026-08-15/ncac-film-copyright-warning-letter-to-grandma-2026.md) |
 | China | A | — | UNESCO World Heritage Centre | [unesco-china-world-heritage-2026](./2026-08-15/unesco-china-world-heritage-2026.md) |
+| Dear You Movie Showtimes & Tickets | B | — | Golden Screen Cinemas Malaysia | [gsc-dear-you-malaysia-2026](./2026-08-15/gsc-dear-you-malaysia-2026.md) |
 | Ngee Ann Kongsi (Incorporation) Ordinance 1933 | A | — | Singapore Statutes Online | [singapore-ngee-ann-ordinance-1933](./2026-08-15/singapore-ngee-ann-ordinance-1933.md) |
 | Phoh Kiu Siang Tng | A | — | National Heritage Board Singapore | [nhb-phoh-kiu-2020](./2026-08-15/nhb-phoh-kiu-2020.md) |
 | Qiaopi and Yinxin Correspondence and Remittance Documents from Overseas Chinese | A | — | UNESCO Memory of the World | [unesco-qiaopi-2013](./2026-08-15/unesco-qiaopi-2013.md) |
@@ -16,11 +18,17 @@
 | Traditional tea processing techniques and associated social practices in China | A | — | UNESCO Intangible Cultural Heritage | [unesco-traditional-tea-2022](./2026-08-15/unesco-traditional-tea-2022.md) |
 | Yueh Hai Ching Temple | A | — | National Heritage Board Singapore | [singapore-nhb-yueh-hai-ching-2020](./2026-08-15/singapore-nhb-yueh-hai-ching-2020.md) |
 | 《侨批故事》 | A | — | 广东省档案馆 | [gd-archives-qiaopi-story](./2026-08-15/gd-archives-qiaopi-story.md) |
+| 《给阿嬷的情书》导演蓝鸿春：情义，是我们最想传递的东西 | B | — | 人民日报海外版／人民日报客户端 | [peoples-daily-lan-hongchun-essay-2026](./2026-08-15/peoples-daily-lan-hongchun-essay-2026.md) |
+| 《给阿嬷的情书》新加坡票房冲向200万元 | B | — | 联合早报 | [zaobao-dear-you-singapore-update-2026](./2026-08-15/zaobao-dear-you-singapore-update-2026.md) |
+| 《阿嬷》再掀方言片讨论 电影节策展人：放映限制近年已松动 | B | — | 联合早报 | [zaobao-dear-you-dialect-discussion-2026](./2026-08-15/zaobao-dear-you-dialect-discussion-2026.md) |
+| 专访｜“阿嬷”导演蓝鸿春：古汉语之美奠定了这部电影的美学基底 | B | — | 澎湃新闻 | [thepaper-lan-hongchun-interview-2026](./2026-08-15/thepaper-lan-hongchun-interview-2026.md) |
 | 中华英歌·舞动汕头——2024年春节英歌舞展演巡游活动在潮阳区火热上演 | B | — | 汕头日报（汕头市政府转载） | [shantou-yingge-parade-2024](./2026-08-15/shantou-yingge-parade-2024.md) |
 | 参考消息特稿\|从海外潮汕文化看中华文明向心力 | B | — | 参考消息（汕头市政府转载） | [shantou-overseas-teochew-2024](./2026-08-15/shantou-overseas-teochew-2024.md) |
 | 国家档案局：汕头侨批档案保护与数字化 | A | — | 国家档案局 | [china-archives-qiaopi-2020](./2026-08-15/china-archives-qiaopi-2020.md) |
+| 备案公示查询结果：给阿嬷的情书 | A | — | 国家电影局 | [national-film-filing-letter-to-grandma-2023](./2026-08-15/national-film-filing-letter-to-grandma-2023.md) |
 | 实现潮州礼俗“双创”的现实条件与路径初探 | A | — | 《广东省社会主义学院学报》 | [gdssy-chaozhou-rituals-2024](./2026-08-15/gdssy-chaozhou-rituals-2024.md) |
 | 广东省人民政府关于印发《广州都市圈发展规划》《深圳都市圈发展规划》《珠江口西岸都市圈发展规划》《汕潮揭都市圈发展规划》《湛茂都市圈发展规划》的通知 | A | — | 广东省人民政府 | [gd-chaoshan-metropolitan-plan-2023](./2026-08-15/gd-chaoshan-metropolitan-plan-2023.md) |
+| 我的光影故事2025丨非遗英歌正燃：从古老鼓点到时代强音 | B | — | 新华社（新华网） | [xinhua-chaoyang-yingge-visuals-2026](./2026-08-15/xinhua-chaoyang-yingge-visuals-2026.md) |
 | 打造高颜值风貌、高质量管理、高品质生活城乡空间 《潮州市“城乡品质提升年”实施方案》印发 | B | — | 潮州日报（潮州市人民政府门户网站承载） | [chaozhou-urban-quality-plan-2025](./2026-08-15/chaozhou-urban-quality-plan-2025.md) |
 | 揭阳 \| 棉湖镇：从千年古镇到活力新城 | B | — | 广东省人民政府地方志办公室 | [gd-dfz-mianhu-2025](./2026-08-15/gd-dfz-mianhu-2025.md) |
 | 揭阳市全域旅游发展规划：地方节庆与空间清单 | A | — | 揭阳市人民政府 | [jieyang-tourism-plan-2018-2035](./2026-08-15/jieyang-tourism-plan-2018-2035.md) |
@@ -40,12 +48,14 @@
 | 潮汕方言电影《给阿嬷的情书》位居榜首 | B | — | 羊城晚报 | [yangcheng-letter-to-grandma-2026](./2026-08-15/yangcheng-letter-to-grandma-2026.md) |
 | 潮汕祠堂“十八样”的布局营造及其成因 | A | — | 《济南大学学报（社会科学版）》 | [jinan-journal-chaoshan-ancestral-halls-2024](./2026-08-15/jinan-journal-chaoshan-ancestral-halls-2024.md) |
 | 潮阳英歌德国上演 舞出浓浓中国年味 | B | — | 新华社（新华网） | [xinhua-yingge-germany-2025](./2026-08-15/xinhua-yingge-germany-2025.md) |
+| 独家专访导演 《给阿嬷的情书》是怎样创作出来的？ | B | — | 新华社音视频部 | [xinhua-letter-to-grandma-video-2026](./2026-08-15/xinhua-letter-to-grandma-video-2026.md) |
 | 王群韬：藏在乡土烟火里的神圣空间 | B | — | 上海社会科学院（转自《文汇报》） | [sass-sacred-space-2026](./2026-08-15/sass-sacred-space-2026.md) |
 | 电影《给阿嬷的情书》暨新时代广东电影发展座谈会在京举办 | A | — | 国家电影局 | [national-film-letter-to-grandma-2026](./2026-08-15/national-film-letter-to-grandma-2026.md) |
 | 简介 Brief introduction | A | — | 新加坡潮州八邑会馆 | [teochew-huay-kuan-history](./2026-08-15/teochew-huay-kuan-history.md) |
 | 粤绣（潮绣） | A | — | 中国非物质文化遗产网·中国非物质文化遗产数字博物馆 | [ihchina-chao-embroidery-2006](./2026-08-15/ihchina-chao-embroidery-2006.md) |
 | 粤菜流派之潮州菜 | A | — | 广东省方志馆 | [gd-dfz-chaozhou-cuisine-2022](./2026-08-15/gd-dfz-chaozhou-cuisine-2022.md) |
 | 英歌（潮南英歌） | A | — | 广东省人民政府 | [gd-government-chaonan-yingge](./2026-08-15/gd-government-chaonan-yingge.md) |
+| 英歌（潮阳英歌） | A | — | 中国非物质文化遗产网·中国非物质文化遗产数字博物馆 | [ihchina-chaoyang-yingge-2006](./2026-08-15/ihchina-chaoyang-yingge-2006.md) |
 | 茶艺（潮州工夫茶艺） | A | — | 中国非物质文化遗产网·中国非物质文化遗产数字博物馆 | [ihchina-gongfu-tea-2008](./2026-08-15/ihchina-gongfu-tea-2008.md) |
 | 营老爷的意趣 | B | — | 人民日报 | [peoples-daily-ying-laoye-2025](./2026-08-15/peoples-daily-ying-laoye-2025.md) |
 | 雕绘乾坤——潮州木雕展 | A | — | 中国国家博物馆 | [national-museum-chaozhou-woodcarving-2020](./2026-08-15/national-museum-chaozhou-woodcarving-2020.md) |

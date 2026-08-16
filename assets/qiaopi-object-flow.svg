@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">侨批对象与关系图</title>
+  <desc id="desc">以信、款、递送和保存四个环节说明侨批的对象关系，图中没有仿造任何档案文字。</desc>
+  <defs>
+    <linearGradient id="paper" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff7df"/><stop offset="1" stop-color="#dcc48d"/></linearGradient>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#102f45"/><stop offset="1" stop-color="#071827"/></linearGradient>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto"><path d="M0 0 L12 6 L0 12Z" fill="#e65a3f"/></marker>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <text x="110" y="115" fill="#f8f2e3" font-family="Arial, 'Noto Sans SC', sans-serif" font-size="50" font-weight="700">侨批不是一个装饰性道具</text>
+  <text x="112" y="160" fill="#9abec9" font-family="Arial, 'Noto Sans SC', sans-serif" font-size="21">对象、责任与路由必须回到具体档案</text>
+  <g font-family="Arial, 'Noto Sans SC', sans-serif">
+    <g transform="translate(135 275)">
+      <rect width="280" height="330" rx="28" fill="#143b50" stroke="#4d8192" stroke-width="3"/>
+      <path d="M70 80 H210 V185 H70Z" fill="url(#paper)"/>
+      <path d="M70 80 L140 140 L210 80" fill="none" stroke="#ad8957" stroke-width="5"/>
+      <text x="45" y="250" fill="#f4d58d" font-size="30" font-weight="700">信 · 话</text>
+      <text x="45" y="288" fill="#d7e5e9" font-size="19">寄收双方 / 日期 / 内容</text>
+    </g>
+    <g transform="translate(505 275)">
+      <rect width="280" height="330" rx="28" fill="#2a1c24" stroke="#8f4339" stroke-width="3"/>
+      <circle cx="140" cy="132" r="65" fill="#e65a3f" opacity="0.18" stroke="#f4d58d" stroke-width="6"/>
+      <path d="M100 132 H180 M140 92 V172" stroke="#f4d58d" stroke-width="12" stroke-linecap="round"/>
+      <text x="45" y="250" fill="#f4d58d" font-size="30" font-weight="700">款 · 凭</text>
+      <text x="45" y="288" fill="#ead8d4" font-size="19">金额 / 汇款凭证 / 账簿</text>
+    </g>
+    <g transform="translate(875 275)">
+      <rect width="280" height="330" rx="28" fill="#143b50" stroke="#4d8192" stroke-width="3"/>
+      <path d="M72 175 C105 75 185 75 215 175" fill="none" stroke="#69b1c5" stroke-width="8" stroke-dasharray="14 12"/>
+      <circle cx="72" cy="175" r="15" fill="#f4d58d"/><circle cx="215" cy="175" r="15" fill="#e65a3f"/>
+      <text x="45" y="250" fill="#f4d58d" font-size="30" font-weight="700">递 · 路</text>
+      <text x="45" y="288" fill="#d7e5e9" font-size="19">批局 / 水客 / 路由</text>
+    </g>
+    <g transform="translate(1245 275)">
+      <rect width="220" height="330" rx="28" fill="#2a1c24" stroke="#8f4339" stroke-width="3"/>
+      <rect x="60" y="70" width="100" height="125" rx="8" fill="url(#paper)"/>
+      <line x1="82" y1="105" x2="138" y2="105" stroke="#ad8957" stroke-width="5"/>
+      <line x1="82" y1="135" x2="138" y2="135" stroke="#ad8957" stroke-width="5"/>
+      <text x="42" y="250" fill="#f4d58d" font-size="30" font-weight="700">藏 · 查</text>
+      <text x="42" y="288" fill="#ead8d4" font-size="19">馆藏 / 扫描 / 检索</text>
+    </g>
+    <path d="M425 440 H485" stroke="#e65a3f" stroke-width="7" marker-end="url(#arrow)"/>
+    <path d="M795 440 H855" stroke="#e65a3f" stroke-width="7" marker-end="url(#arrow)"/>
+    <path d="M1165 440 H1225" stroke="#e65a3f" stroke-width="7" marker-end="url(#arrow)"/>
+  </g>
+  <rect x="120" y="700" width="1360" height="90" rx="22" fill="#f4d58d" opacity="0.08" stroke="#f4d58d" stroke-opacity="0.3"/>
+  <text x="160" y="755" fill="#f8f2e3" font-family="Arial, 'Noto Sans SC', sans-serif" font-size="24">图中没有姓名、金额、地址或仿造笔迹；具体故事必须回到获授权的单件档案。</text>
+  <text x="1190" y="845" fill="#7896a4" font-family="Arial, 'Noto Sans SC', sans-serif" font-size="18">原创对象图 · 非档案复制件</text>
+</svg>

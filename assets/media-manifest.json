@@ -1,0 +1,139 @@
+{
+  "version": 1,
+  "reviewed": "2026-08-15",
+  "items": [
+    {
+      "id": "letter-to-grandma-hero",
+      "path": "assets/letter-to-grandma-hero.png",
+      "media_type": "image",
+      "rights_status": "editorial_original",
+      "creator": "TEOCHEW PEOPLE with OpenAI image generation",
+      "creation_method": "AI-assisted editorial illustration; human-directed, outpainted to 16:9, and reviewed",
+      "dimensions": "1672x941",
+      "source_ids": [
+        "unesco-qiaopi-2013",
+        "gd-archives-qiaopi-story",
+        "national-film-letter-to-grandma-2026"
+      ],
+      "alt": "原创编辑插画：两代人的手围着空白信纸，窗外夜海连接潮汕屋脊与东南亚岸灯",
+      "disclaimer": "非历史照片、非电影剧照、非真实侨批复制件，人物不可识别。",
+      "purpose": "《给阿嬷的情书》文化专题头图",
+      "prompt_summary": "Blank letter, two non-identifiable hands, two shores across a blue-hour sea; no film imagery or readable text",
+      "reviewed": "2026-08-15"
+    },
+    {
+      "id": "yingge-epic",
+      "path": "assets/yingge-epic.png",
+      "media_type": "image",
+      "rights_status": "editorial_original",
+      "creator": "TEOCHEW PEOPLE with OpenAI image generation",
+      "creation_method": "AI-assisted editorial illustration; human-directed revision and reviewed",
+      "dimensions": "1672x941",
+      "source_ids": [
+        "ihchina-chaoyang-yingge-2006",
+        "gd-government-chaonan-yingge",
+        "xinhua-chaoyang-yingge-visuals-2026"
+      ],
+      "alt": "原创编辑视觉：英歌舞者身着长袖彩衣，在晨光古镇街巷中列阵击打双短槌",
+      "disclaimer": "非具体演出现场，不对应真实人物、队伍、脸谱、流派标识或活动年份。",
+      "purpose": "README 潮汕人风采史诗展示与英歌主题入口",
+      "prompt_summary": "Source-grounded composite of long-sleeved colorful Yingge dress, distinct painted faces, paired slender sticks and a dawn street formation; invented people and choreography",
+      "reviewed": "2026-08-15"
+    },
+    {
+      "id": "letter-to-grandma-timeline",
+      "path": "assets/letter-to-grandma-timeline.svg",
+      "media_type": "image",
+      "rights_status": "editorial_original",
+      "creator": "TEOCHEW PEOPLE",
+      "creation_method": "Hand-authored SVG using source-dated event nodes",
+      "dimensions": "1600x900",
+      "source_ids": [
+        "national-film-filing-letter-to-grandma-2023",
+        "ncac-film-copyright-warning-letter-to-grandma-2026",
+        "national-film-letter-to-grandma-2026",
+        "gsc-dear-you-malaysia-2026",
+        "zaobao-dear-you-singapore-update-2026"
+      ],
+      "alt": "《给阿嬷的情书》从2023年备案到2026年上映、展映与马新放映的编辑时间线",
+      "disclaimer": "时间线区分备案、上映、活动、报道和放映日期，不表示所有状态持续至今。",
+      "purpose": "专题时间线",
+      "reviewed": "2026-08-15"
+    },
+    {
+      "id": "letter-to-grandma-map",
+      "path": "assets/letter-to-grandma-map.svg",
+      "media_type": "image",
+      "rights_status": "editorial_original",
+      "creator": "TEOCHEW PEOPLE",
+      "creation_method": "Hand-authored schematic SVG with separate line types",
+      "dimensions": "1600x900",
+      "source_ids": [
+        "gd-chaoshan-metropolitan-plan-2023",
+        "yangcheng-letter-to-grandma-2026",
+        "unesco-qiaopi-2013",
+        "gsc-dear-you-malaysia-2026",
+        "zaobao-dear-you-singapore-update-2026"
+      ],
+      "alt": "编辑示意地图用三种线型区分汕潮揭取景、侨批与社群联系及2026年马新放映",
+      "disclaimer": "非比例地图、非单一家族迁徙路线，取景地、历史网络与放映节点不能互换。",
+      "purpose": "专题跨海地理图",
+      "reviewed": "2026-08-15"
+    },
+    {
+      "id": "qiaopi-object-flow",
+      "path": "assets/qiaopi-object-flow.svg",
+      "media_type": "image",
+      "rights_status": "editorial_original",
+      "creator": "TEOCHEW PEOPLE",
+      "creation_method": "Hand-authored object relationship SVG",
+      "dimensions": "1600x900",
+      "source_ids": [
+        "unesco-qiaopi-2013",
+        "gd-archives-qiaopi-story",
+        "china-archives-qiaopi-2020"
+      ],
+      "alt": "侨批的信、汇款凭证、递送路由与馆藏扫描四环节对象关系图",
+      "disclaimer": "没有复制或仿造任何馆藏姓名、金额、地址、笔迹、邮戳或信件正文。",
+      "purpose": "专题侨批对象图",
+      "reviewed": "2026-08-15"
+    },
+    {
+      "id": "evidence-layers",
+      "path": "assets/evidence-layers.svg",
+      "media_type": "image",
+      "rights_status": "editorial_original",
+      "creator": "TEOCHEW PEOPLE",
+      "creation_method": "Hand-authored evidence taxonomy SVG",
+      "dimensions": "1600x900",
+      "source_ids": [
+        "national-film-filing-letter-to-grandma-2023",
+        "ncac-film-copyright-warning-letter-to-grandma-2026",
+        "peoples-daily-lan-hongchun-essay-2026",
+        "xinhua-letter-to-grandma-video-2026",
+        "unesco-qiaopi-2013"
+      ],
+      "alt": "监管与档案、主创自述、作品画面、编辑综合和未知内容的五层证据图",
+      "disclaimer": "这是编辑方法图，不对电影真实性、历史价值或观众意见作量化评分。",
+      "purpose": "专题证据分层图",
+      "reviewed": "2026-08-15"
+    },
+    {
+      "id": "video-to-wiki-flow",
+      "path": "assets/video-to-wiki-flow.svg",
+      "media_type": "image",
+      "rights_status": "editorial_original",
+      "creator": "TEOCHEW PEOPLE",
+      "creation_method": "Hand-authored workflow SVG based on the admitted Xinhua video record",
+      "dimensions": "1600x900",
+      "source_ids": [
+        "xinhua-letter-to-grandma-video-2026",
+        "ncac-film-copyright-warning-letter-to-grandma-2026"
+      ],
+      "alt": "公开视频从页面登记、时间码与责任主体拆分到raw、topic和内容输出的证据流程",
+      "disclaimer": "原视频保持链接状态，流程不保存媒体本体、完整转录、电影截图或原音轨。",
+      "purpose": "视频素材转 Wiki 演示图",
+      "reviewed": "2026-08-15"
+    }
+  ]
+}

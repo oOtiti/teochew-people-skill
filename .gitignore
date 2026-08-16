@@ -30,6 +30,8 @@ dist/
 build/
 coverage/
 *.tgz
+.playwright-cli/
+output/playwright/
 
 # 密钥和本地环境变量
 .env

@@ -18,6 +18,13 @@ const PROJECT_OVERLAY_IGNORE = `# Teochew People project overlays are private by
 !.gitignore
 `;
 const SOURCE_TIERS = new Set(["A", "B", "C"]);
+const MEDIA_TYPES = new Set(["video", "audio", "image"]);
+const RIGHTS_STATUSES = new Set(["official_or_licensed", "link_only", "editorial_original"]);
+const TRANSCRIPT_STATUSES = new Set(["verified_excerpt", "partial", "unavailable"]);
+const MEDIA_DURATION_PATTERN = /^\d{2}:\d{2}:\d{2}$/;
+const TIMECODE_SCOPE_PATTERN = /^\d{2}:\d{2}:\d{2}-\d{2}:\d{2}:\d{2}$/;
+const MEDIA_METADATA_FIELDS = ["media_type", "rights_status", "media_duration", "transcript_status", "timecode_scope"];
+const IMAGE_ONLY_INVALID_FIELDS = ["media_duration", "transcript_status", "timecode_scope"];
 const SOURCE_STATUSES = new Set(["unavailable"]);
 const EVIDENCE_STATES = new Set(["verified", "synthesis", "varies", "unknown"]);
 const FRESHNESS_VALUES = new Set(["enduring", "current", "event"]);
@@ -309,6 +316,20 @@ function requiredFields(record, fields) {
   return fields.filter((field) => record[field] === undefined || record[field] === "");
 }
 
+function parseClockToSeconds(value) {
+  if (!MEDIA_DURATION_PATTERN.test(value)) return null;
+  const [hoursText, minutesText, secondsText] = value.split(":");
+  const hours = Number(hoursText);
+  const minutes = Number(minutesText);
+  const seconds = Number(secondsText);
+  if (minutes >= 60 || seconds >= 60) return null;
+  return (hours * 3600) + (minutes * 60) + seconds;
+}
+
+function hasMediaValue(record, field) {
+  return record[field] !== undefined && record[field] !== "";
+}
+
 function ageInDays(reviewed, now) {
   const parsed = Date.parse(`${reviewed}T00:00:00Z`);
   return Number.isFinite(parsed) ? Math.floor((now.getTime() - parsed) / 86_400_000) : Number.POSITIVE_INFINITY;
@@ -353,6 +374,101 @@ export async function lintWiki(skillRoot, options = {}) {
       }
       if (record.source_status && !SOURCE_STATUSES.has(record.source_status)) {
         issues.push(issue("invalid-source-status", record.relative, `Source status must be unavailable when present; received '${record.source_status}'`));
+      }
+      if (MEDIA_METADATA_FIELDS.some((field) => hasMediaValue(record, field))) {
+        const missingMedia = new Set();
+        if (!hasMediaValue(record, "media_type")) missingMedia.add("media_type");
+        if (!hasMediaValue(record, "rights_status")) missingMedia.add("rights_status");
+        const requiresTemporalMetadata = record.media_type === "video" ||
+          record.media_type === "audio" ||
+          hasMediaValue(record, "media_duration") ||
+          hasMediaValue(record, "transcript_status") ||
+          hasMediaValue(record, "timecode_scope");
+        if (requiresTemporalMetadata) {
+          for (const field of requiredFields(record, ["media_duration", "transcript_status"])) missingMedia.add(field);
+        }
+        if (hasMediaValue(record, "media_type") && !MEDIA_TYPES.has(record.media_type)) {
+          issues.push(issue("invalid-media-type", record.relative, `Media type must be video, audio, or image; received '${record.media_type}'`));
+        }
+        if (hasMediaValue(record, "rights_status") && !RIGHTS_STATUSES.has(record.rights_status)) {
+          issues.push(
+            issue(
+              "invalid-rights-status",
+              record.relative,
+              `Rights status must be official_or_licensed, link_only, or editorial_original; received '${record.rights_status}'`,
+            ),
+          );
+        }
+        if (hasMediaValue(record, "transcript_status") && !TRANSCRIPT_STATUSES.has(record.transcript_status)) {
+          issues.push(
+            issue(
+              "invalid-transcript-status",
+              record.relative,
+              `Transcript status must be verified_excerpt, partial, or unavailable; received '${record.transcript_status}'`,
+            ),
+          );
+        }
+        const durationSeconds = hasMediaValue(record, "media_duration")
+          ? parseClockToSeconds(record.media_duration)
+          : null;
+        if (hasMediaValue(record, "media_duration") && durationSeconds === null) {
+          issues.push(
+            issue(
+              "invalid-media-duration",
+              record.relative,
+              `Media duration must use HH:MM:SS; received '${record.media_duration}'`,
+            ),
+          );
+        }
+        if (
+          record.transcript_status !== undefined &&
+          record.transcript_status !== "unavailable" &&
+          record.timecode_scope === undefined
+        ) {
+          missingMedia.add("timecode_scope");
+        }
+        if (hasMediaValue(record, "timecode_scope")) {
+          let validTimecodeScope = TIMECODE_SCOPE_PATTERN.test(record.timecode_scope);
+          if (validTimecodeScope) {
+            const [startText, endText] = record.timecode_scope.split("-");
+            const startSeconds = parseClockToSeconds(startText);
+            const endSeconds = parseClockToSeconds(endText);
+            validTimecodeScope = startSeconds !== null &&
+              endSeconds !== null &&
+              startSeconds <= endSeconds &&
+              (durationSeconds === null || endSeconds <= durationSeconds);
+          }
+          if (!validTimecodeScope) {
+            issues.push(
+              issue(
+                "invalid-timecode-scope",
+                record.relative,
+                `Timecode scope must use HH:MM:SS-HH:MM:SS within duration bounds; received '${record.timecode_scope}'`,
+              ),
+            );
+          }
+        }
+        if (record.media_type === "image") {
+          const invalidFields = IMAGE_ONLY_INVALID_FIELDS.filter((field) => hasMediaValue(record, field));
+          if (invalidFields.length) {
+            issues.push(
+              issue(
+                "invalid-media-fields",
+                record.relative,
+                `Image sources cannot include: ${invalidFields.join(", ")}`,
+              ),
+            );
+          }
+        }
+        if (missingMedia.size) {
+          issues.push(
+            issue(
+              "missing-media-metadata",
+              record.relative,
+              `Missing media metadata: ${[...missingMedia].sort(compareText).join(", ")}`,
+            ),
+          );
+        }
       }
       continue;
     }

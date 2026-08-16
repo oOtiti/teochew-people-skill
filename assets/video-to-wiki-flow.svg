@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">公开视频转 Wiki 的证据链</title>
+  <desc id="desc">从原发布页面、权利和时长登记，经过时间码人工核验、责任主体拆分、claim限制到raw、topic与内容生产。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#071827"/><stop offset="0.55" stop-color="#0d3551"/><stop offset="1" stop-color="#271820"/></linearGradient>
+    <marker id="arrow" markerWidth="11" markerHeight="11" refX="9" refY="5.5" orient="auto"><path d="M0 0 L11 5.5 L0 11Z" fill="#f4d58d"/></marker>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <text x="100" y="105" fill="#f8f2e3" font-family="Arial, 'Noto Sans SC', sans-serif" font-size="49" font-weight="700">视频不会直接变成事实</text>
+  <text x="102" y="150" fill="#9abec9" font-family="Arial, 'Noto Sans SC', sans-serif" font-size="21">先拆责任，再写 claim；先核权利，再派生镜头</text>
+  <g font-family="Arial, 'Noto Sans SC', sans-serif">
+    <g transform="translate(100 270)">
+      <rect width="205" height="245" rx="24" fill="#153c50" stroke="#69b1c5" stroke-width="3"/>
+      <text x="28" y="55" fill="#f4d58d" font-size="21" font-weight="700">01 · 页面登记</text>
+      <text x="28" y="105" fill="#f8f2e3" font-size="24">发布者 / URL</text>
+      <text x="28" y="145" fill="#c5dce3" font-size="18">日期 · 09:49</text>
+      <text x="28" y="180" fill="#c5dce3" font-size="18">rights: link_only</text>
+    </g>
+    <g transform="translate(345 270)">
+      <rect width="205" height="245" rx="24" fill="#39202a" stroke="#e65a3f" stroke-width="3"/>
+      <text x="28" y="55" fill="#f4d58d" font-size="21" font-weight="700">02 · 时间码</text>
+      <text x="28" y="105" fill="#f8f2e3" font-size="23">03:55—04:45</text>
+      <text x="28" y="145" fill="#f8f2e3" font-size="23">06:40—08:05</text>
+      <text x="28" y="185" fill="#ead8d4" font-size="18">人工回听必要范围</text>
+    </g>
+    <g transform="translate(590 270)">
+      <rect width="205" height="245" rx="24" fill="#153c50" stroke="#69b1c5" stroke-width="3"/>
+      <text x="28" y="55" fill="#f4d58d" font-size="21" font-weight="700">03 · 责任主体</text>
+      <text x="28" y="105" fill="#f8f2e3" font-size="21">speaker</text>
+      <text x="28" y="140" fill="#f8f2e3" font-size="21">narration / subtitle</text>
+      <text x="28" y="175" fill="#f8f2e3" font-size="21">frame observation</text>
+    </g>
+    <g transform="translate(835 270)">
+      <rect width="205" height="245" rx="24" fill="#39202a" stroke="#e65a3f" stroke-width="3"/>
+      <text x="28" y="55" fill="#f4d58d" font-size="21" font-weight="700">04 · Claim</text>
+      <text x="28" y="105" fill="#f8f2e3" font-size="22">准确转述</text>
+      <text x="28" y="145" fill="#ead8d4" font-size="18">能证明 / 不能证明</text>
+      <text x="28" y="180" fill="#ead8d4" font-size="18">confidence / unknown</text>
+    </g>
+    <g transform="translate(1080 270)">
+      <rect width="205" height="245" rx="24" fill="#153c50" stroke="#69b1c5" stroke-width="3"/>
+      <text x="28" y="55" fill="#f4d58d" font-size="21" font-weight="700">05 · 知识层</text>
+      <text x="28" y="115" fill="#f8f2e3" font-size="29" font-weight="700">RAW</text>
+      <text x="28" y="165" fill="#f8f2e3" font-size="29" font-weight="700">TOPIC</text>
+    </g>
+    <g transform="translate(1325 270)">
+      <rect width="175" height="245" rx="24" fill="#3a321f" stroke="#f4d58d" stroke-width="3"/>
+      <text x="25" y="55" fill="#f4d58d" font-size="21" font-weight="700">06 · 输出</text>
+      <text x="25" y="110" fill="#f8f2e3" font-size="22">文章</text>
+      <text x="25" y="150" fill="#f8f2e3" font-size="22">口播</text>
+      <text x="25" y="190" fill="#f8f2e3" font-size="22">分镜</text>
+    </g>
+    <g stroke="#f4d58d" stroke-width="5" marker-end="url(#arrow)">
+      <line x1="310" y1="393" x2="330" y2="393"/><line x1="555" y1="393" x2="575" y2="393"/><line x1="800" y1="393" x2="820" y2="393"/><line x1="1045" y1="393" x2="1065" y2="393"/><line x1="1290" y1="393" x2="1310" y2="393"/>
+    </g>
+  </g>
+  <rect x="130" y="625" width="1340" height="130" rx="28" fill="#071827" stroke="#e65a3f" stroke-opacity="0.65"/>
+  <text x="180" y="680" fill="#e65a3f" font-family="Arial, 'Noto Sans SC', sans-serif" font-size="24" font-weight="700">STOP</text>
+  <text x="290" y="680" fill="#f8f2e3" font-family="Arial, 'Noto Sans SC', sans-serif" font-size="22">不下载权利不明原视频 · 不保存完整转录 · 不用画面外推历史</text>
+  <text x="290" y="720" fill="#9abec9" font-family="Arial, 'Noto Sans SC', sans-serif" font-size="19">新华社案例只保存 URL、必要时间码与准确转述；电影片段仍是 link_only。</text>
+  <text x="1180" y="835" fill="#7896a4" font-family="Arial, 'Noto Sans SC', sans-serif" font-size="18">原创流程图 · 2026-08-15</text>
+</svg>

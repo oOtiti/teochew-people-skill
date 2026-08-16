@@ -173,3 +173,47 @@
 ## 2026-08-15 — 国家非遗项目页 canonical 路径更新
 
 - `ihchina-gongfu-tea-2008` 原路径 `/Article/Index/detail?id=15247` 在最终链接复核中超时；中国非物质文化遗产网现行同项目 ID canonical `https://www.ihchina.cn/art/detail/id/15247.html` 可回放，项目名、项目序号、项目编号、2008年第二批、申报地区与保护单位一致。raw 只更新同一官方记录的当前路径，不新增来源，统计不变。
+
+## 2026-08-15 — 《给阿嬷的情书》多媒体专题追加审查
+
+本轮以“影片身份与权利—主创自述—侨批与潮语独立证据—海外实际放映—可回放视频—英歌原创视觉边界”为覆盖矩阵，先核 canonical、直接性和版权，再决定是否入库。电影、新闻、档案和现场照片即使公开可看，也不自动成为可复制素材。
+
+### 准入
+
+| 候选 URL / source ID | 决定 | 发布者、日期、范围与直接性 | 可直接支持与创作价值 | 限制、独立性与版权 |
+| --- | --- | --- | --- | --- |
+| `https://www.chinafilm.gov.cn/dybalxgs/202312/t20231221_823053.html` / `national-film-filing-letter-to-grandma-2023` | Admit A | 国家电影局；2023备案归档；电影备案直接记录 | 备案号、单位、编剧、结果与备案梗概；适合从备案到上映的时间线 | 不证明完成片、演员或历史真实性；页面图像不复制 |
+| `https://www.chinafilm.gov.cn/xxgk/gsxx/wggs/202604/t20260430_988295.html` / `ncac-film-copyright-warning-letter-to-grandma-2026` | Admit A | 国家版权局信息、国家电影局承载；2026-04-29；版权预警直接记录 | 所列权利人、4月30日上映日及未经许可不得网络提供／上传的明确边界 | 不授予本项目任何再利用权，也不穷尽全部底层权利 |
+| `https://www.news.cn/politics/20260516/b9e1d180b13f4fb1baddd16e4a286fd3/c.html` / `xinhua-letter-to-grandma-video-2026` | Admit B | 新华社音视频部；2026-05-16；原始视频与导演受访 | 09:49视频、创作过程、侨批写作、跨语言表演准备；可完成时间码入库演示 | `link_only`；只人工核验必要片段，不存MP4、截图、音轨或完整转录；导演说法保持归因 |
+| `https://www.peopleapp.com/column/30052199783-500007506087` / `peoples-daily-lan-hongchun-essay-2026` | Admit B | 蓝鸿春署名、人民日报海外版采访整理；2026-05-22；创作者一手陈述 | 成长记忆、东南亚调研、侨批阅读与剧作重组 | 真实性比例与价值判断不能升级为独立历史审计；配图与电影文字 `link_only` |
+| `https://www.thepaper.cn/newsDetail_forward_33164270?commTag=true` / `thepaper-lan-hongchun-interview-2026` | Admit B | 澎湃新闻陈晨直接采访；2026-05-13；具名编辑责任 | 纪录片走访、2023创意节点、半年调研与资料寻找 | 市场数字会变；剧情、台词和海报不再利用；受访说法保持归因 |
+| `https://www.gsc.com.my/movie/dear-you/` / `gsc-dear-you-malaysia-2026` | Admit B | Golden Screen Cinemas Malaysia；上映日2026-06-18；当地院线直接页面 | 马来西亚上映、潮语、字幕、片长和主创；适合海外语言版本卡 | 商业院线只证明自身记录，不证明全国规模或最终票房；海报／预告 `link_only` |
+| `https://www.zaobao.com.sg/news/singapore/story20260630-9275081` / `zaobao-dear-you-dialect-discussion-2026` | Admit B | 联合早报魏瑜嶙；2026-06-30；新加坡具名报道 | 潮语原音场次、加场状态和不同受访者对方言影视环境的解释 | 不代表单一社会意见，申请不是最终结果；观点逐人归因，图片／视频 `link_only` |
+| `https://www.zaobao.com.sg/entertainment/story20260703-9308034` / `zaobao-dear-you-singapore-update-2026` | Admit B | 联合早报蔡欣盈；2026-07-03；新加坡较晚状态快照 | 7月新增原音场次、影院、日期和带截止时刻的售票比例 | 标题票房是预测，数字不得写成永久结果；照片 `link_only` |
+| `https://www.ihchina.cn/project_details/12901.html` / `ihchina-chaoyang-yingge-2006` | Admit A | 中国非遗网；2006第一批；潮阳英歌正式项目页 | 项目编号、保护单位、木棒、锣鼓、吆喝、步伐、队形与板式；支撑原创视觉边界 | 起源传说不作确定历史；潮阳、潮南、普宁、甲子和具体队伍不能互换；图片 `link_only` |
+
+### Reject / defer
+
+| 候选 | 决定 | 理由 |
+| --- | --- | --- |
+| Wikipedia、百度百科与 Reddit 讨论串 | Reject as evidence | 只用于发现检索词；不能证明历史、票房、发行或跨国身份判断 |
+| 新浪、搜狐、中国青年网等同一主创材料转载 | Reject as duplicate | 已取得人民日报署名材料、新华社原视频和澎湃直接采访，转载不构成独立证据 |
+| 1905 影片导赏页 | Defer | 编辑性概括、剧情和电影文字多于独立文化证据；已有更直接监管、档案和主创来源 |
+| 滚动票务预测、评分截图和搜索摘要 | Reject for stable claims | 缺固定 canonical 或会持续变化；“海外十余国”“最终票房”等不从摘要写入稳定 topic |
+| BBC 中文相关文章 | Defer | 2026-08-15 受 robots 限制，未完成正文回放；不由搜索摘要推断论点 |
+| 联合早报影评、诗歌和读者来稿 | Defer for core facts | 可作具名受众样本，但不为观点数量堆叠同源材料，也不替代发行、档案或语言事实 |
+| 电影、报道、档案与英歌页面中的图片／音视频 | Reject for redistribution | 未发现本仓库所需再分发授权；只保存 URL、必要短转述和时间码，公开视觉使用 `editorial_original` |
+
+- 本轮新准入 A 3、B 6、C 0，共 9 条；追加后当前有效统计为 A 35、B 19、C 0，共 54 条。
+- `xinhua-letter-to-grandma-video-2026` 是首条带媒体证据字段的 raw：`video`、`link_only`、`00:09:49`、`verified_excerpt`、核验范围 `00:03:55-00:09:45`。
+- 影片的历史表达由既有 `unesco-qiaopi-2013`、`gd-archives-qiaopi-story`、`china-archives-qiaopi-2020` 与 `gd-dfz-teochew-language-2020` 独立支撑；主创材料不替代这些来源。
+- 英歌原创视觉以 `ihchina-chaoyang-yingge-2006` 和既有潮南／潮阳来源共有的群体、木槌、锣鼓与队形为边界，不复制具体队伍、脸谱或现场照片。
+
+## 2026-08-15 — 英歌视觉准确性复核
+
+| 候选 URL / source ID | 决定 | 发布者、日期、范围与直接性 | 可直接支持与创作价值 | 限制、独立性与版权 |
+| --- | --- | --- | --- | --- |
+| `https://www.news.cn/20260105/c63cc3ebd8734be7a3f5151501e1a64a/c.html` / `xinhua-chaoyang-yingge-visuals-2026` | Admit B | 新华社摄影部与广东分社；2026-01-05发布；姚军具名拍摄的2025潮阳图文 | 逐人勾脸、穿戴长袖演出服、绣饰护片／腰片、绑腿、双短棒、头饰／髯口与短发队员并存，以及具名训练和活动节点；用于校正原创图的类别特征 | 只证明图中具名队伍、地点与时段；不建立全域标准。图片 `link_only`，不临摹肖像、具体脸谱、队徽、站位或新闻构图 |
+
+- 此条是在首页英歌原创图的人工审校发现“无袖武术装、同模板脸谱、粗方木棒”等偏差后补入；新增视觉只作跨来源综合，不冒充新华社照片或任何真实队伍。
+- 当前有效统计为 A 35、B 20、C 0，共55条。

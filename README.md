@@ -1,8 +1,54 @@
-![TEOCHEW PEOPLE](assets/social-preview.png)
+<p align="center">
+  <img src="assets/social-preview.png" alt="TEOCHEW PEOPLE：潮汕文化 LLM Wiki" width="100%">
+</p>
 
-TEOCHEW PEOPLE 是一个面向 AI agent 的潮汕文化 LLM Wiki：以可追溯的 raw 来源、已经建设好的主题页与分类索引为公共知识底座，按需检索并持续审计、研究和演进。它优先服务文章、口播与视频生产，让事实、地域和家庭差异，以及人物、动作、器物、声音、空间与顺序都能回到具体来源；它不把任何一次回答或本地经验包装成自动生成的真理。
+<h1 align="center">TEOCHEW PEOPLE</h1>
 
-## 为什么它不是普通资料合集
+<p align="center">
+  <strong>自进化、个性化的潮汕文化 Skill 与 LLM Wiki</strong><br>
+  精挑细选来源，建设可追溯主题，为文章、口播和视频生产准备真正可用的文化细节。
+</p>
+
+<p align="center">
+  <a href="https://github.com/oOtiti/teochew-people-skill/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/oOtiti/teochew-people-skill/actions/workflows/ci.yml/badge.svg"></a>
+  <a href="https://www.npmjs.com/package/teochew-people-skill"><img alt="npm" src="https://img.shields.io/npm/v/teochew-people-skill?logo=npm&label=npm"></a>
+  <img alt="Node.js &gt;=18" src="https://img.shields.io/badge/Node.js-%3E%3D18-339933?logo=nodedotjs&logoColor=white">
+  <a href="LICENSE"><img alt="License MIT" src="https://img.shields.io/badge/License-MIT-f0a000.svg"></a>
+  <img alt="Wiki 55 sources" src="https://img.shields.io/badge/Wiki-55_sources-136f63">
+  <img alt="Topics 50" src="https://img.shields.io/badge/Topics-50-8f2d1e">
+  <img alt="Categories 9" src="https://img.shields.io/badge/Categories-9-c79434">
+  <img alt="Languages 4" src="https://img.shields.io/badge/Languages-4-3949ab">
+</p>
+
+<p align="center">
+  <strong>简体中文</strong> · <a href="README.zh-Hant.md">繁體中文</a> · <a href="README.en.md">English</a> · <a href="README.ja.md">日本語</a>
+</p>
+
+<p align="center">
+  <a href="skills/teochew-people-skill/wiki/index.md"><strong>进入公共 WIKI</strong></a> ·
+  <a href="examples/letter-to-grandma-feature.md">阅读图文专题</a> ·
+  <a href="examples/letter-to-grandma-video-scripts.md">查看视频脚本</a> ·
+  <a href="#快速安装">快速安装</a>
+</p>
+
+## 这是一套什么样的 WIKI
+
+TEOCHEW PEOPLE 用 55 条可追溯 raw 来源、50 张主题页和 9 个分类索引构成公共知识底座。经审核的新资料让 Wiki 持续演进；经你明确同意的受众、家庭讲法和表达偏好让输出越来越贴合。它会越用越好用，但不会把一次回答或私人经验自动写成公共真理。
+
+| 组成 | 它解决什么 | 如何越用越好用 |
+| --- | --- | --- |
+| **公共 Wiki** | 55 条 raw 来源与 50 张 topic 把事实、地点、年代、差异和未知组织成可检索知识 | 新来源先审身份与直接性，再进入 raw 和 topic；错误有日志、有版本、可回退 |
+| **自进化** | `research → ingest → evolve → lint` 把热点核验、来源准入和结构检查连成维护链 | 只沉淀经确认、可长期复用的变化；不是从每次对话自动学习，更不是自动掌握真相 |
+| **个性化** | 项目和用户 local vault 保存受众、选例、家庭讲法与表达偏好 | 只有明确同意才写入；本地层可以调整表达，但不能静默覆盖公共事实 |
+| **内容生产** | topic 同时准备文字、画面、声音、动作、器物、空间和时间码 | 一套证据链派生文章、口播、分镜和审校，输入越精细，输出越可拍、可改、可追溯 |
+
+查询从 [`wiki/index.md`](skills/teochew-people-skill/wiki/index.md) 开始；需要核对时沿 `source_ids` 回到 [`raw/index.md`](skills/teochew-people-skill/raw/index.md)。这是一套会成长的知识工作流，而不是把所有文件一次塞给模型。
+
+![潮汕人风采：原创英歌舞史诗视觉，长袖彩衣的领舞者与队列在晨光古镇街巷中击打双短槌](assets/yingge-epic.png)
+
+<p align="center"><sub>潮汕人风采｜原创编辑视觉，非具体演出现场；服饰、脸谱与动作不对应单一队伍或固定仪式。</sub></p>
+
+### 为什么它不是普通资料合集
 
 普通资料夹解决“文件放在哪里”，却很少回答“这句话能写多远”。本项目把知识分成互相可追踪的两层：
 
@@ -13,11 +59,12 @@ TEOCHEW PEOPLE 是一个面向 AI agent 的潮汕文化 LLM Wiki：以可追溯�
 
 ## 它如何持续成长
 
-五个操作入口构成一条可重复审计的维护链：
+六个操作入口构成一条可重复审计的维护链：
 
 | 操作 | 什么时候使用 | 产出或边界 |
 | --- | --- | --- |
 | [ingest](skills/teochew-people-skill/operations/ingest.md) | 找到候选资料时 | 先判来源与独立性；录用才建 raw，拒绝也留理由 |
+| [media ingest](skills/teochew-people-skill/operations/media-ingest.md) | 输入视频、音频、图片或家庭素材时 | 先判权利，再取必要时间码；分开说话者、旁白、字幕与画面观察 |
 | [query](skills/teochew-people-skill/operations/query.md) | 回答、写作、审校或制作时 | 从索引开始，首轮最多读 3 个 topic，再沿 source IDs 核对 |
 | [research](skills/teochew-people-skill/operations/research.md) | 资料陈旧、冲突、空缺或涉及当前状态时 | 先选来源再成文；当前事实实时核验 |
 | [evolve](skills/teochew-people-skill/operations/evolve.md) | 发现可长期复用且证据充分的变化时 | 公共事实、本地知识与项目覆盖分层写入；一次性回答不沉淀 |
@@ -28,6 +75,22 @@ TEOCHEW PEOPLE 是一个面向 AI agent 的潮汕文化 LLM Wiki：以可追溯�
 ## 为写作和视频生产准备的知识
 
 主题页不仅保存“是什么”，也用 `claim_roles` 标记定义、历史、地理范围、画面、声音、动作顺序、器物与生活经验。内容制作者可以从[场景细节索引](skills/teochew-people-skill/wiki/guides/场景细节索引.md)选材，再按[写作生产](skills/teochew-people-skill/wiki/guides/写作生产.md)和[短视频口播与分镜](skills/teochew-people-skill/wiki/guides/短视频口播与分镜.md)把“口播事实—来源—镜头依据”对齐。
+
+### 效果展示：《给阿嬷的情书》
+
+![原创编辑插画：两代人的手围着空白信纸，窗外夜海连接潮汕屋脊与东南亚岸灯](assets/letter-to-grandma-hero.png)
+
+<p align="center"><sub>原创编辑插画｜非历史照片、非电影剧照、非真实侨批复制件。</sub></p>
+
+这套演示不复制电影剧照、片段、台词或音乐，而是把电影备案与传播、主创自述、侨批档案、潮语地方差异和马新放映节点拆成可追踪证据，再用原创视觉完成文章与短视频表达。它展示了这个项目最重要的利益：精挑细选输入，让一篇长文、两种时长脚本和后续审校共享同一条证据链。
+
+| 成品 | 你会看到什么 |
+| --- | --- |
+| [图文专题《一封信，穿过海》](examples/letter-to-grandma-feature.md) | 约 4,100 个汉字、6 个视觉单元；区分影片表达、历史档案、主创归因、编辑综合与未知 |
+| [60 秒与约 3 分钟视频脚本](examples/letter-to-grandma-video-scripts.md) | 完整口播、时间码、镜头、声音、来源、权利状态和当地核验项 |
+| [新华社视频转 Wiki 演示](examples/video-to-wiki-demo.md) | 从来源登记到必要时间码、raw、topic、文章句子和镜头的完整链路；不保存 MP4 或完整逐字稿 |
+
+本地 7 个视觉资产都在 [`assets/media-manifest.json`](assets/media-manifest.json) 登记为 `editorial_original`；外部电影、新闻、档案图片与公开视频保持 `link_only`。处理自己的家庭照片、旧信或录音时，默认只进入本地覆盖层，逐项得到发布授权后才公开。
 
 示范文章从一张供桌写到一条街巷，但同时守住地方边界：
 
@@ -131,7 +194,7 @@ skills/teochew-people-skill/
 │   ├── places/ society-diaspora/ people-organizations/
 │   ├── current-events/     # 带日期和状态的事件页
 │   └── guides/             # 写作、分镜、事实与审校指南
-├── operations/             # ingest/query/research/evolve/lint
+├── operations/             # ingest/media-ingest/query/research/evolve/lint
 ├── scripts/                # 索引、lint、状态与 vault 工具
 ├── assets/vault-template/  # 私有层模板，不含用户数据
 ├── wiki-purpose.md
@@ -154,7 +217,9 @@ skills/teochew-people-skill/
 ```bash
 npm run wiki:index:check
 npm run wiki:lint
+npm run media:check
 npm test
+npm run readme:render:check
 npm run pack:check
 ```
 

@@ -6,22 +6,34 @@ $skillFile = Join-Path $skillDir "SKILL.md"
 $agentFile = Join-Path $skillDir "agents/openai.yaml"
 $packageFile = Join-Path $root "package.json"
 $installScript = Join-Path $root "scripts/install-skill.mjs"
+$readmeRenderScript = Join-Path $root "scripts/validate-github-readmes.mjs"
 $readmeFile = Join-Path $root "README.md"
+$readmeTraditionalFile = Join-Path $root "README.zh-Hant.md"
+$readmeEnglishFile = Join-Path $root "README.en.md"
+$readmeJapaneseFile = Join-Path $root "README.ja.md"
+$projectPageFile = Join-Path $root "index.html"
 $licenseFile = Join-Path $root "LICENSE"
 $contributingFile = Join-Path $root "CONTRIBUTING.md"
 $exampleFile = Join-Path $root "examples/before-after.md"
 $showcaseArticleFile = Join-Path $root "examples/showcase-article.md"
 $showcaseVideoFile = Join-Path $root "examples/showcase-video.md"
+$letterFeatureFile = Join-Path $root "examples/letter-to-grandma-feature.md"
+$letterVideoFile = Join-Path $root "examples/letter-to-grandma-video-scripts.md"
+$videoWikiDemoFile = Join-Path $root "examples/video-to-wiki-demo.md"
 $heroBackgroundFile = Join-Path $root "assets/hero-background.png"
 $heroFile = Join-Path $root "assets/hero.svg"
 $socialPreviewFile = Join-Path $root "assets/social-preview.png"
 $caseDemoFile = Join-Path $root "assets/case-demo.svg"
+$letterHeroFile = Join-Path $root "assets/letter-to-grandma-hero.png"
+$yinggeEpicFile = Join-Path $root "assets/yingge-epic.png"
+$mediaManifestFile = Join-Path $root "assets/media-manifest.json"
 $requiredSkillFiles = @(
     "wiki-purpose.md",
     "wiki-schema.md",
     "wiki-log.md",
     "agents/openai.yaml",
     "operations/ingest.md",
+    "operations/media-ingest.md",
     "operations/query.md",
     "operations/research.md",
     "operations/evolve.md",
@@ -97,16 +109,27 @@ foreach ($category in $requiredWikiCategories) {
 foreach ($path in @(
     $packageFile,
     $installScript,
+    $readmeRenderScript,
     $readmeFile,
+    $readmeTraditionalFile,
+    $readmeEnglishFile,
+    $readmeJapaneseFile,
+    $projectPageFile,
     $licenseFile,
     $contributingFile,
     $exampleFile,
     $showcaseArticleFile,
     $showcaseVideoFile,
+    $letterFeatureFile,
+    $letterVideoFile,
+    $videoWikiDemoFile,
     $heroBackgroundFile,
     $heroFile,
     $socialPreviewFile,
-    $caseDemoFile
+    $caseDemoFile,
+    $letterHeroFile,
+    $yinggeEpicFile,
+    $mediaManifestFile
 )) {
     if (-not (Test-Path -LiteralPath $path)) {
         Fail "缺少公开发布文件: $($path.Substring($root.Length + 1))"
@@ -126,6 +149,21 @@ $bundledText = Get-ChildItem -LiteralPath $skillDir -File -Recurse |
 foreach ($term in @("raw", "wiki", "research", "evolve", "local vault", "拜老爷", "营老爷", "TEOCHEW PEOPLE", "ingest", "query", "lint")) {
     if ($bundledText -notmatch [regex]::Escape($term)) {
         Fail "技能内容应包含 '$term'"
+    }
+}
+
+$mediaIngestContract = @(
+    @{ Label = "公开可访问不等于可再利用"; Pattern = '公开可访问.{0,20}不等于.{0,20}(可再利用|可复制|可下载)' },
+    @{ Label = "时间码"; Pattern = '(timecode|时间码)' },
+    @{ Label = "说话者与画面观察分离"; Pattern = '(speaker_claim|说话者).{0,100}(frame_observation|画面观察)' },
+    @{ Label = "禁止无授权完整转录"; Pattern = '(不得|禁止|不能).{0,80}(完整逐字稿|完整转录|全文转录)' },
+    @{ Label = "用户背景默认本地覆盖"; Pattern = '(用户背景|用户素材|家庭材料).{0,100}(local overlay|本地覆盖层)' },
+    @{ Label = "派生素材逐项声明媒体类型与权利"; Pattern = '(每个拟用素材|每项素材).{0,100}media_type.{0,100}rights_status' }
+)
+
+foreach ($requirement in $mediaIngestContract) {
+    if ($bundledText -notmatch $requirement.Pattern) {
+        Fail "技能内容缺少媒体摄取规则: $($requirement.Label)"
     }
 }
 
@@ -162,14 +200,28 @@ if (-not $package.bin.'teochew-people-skill') {
 $requiredPackageFiles = @(
     "skills/teochew-people-skill",
     "scripts/install-skill.mjs",
+    "scripts/validate-github-readmes.mjs",
     "examples",
     "assets/hero-background.png",
     "assets/hero.svg",
     "assets/social-preview.png",
     "assets/case-demo.svg",
+    "assets/letter-to-grandma-hero.png",
+    "assets/yingge-epic.png",
+    "assets/letter-to-grandma-timeline.svg",
+    "assets/letter-to-grandma-map.svg",
+    "assets/qiaopi-object-flow.svg",
+    "assets/evidence-layers.svg",
+    "assets/video-to-wiki-flow.svg",
+    "assets/media-manifest.json",
+    "scripts/validate-media-manifest.mjs",
     "docs/github-workflows.md",
     "docs/publishing.md",
     "README.md",
+    "README.zh-Hant.md",
+    "README.en.md",
+    "README.ja.md",
+    "index.html",
     "CONTRIBUTING.md",
     "LICENSE"
 )
@@ -178,6 +230,10 @@ foreach ($required in $requiredPackageFiles) {
     if ($packageFiles -notcontains $required) {
         Fail "package.json files 应包含 '$required'"
     }
+}
+
+if ($package.scripts.PSObject.Properties["readme:render:check"].Value -ne "node scripts/validate-github-readmes.mjs") {
+    Fail "package.json scripts 应提供 GitHub README 实际渲染检查"
 }
 
 foreach ($entry in $packageFiles) {
@@ -219,10 +275,36 @@ $readme = Get-Content -LiteralPath $readmeFile -Raw
 foreach ($term in @(
     "assets/social-preview.png",
     "TEOCHEW PEOPLE",
+    "<h1 align=`"center`">TEOCHEW PEOPLE</h1>",
+    "href=`"skills/teochew-people-skill/wiki/index.md`"",
+    "href=`"examples/letter-to-grandma-feature.md`"",
+    "href=`"examples/letter-to-grandma-video-scripts.md`"",
+    "href=`"#快速安装`"",
     "npx teochew-people-skill --codex",
     "npx teochew-people-skill --claude",
     "(examples/showcase-article.md)",
-    "(examples/showcase-video.md)"
+    "(examples/showcase-video.md)",
+    "assets/yingge-epic.png",
+    "原创编辑视觉，非具体演出现场",
+    "assets/letter-to-grandma-hero.png",
+    "(examples/letter-to-grandma-feature.md)",
+    "(examples/letter-to-grandma-video-scripts.md)",
+    "(examples/video-to-wiki-demo.md)",
+    "(skills/teochew-people-skill/operations/media-ingest.md)",
+    "README.zh-Hant.md",
+    "README.en.md",
+    "README.ja.md",
+    "actions/workflows/ci.yml/badge.svg",
+    "img.shields.io/npm/v/teochew-people-skill",
+    "Node.js-%3E%3D18",
+    "License-MIT",
+    "Wiki-55_sources",
+    "Topics-50",
+    "Categories-9",
+    "Languages-4",
+    "自进化",
+    "个性化",
+    "越用越好用"
 )) {
     if ($readme -notmatch [regex]::Escape($term)) {
         Fail "README 应包含 '$term'"
@@ -230,7 +312,7 @@ foreach ($term in @(
 }
 
 $expectedReadmeSections = @(
-    "为什么它不是普通资料合集",
+    "这是一套什么样的 WIKI",
     "它如何持续成长",
     "为写作和视频生产准备的知识",
     "知识如何保持全面和客观",
@@ -251,8 +333,115 @@ for ($i = 0; $i -lt $expectedReadmeSections.Count; $i++) {
     }
 }
 
-if ($readme -notmatch '(?s)^!\[TEOCHEW PEOPLE\]\(assets/social-preview\.png\)\r?\n\r?\n[^\r\n]+\r?\n\r?\n## 为什么它不是普通资料合集') {
-    Fail "README 顶部必须只有 social preview hero，随后是一段产品定义和规定章节"
+$githubHomeOrder = @(
+    "<img src=`"assets/social-preview.png`"",
+    "<h1 align=`"center`">TEOCHEW PEOPLE</h1>",
+    "actions/workflows/ci.yml/badge.svg",
+    "<strong>简体中文</strong>",
+    "href=`"skills/teochew-people-skill/wiki/index.md`"",
+    "href=`"examples/letter-to-grandma-feature.md`"",
+    "href=`"examples/letter-to-grandma-video-scripts.md`"",
+    "href=`"#快速安装`"",
+    "## 这是一套什么样的 WIKI"
+)
+$previousHomePosition = -1
+foreach ($term in $githubHomeOrder) {
+    $homePosition = $readme.IndexOf($term, [System.StringComparison]::Ordinal)
+    if ($homePosition -le $previousHomePosition) {
+        Fail "GitHub 仓库首页应按 hero、品牌、徽章、语言、WIKI/专题/脚本入口和 WIKI 介绍的顺序呈现"
+    }
+    $previousHomePosition = $homePosition
+}
+
+$localizedReadmes = @(
+    @{ Path = $readmeTraditionalFile; Label = "繁體中文"; Selected = "<strong><a href=`"README.zh-Hant.md`">繁體中文"; Install = "href=`"#快速安裝`""; FirstSection = "## 這是什麼"; Terms = @("自我演進", "個人化", "寫作與影片製作") },
+    @{ Path = $readmeEnglishFile; Label = "English"; Selected = "<strong><a href=`"README.en.md`">English"; Install = "href=`"#install`""; FirstSection = "## What it is"; Terms = @("evolving", "personalized", "writing and video production") },
+    @{ Path = $readmeJapaneseFile; Label = "日本語"; Selected = "<strong><a href=`"README.ja.md`">日本語"; Install = "href=`"#インストール`""; FirstSection = "## このプロジェクトについて"; Terms = @("進化", "パーソナライズ", "文章と動画制作") }
+)
+
+foreach ($localized in $localizedReadmes) {
+    $content = Get-Content -LiteralPath $localized.Path -Raw
+    foreach ($term in @(
+        "TEOCHEW PEOPLE",
+        "README.md",
+        "README.zh-Hant.md",
+        "README.en.md",
+        "README.ja.md",
+        "<h1 align=`"center`">TEOCHEW PEOPLE</h1>",
+        "href=`"skills/teochew-people-skill/wiki/index.md`"",
+        "href=`"examples/letter-to-grandma-feature.md`"",
+        "href=`"examples/letter-to-grandma-video-scripts.md`"",
+        "assets/social-preview.png",
+        "assets/yingge-epic.png",
+        "assets/letter-to-grandma-hero.png",
+        "npx teochew-people-skill --codex --no-vault",
+        "npx teochew-people-skill --claude --no-vault",
+        "npx teochew-people-skill --dest /path/to/skills --no-vault",
+        "npx teochew-people-skill --codex --init-vault",
+        "npx teochew-people-skill --codex --init-project /path/to/project",
+        "editorial_original",
+        "link_only",
+        "local overlay",
+        "MIT License",
+        "55",
+        "50",
+        "Categories-9",
+        "9"
+    ) + $localized.Terms) {
+        if ($content -notmatch [regex]::Escape($term)) {
+            Fail "$($localized.Label) README 应包含 '$term'"
+        }
+    }
+
+    $localizedHomeOrder = @(
+        "<img src=`"assets/social-preview.png`"",
+        "<h1 align=`"center`">TEOCHEW PEOPLE</h1>",
+        "actions/workflows/ci.yml/badge.svg",
+        $localized.Selected,
+        "href=`"skills/teochew-people-skill/wiki/index.md`"",
+        "href=`"examples/letter-to-grandma-feature.md`"",
+        "href=`"examples/letter-to-grandma-video-scripts.md`"",
+        $localized.Install,
+        $localized.FirstSection
+    )
+    $previousLocalizedPosition = -1
+    foreach ($term in $localizedHomeOrder) {
+        $localizedPosition = $content.IndexOf($term, [System.StringComparison]::Ordinal)
+        if ($localizedPosition -le $previousLocalizedPosition) {
+            Fail "$($localized.Label) GitHub 仓库首页的 hero、品牌、徽章、语言、入口或首节顺序不正确"
+        }
+        $previousLocalizedPosition = $localizedPosition
+    }
+}
+
+$projectPage = Get-Content -LiteralPath $projectPageFile -Raw
+foreach ($term in @(
+    "TEOCHEW PEOPLE",
+    "data-language=`"zh-CN`"",
+    "data-language=`"zh-Hant`"",
+    "data-language=`"en`"",
+    "data-language=`"ja`"",
+    "data-i18n-aria=`"navigationLabel`"",
+    "data-i18n-aria=`"languageSwitcherLabel`"",
+    "data-i18n-aria=`"statusLabel`"",
+    "data-i18n-aria=`"countsLabel`"",
+    "data-i18n-alt=`"heroImageAlt`"",
+    "assets/yingge-epic.png",
+    "assets/letter-to-grandma-hero.png",
+    "examples/letter-to-grandma-feature.md",
+    "examples/letter-to-grandma-video-scripts.md",
+    "examples/video-to-wiki-demo.md",
+    "editorial_original",
+    "link_only",
+    "local overlay",
+    "prefers-reduced-motion",
+    "55",
+    "50",
+    "9"
+)) {
+    if ($projectPage -notmatch [regex]::Escape($term)) {
+        Fail "项目展示页应包含 '$term'"
+    }
 }
 
 foreach ($forbidden in @("编译过", "编译内容", "Teochew People (潮汕人) Skill")) {

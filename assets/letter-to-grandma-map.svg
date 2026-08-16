@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">汕潮揭与东南亚的三层编辑地图</title>
+  <desc id="desc">以不同线型区分电影取景、侨批历史联系与2026年放映节点，不是比例地图或家族迁徙路线。</desc>
+  <defs>
+    <radialGradient id="sea"><stop offset="0" stop-color="#164d68"/><stop offset="1" stop-color="#071827"/></radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="12"/></filter>
+  </defs>
+  <rect width="1600" height="900" fill="url(#sea)"/>
+  <path d="M0 160 C310 75 530 245 760 160 S1190 60 1600 165" fill="none" stroke="#80b3c2" stroke-width="2" opacity="0.18"/>
+  <path d="M0 735 C300 640 565 835 870 715 S1320 625 1600 770" fill="none" stroke="#80b3c2" stroke-width="2" opacity="0.14"/>
+  <text x="100" y="110" fill="#f8f2e3" font-family="Arial, 'Noto Sans SC', sans-serif" font-size="48" font-weight="700">三种地理，不画成一条路</text>
+  <text x="102" y="155" fill="#9abec9" font-family="Arial, 'Noto Sans SC', sans-serif" font-size="21">取景地 ≠ 历史网络 ≠ 当代放映</text>
+  <g fill="#0b2638" stroke="#4a8195" stroke-width="3">
+    <path d="M245 250 C325 190 485 205 535 295 C580 375 535 505 420 540 C300 575 185 495 175 385 C168 320 194 282 245 250Z"/>
+    <path d="M1050 260 C1150 205 1325 230 1390 325 C1455 422 1400 555 1280 592 C1160 630 1010 560 985 438 C968 358 997 292 1050 260Z"/>
+  </g>
+  <g font-family="Arial, 'Noto Sans SC', sans-serif">
+    <text x="240" y="315" fill="#7db6c7" font-size="19" letter-spacing="3">粤东取景节点</text>
+    <g fill="#f8f2e3" font-size="27" font-weight="700">
+      <circle cx="285" cy="390" r="10" fill="#e65a3f"/><text x="310" y="400">汕头</text>
+      <circle cx="405" cy="325" r="10" fill="#e65a3f"/><text x="430" y="335">潮州</text>
+      <circle cx="420" cy="455" r="10" fill="#e65a3f"/><text x="445" y="465">揭阳</text>
+    </g>
+    <text x="1060" y="315" fill="#7db6c7" font-size="19" letter-spacing="3">东南亚公开节点</text>
+    <g fill="#f8f2e3" font-size="27" font-weight="700">
+      <circle cx="1090" cy="405" r="10" fill="#f4d58d"/><text x="1115" y="415">泰国 · 主创调研 / 影片空间</text>
+      <circle cx="1190" cy="500" r="10" fill="#e65a3f"/><text x="1215" y="510">马来西亚 · 2026放映</text>
+      <circle cx="1260" cy="370" r="10" fill="#e65a3f"/><text x="1285" y="380">新加坡 · 2026放映</text>
+    </g>
+  </g>
+  <path d="M450 375 C685 210 860 215 1090 405" fill="none" stroke="#f4d58d" stroke-width="5" stroke-dasharray="20 14"/>
+  <path d="M430 430 C715 590 940 560 1190 500" fill="none" stroke="#e65a3f" stroke-width="5"/>
+  <path d="M405 325 C690 365 980 315 1260 370" fill="none" stroke="#69b1c5" stroke-width="5" stroke-dasharray="3 16" stroke-linecap="round"/>
+  <circle cx="780" cy="405" r="125" fill="#f4d58d" opacity="0.05" filter="url(#soft)"/>
+  <g font-family="Arial, 'Noto Sans SC', sans-serif" font-size="19">
+    <line x1="180" y1="700" x2="260" y2="700" stroke="#f4d58d" stroke-width="5" stroke-dasharray="20 14"/><text x="280" y="708" fill="#d7e5e9">侨批／社群历史联系（非单一家族路线）</text>
+    <line x1="180" y1="755" x2="260" y2="755" stroke="#e65a3f" stroke-width="5"/><text x="280" y="763" fill="#d7e5e9">电影取景与2026放映节点</text>
+    <line x1="180" y1="810" x2="260" y2="810" stroke="#69b1c5" stroke-width="5" stroke-dasharray="3 16" stroke-linecap="round"/><text x="280" y="818" fill="#d7e5e9">语言与组织联系</text>
+  </g>
+  <text x="1120" y="820" fill="#7896a4" font-family="Arial, 'Noto Sans SC', sans-serif" font-size="18">原创编辑示意 · 非比例地图</text>
+</svg>
